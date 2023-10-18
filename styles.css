@@ -1,0 +1,30 @@
+
+
+/* Establecer un tamaño máximo para el logotipo */
+.navbar-brand img {
+    max-width: 20%; /* El logotipo se ajustará al ancho del contenedor */
+    height: auto; /* Mantiene la proporción de aspecto */
+}
+
+.container-nav {
+    width: 100;
+}
+
+.navbar-collapse {
+    justify-content: flex-end;
+    
+}
+.navbar-nav {
+    align-items: center;
+}
+
+.collapse.navbar-collapse {
+    height: 100%;
+}
+
+
+.navbar-nav .nav-item {
+    font-size: large;
+    color: white;
+    margin-right: 20px;
+}
