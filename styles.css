@@ -8,6 +8,10 @@
 
 .container-nav {
     width: 100;
+    
+}
+.navbar {
+    margin-bottom: 0;
 }
 
 .navbar-collapse {
@@ -20,11 +24,108 @@
 
 .collapse.navbar-collapse {
     height: 100%;
+    margin-left: 30px;
+}
+
+.navbar-toggler {
+    margin-left: 100px;
+}
+
+.navbar-nav .nav-item {
+    font-size: 20px;
+    color: white;
+    text-shadow: white;
+    margin-right: 20px;
 }
 
 
-.navbar-nav .nav-item {
-    font-size: large;
+
+
+main {
     color: white;
-    margin-right: 20px;
+    text-shadow: 5px 5px 5px #000; /* Agrega sombra al texto */
+    margin-top: 0; /* Elimina el margen superior */
+    padding: 0;
+}
+
+#titulo-principal{
+    font-size: 12vw;
+    margin: 0;  /* Ajusta los márgenes superior e inferior según sea necesario */
+    padding-top: 20px;
+}
+
+.col-md-3 {
+    text-align: center;
+}
+
+.col-md-3 > h2 {
+    margin-top: 30px; /* Ajusta este valor según tus necesidades */
+    font-size: 45px;
+}
+
+.col-md-3 > .material-symbols-outlined {
+    margin-top: 50px;
+    font-size: 70px; /* Ajusta este valor según tus necesidades */
+    position: relative; /* Esto permite mover el elemento con 'top', 'right', 'bottom', 'left' */
+    top: 10px; /* Mueve el elemento hacia abajo */
+    text-align: center; /* Centra el texto */
+}
+
+.bg-image {
+    /* Mantén tus estilos existentes */
+    background-image: url('img/reunion.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    /* Agrega una superposición semi-transparente y oscura */
+    background-color: rgba(0, 0, 0, 0.5); /* Negro semi-transparente */
+    background-blend-mode: multiply;
+}
+
+main .container-fluid {
+    padding: 0;
+}
+
+.container-fluid.bg-image {
+    padding: 0; /* Elimina el relleno del container para el fondo de imagen */
+}
+
+.col-md-3 p {
+    margin-top: 10px; /* Ajusta el margen superior según tus necesidades */
+    font-size: 16px; /* Ajusta el tamaño del texto para pantallas más pequeñas */
+}
+
+footer {
+    background-color: #343a40; /* Color de fondo oscuro */
+    color: #fff; /* Texto blanco */
+    
+    bottom: 0; /* Fijar en la parte inferior de la ventana del navegador */
+    width: 100%; /* Ancho completo del viewport */
+}
+
+
+footer p {
+    font-size: 14px; /* Ajusta el tamaño del texto del footer para pantallas pequeñas */
+    margin: 10px 0; /* Ajusta los márgenes superior e inferior según sea necesario */
+}
+
+
+@media (max-width: 768px) {
+    .navbar-brand img {
+        max-width: 60%; /* Tamaño del logo en pantallas más pequeñas */
+    }
+}
+
+@media (min-width: 992px) {
+    #titulo-principal {
+        font-size: 70px; /* Ajusta el valor según tu preferencia */
+    }
+}
+
+
+@media (max-width: 768px) {
+    .col-md-3 p {
+        margin-top: 10px; /* Ajusta el valor según tu preferencia */
+        font-size: 14px; /* Ajusta el valor según tu preferencia */
+    }
 }
