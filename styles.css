@@ -1,37 +1,44 @@
+/*colores*/
+:root{
+    --h2-aside: #328695;
 
-
-/* Establecer un tamaño máximo para el logotipo */
-.navbar-brand img {
-    max-width: 20%; /* El logotipo se ajustará al ancho del contenedor */
-    height: auto; /* Mantiene la proporción de aspecto */
 }
 
-.container-nav {
+/* MENÚ DE NAVEGACIÓN */
+#main-navbar {
+    background-color: #343a40; /* Color de fondo del menú de navegación */
+}
+
+#main-navbar .navbar-brand img {
+    max-width: 20%; /* Ancho del logotipo ajustado al 75% */
+}
+
+#main-navbar .container-nav {
     width: 100;
-    
 }
-.navbar {
+
+#main-navbar .navbar {
     margin-bottom: 0;
 }
 
-.navbar-collapse {
+#main-navbar .navbar-collapse {
     justify-content: flex-end;
-    
 }
-.navbar-nav {
+
+#main-navbar .navbar-nav {
     align-items: center;
 }
 
-.collapse.navbar-collapse {
+#main-navbar .collapse.navbar-collapse {
     height: 100%;
     margin-left: 30px;
 }
 
-.navbar-toggler {
+#main-navbar .navbar-toggler {
     margin-left: 100px;
 }
 
-.navbar-nav .nav-item {
+#main-navbar .navbar-nav .nav-item {
     font-size: 20px;
     color: white;
     text-shadow: white;
@@ -39,93 +46,179 @@
 }
 
 
-
-
-main {
+#main-content {
     color: white;
-    text-shadow: 5px 5px 5px #000; /* Agrega sombra al texto */
-    margin-top: 0; /* Elimina el margen superior */
+    text-shadow: 5px 5px 5px #000;
+    margin-top: 0;
     padding: 0;
 }
 
-#titulo-principal{
+#main-content #titulo-principal {
     font-size: 12vw;
-    margin: 0;  /* Ajusta los márgenes superior e inferior según sea necesario */
+    margin: 0;
     padding-top: 20px;
 }
 
-.col-md-3 {
+#main-content .col-md-3 {
     text-align: center;
 }
 
-.col-md-3 > h2 {
-    margin-top: 30px; /* Ajusta este valor según tus necesidades */
+#main-content .col-md-3 > h2 {
+    margin-top: 30px;
     font-size: 45px;
 }
 
-.col-md-3 > .material-symbols-outlined {
+#main-content .col-md-3 .material-symbols-outlined {
     margin-top: 50px;
-    font-size: 70px; /* Ajusta este valor según tus necesidades */
-    position: relative; /* Esto permite mover el elemento con 'top', 'right', 'bottom', 'left' */
-    top: 10px; /* Mueve el elemento hacia abajo */
-    text-align: center; /* Centra el texto */
+    font-size: 70px;
+    position: relative;
+    top: 10px;
+    text-align: center;
 }
 
 .bg-image {
-    /* Mantén tus estilos existentes */
     background-image: url('img/reunion.jpg');
     background-size: cover;
     background-repeat: no-repeat;
-
-    /* Agrega una superposición semi-transparente y oscura */
-    background-color: rgba(0, 0, 0, 0.5); /* Negro semi-transparente */
+    background-color: rgba(0, 0, 0, 0.5);
     background-blend-mode: multiply;
 }
 
-main .container-fluid {
+#main-content .container-fluid {
     padding: 0;
 }
 
-.container-fluid.bg-image {
-    padding: 0; /* Elimina el relleno del container para el fondo de imagen */
+#main-content .container-fluid.bg-image {
+    padding: 0;
 }
 
-.col-md-3 p {
-    margin-top: 10px; /* Ajusta el margen superior según tus necesidades */
-    font-size: 16px; /* Ajusta el tamaño del texto para pantallas más pequeñas */
-}
-
-footer {
-    background-color: #343a40; /* Color de fondo oscuro */
-    color: #fff; /* Texto blanco */
-    
-    bottom: 0; /* Fijar en la parte inferior de la ventana del navegador */
-    width: 100%; /* Ancho completo del viewport */
+#main-content .col-md-3 p {
+    margin-top: 10px;
+    font-size: 16px;
 }
 
 
-footer p {
-    font-size: 14px; /* Ajusta el tamaño del texto del footer para pantallas pequeñas */
-    margin: 10px 0; /* Ajusta los márgenes superior e inferior según sea necesario */
+
+/*SECCION SECUNDARIA*/
+#related-content {
+    background-color: rgba(218, 218, 218, 0.74);
 }
 
+#related-content > h2 {
+    color: var(--h2-aside);
+    text-align: left;
+    font-size: 50px;
+    padding-top: 30px;
+}
+
+#related-content div.col-md-6 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#related-content img[alt="Nosotros"] {
+    align-items: center;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+#related-content .about-us-section  p {
+    color: rgba(43, 43, 43, 0.5);
+    font-size: 25px;
+    line-height: 45px;
+    text-align: left; /* Alinea el texto a la izquierda */
+    vertical-align: top; /* Alinea el texto hacia arriba */
+    padding: 0; /* Añade espacio en la parte superior para mover el párrafo hacia arriba */
+}
+
+#servicios {
+    text-align: center;
+}
+
+#related-content .service-row {
+    margin-bottom: 20px; /* Ajusta el valor según la cantidad de espacio que desees */
+}
+
+/* Margen inferior para la imagen */
+#related-content img[alt="Nosotros"],
+#related-content img[alt="Servicio 1"],
+#related-content img[alt="Servicio 2"],
+#related-content img[alt="Servicio 3"] {
+    max-width: 80%; /* Ajusta el ancho máximo de las imágenes al contenedor */
+    height: auto; /* Ajusta la altura automáticamente para mantener la proporción */
+    border-radius: 10px; /* Agrega bordes redondeados */
+    margin: 10px 0; /* Agrega margen superior e inferior a las imágenes */
+}
+
+#related-content .service-section h3 {
+    display: block;  /* Asegura que el título se muestre como un bloque */
+    font-size: 35px; /* Tamaño del subtítulo */
+    text-align: center; /* Alinea el subtítulo al centro */
+    color: rgb(8, 173, 173);
+    /* margin: 0; Elimina el margen superior predeterminado */
+}
+
+#related-content .service-section p {
+    display: block; /* Asegura que el párrafo se muestre como un bloque */
+    font-size: 20px; /* Tamaño del texto */
+    text-align: center; /* Alinea el texto al centro */
+    color: rgba(43, 43, 43, 0.5); /* Color del texto */
+    line-height: 1.4; /* Ajusta el espaciado entre líneas */
+    /* margin: 0; Elimina el margen superior predeterminado */
+}
+
+
+/*FOOTER*/
+
+#page-footer {
+    background-color: #343a40;
+    color: #fff;
+    bottom: 0;
+    width: 100%;
+}
+
+#page-footer p.footer-text {
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+
+/*MEDIA QUERIES*/
 
 @media (max-width: 768px) {
     .navbar-brand img {
-        max-width: 60%; /* Tamaño del logo en pantallas más pequeñas */
+        max-width: 100%;
     }
 }
 
 @media (min-width: 992px) {
-    #titulo-principal {
-        font-size: 70px; /* Ajusta el valor según tu preferencia */
+    #main-content #titulo-principal {
+        font-size: 70px;
     }
 }
 
+@media (max-width: 768px) {
+    #main-content .col-md-3 p {
+        margin-top: 10px;
+        font-size: 14px;
+    }
+}
 
 @media (max-width: 768px) {
-    .col-md-3 p {
-        margin-top: 10px; /* Ajusta el valor según tu preferencia */
-        font-size: 14px; /* Ajusta el valor según tu preferencia */
+    #related-content h2 {
+        font-size: 30px;
+    }
+
+    #related-content div.col-md-6 > p {
+        font-size: 18px;
+        line-height: 25px;
+    }
+}
+
+@media (max-width: 768px) {
+    #page-footer p.footer-text {
+        font-size: 12px;
     }
 }
