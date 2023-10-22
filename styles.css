@@ -1,25 +1,25 @@
 /*colores*/
-:root{
-    --h2-aside: #328695;
-
+:root {
+    --h2-aside: rgb(39, 82, 90);
+    --background-aside: rgba(218, 218, 218, 0.74);
 }
 
 /* MENÚ DE NAVEGACIÓN */
-#main-navbar {
-    background-color: #343a40; /* Color de fondo del menú de navegación */
-}
+/* #main-navbar {
+    background-color: #343a40; /* Color de fondo del menú de navegación 
+} */
 
 #main-navbar .navbar-brand img {
     max-width: 20%; /* Ancho del logotipo ajustado al 75% */
 }
 
 #main-navbar .container-nav {
-    width: 100;
+    width: 100%;
 }
 
-#main-navbar .navbar {
-    margin-bottom: 0;
-}
+/* #main-navbar .navbar {
+    margin-bottom: 10;
+} */
 
 #main-navbar .navbar-collapse {
     justify-content: flex-end;
@@ -31,12 +31,12 @@
 
 #main-navbar .collapse.navbar-collapse {
     height: 100%;
-    margin-left: 30px;
+    /*margin-left: 30px;*/
 }
 
-#main-navbar .navbar-toggler {
+/* #main-navbar .navbar-toggler {
     margin-left: 100px;
-}
+} */
 
 #main-navbar .navbar-nav .nav-item {
     font-size: 20px;
@@ -45,6 +45,7 @@
     margin-right: 20px;
 }
 
+/* SECCION MAIN */
 
 #main-content {
     color: white;
@@ -101,11 +102,12 @@
 
 /*SECCION SECUNDARIA*/
 #related-content {
-    background-color: rgba(218, 218, 218, 0.74);
+    background-color: var(--background-aside);
 }
 
 #related-content > h2 {
     color: var(--h2-aside);
+    text-shadow: 1px 1px 2px rgba(151, 151, 151, 0.986);
     text-align: left;
     font-size: 50px;
     padding-top: 30px;
@@ -122,6 +124,7 @@
     max-width: 100%;
     height: auto;
     border-radius: 10px;
+    margin-bottom: 10px;
 }
 
 #related-content .about-us-section  p {
@@ -133,42 +136,180 @@
     padding: 0; /* Añade espacio en la parte superior para mover el párrafo hacia arriba */
 }
 
-#servicios {
+
+/* SECCION SECUNDARIA 2*/
+
+aside.container-fluid {
+    background-color:var(--background-aside);
+    
+}
+
+.article img {
+    align-items: center;
+    max-width: 100%;
+    height: auto;
+    
+    margin: 10px;
+    
+}
+
+
+.article {
+    overflow: hidden;
+}
+
+
+.article:hover img {
+    transform: scale(1.1);
+}
+
+.article-title {
+    
+    color:var(--h2-aside);
+    text-align: center;
+    font-size: 24px;
+    text-shadow: 1px 1px 2px rgba(151, 151, 151, 0.986);
+}
+
+.article-paragraph {
+    color: gray;
     text-align: center;
 }
+/* SECCION SECUNDARIA 3 */
 
-#related-content .service-row {
-    margin-bottom: 20px; /* Ajusta el valor según la cantidad de espacio que desees */
-}
+  /* Estilos generales para el formulario y el mapa */
+  .article {
+    margin: 10px;
+    padding: 20px;
+    border: 1px solid #ccc;
+  }
 
-/* Margen inferior para la imagen */
-#related-content img[alt="Nosotros"],
-#related-content img[alt="Servicio 1"],
-#related-content img[alt="Servicio 2"],
-#related-content img[alt="Servicio 3"] {
-    max-width: 80%; /* Ajusta el ancho máximo de las imágenes al contenedor */
-    height: auto; /* Ajusta la altura automáticamente para mantener la proporción */
-    border-radius: 10px; /* Agrega bordes redondeados */
-    margin: 10px 0; /* Agrega margen superior e inferior a las imágenes */
-}
+  /* Estilos para los títulos de los artículos */
+  .article-title {
+    font-size: 24px;
+    color:var(--h2-aside);
+    margin-bottom: 10px;
+  }
 
-#related-content .service-section h3 {
-    display: block;  /* Asegura que el título se muestre como un bloque */
-    font-size: 35px; /* Tamaño del subtítulo */
-    text-align: center; /* Alinea el subtítulo al centro */
-    color: rgb(8, 173, 173);
-    /* margin: 0; Elimina el margen superior predeterminado */
-}
+  /* Estilos para los campos de formulario */
+  .form-group {
+    margin-bottom: 20px;
+  }
 
-#related-content .service-section p {
-    display: block; /* Asegura que el párrafo se muestre como un bloque */
-    font-size: 20px; /* Tamaño del texto */
-    text-align: center; /* Alinea el texto al centro */
-    color: rgba(43, 43, 43, 0.5); /* Color del texto */
-    line-height: 1.4; /* Ajusta el espaciado entre líneas */
-    /* margin: 0; Elimina el margen superior predeterminado */
-}
+  .form-group label {
+    font-weight: bold;
+  }
 
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  /* Estilos para el botón del formulario */
+  .btn-primary {
+    background-color:var(--h2-aside);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+  }
+
+  /* Estilos para el mapa (iframe) */
+  iframe {
+    width: 100%;
+    height: 495px;
+    border: 0;
+  }
+
+
+  /* BOTON DE SCROLL */
+  #scrollToTopBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    font-size: 24px;
+    border: none;
+    outline: none;
+    background-color:var(--h2-aside);
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10%;
+    opacity: 0.7;
+  }
+  
+  #scrollToTopBtn:hover {
+    background-color: var(--h2-aside) ;
+  }
+  
+  /* Estilos para el contenedor del popup */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    text-align: center;
+  }
+  
+
+
+  /* Estilos para el contenido del popup */
+  .popup-content {
+    position:absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color:var(--background-aside);
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px #000000;
+    text-align: center;
+    width: 20vw;
+    height: 20vw;
+  }
+  
+  /* Estilos para el botón de cierre del popup */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  /* Estilos para el formulario dentro del popup */
+  form {
+    text-align: center;
+    
+  }
+  
+  /* Estilos para el botón dentro del formulario */
+  button {
+    background-color:var(--h2-aside);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Estilos para el enlace de inicio de sesión */
+  #loginLink {
+    cursor: pointer;
+    
+  }
+  
+  /* Estilos para el enlace de inicio de sesión al pasar el mouse */
+  #loginLink:hover {
+    text-decoration:underline;
+  }
+  
 
 /*FOOTER*/
 
@@ -220,5 +361,12 @@
 @media (max-width: 768px) {
     #page-footer p.footer-text {
         font-size: 12px;
+    }
+}
+
+@media(max-width: 768px) {
+    .popup-content {
+        width: auto;
+        height: auto;
     }
 }
