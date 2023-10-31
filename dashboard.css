@@ -1,0 +1,29 @@
+.sidebar {
+    height: 100vh; /* 100% del alto de la ventana */
+    position: fixed; /* Fijar en su posición */
+    top: 0; /* En la parte superior */
+    left: 0; /* En la parte izquierda */
+    width: 250px; /* Ancho deseado */
+    background-color: #333;
+    color: #fff;
+}
+
+.sidebar-logo {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 10px;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+}

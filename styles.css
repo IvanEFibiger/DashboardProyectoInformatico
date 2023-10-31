@@ -260,19 +260,19 @@ aside.container-fluid {
 
 
   /* Estilos para el contenido del popup */
-  .popup-content {
-    position:absolute;
+   .popup-content {
+    position:absolute; 
     top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color:var(--background-aside);
-    padding: 20px;
+    padding: 20px; 
     border-radius: 5px;
     box-shadow: 0px 0px 10px 0px #000000;
     text-align: center;
-    width: 20vw;
-    height: 20vw;
-  }
+    width: auto;
+    height: auto;
+  } 
   
   /* Estilos para el botón de cierre del popup */
   .close {

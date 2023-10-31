@@ -35,7 +35,8 @@ var closePopup = document.getElementById("closePopup");
 var loginForm = document.getElementById("loginForm");
 
 // Abre el popup al hacer clic en el enlace
-loginLink.addEventListener("click", function() {
+loginLink.addEventListener("click", function(e) {
+  e.preventDefault();
   loginPopup.style.display = "block";
 });
 
@@ -46,7 +47,7 @@ closePopup.addEventListener("click", function() {
 
 // Cierra el popup al hacer clic fuera del contenido
 window.addEventListener("click", function(event) {
-  if (event.target == loginPopup) {
+  if (event.target === loginPopup) {
     loginPopup.style.display = "none";
   }
 });
