@@ -1,29 +1,183 @@
-.sidebar {
-    height: 100vh; /* 100% del alto de la ventana */
-    position: fixed; /* Fijar en su posición */
-    top: 0; /* En la parte superior */
-    left: 0; /* En la parte izquierda */
-    width: 250px; /* Ancho deseado */
-    background-color: #333;
-    color: #fff;
+:root {
+  --color-principal: rgb(248, 240, 229);
+  --color-secundario: rgb(234, 219, 200);
+  --color-terciario: rgb(218, 192, 163);
+  --color-extra: rgb(16, 44, 87);
+  --color-texto-principal: rgb(0, 41, 0);
+  --color-texto-secundario: rgb(75, 74, 74);
+  --color-texto-terciario: rgb(255, 255, 255);
 }
 
-.sidebar-logo {
-    text-align: center;
-    padding: 20px 0;
+/* Estilo general */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: var(--color-principal);
 }
 
-.sidebar ul {
-    list-style: none;
-    padding: 0;
+/* Estilo del texto del nav */
+/* Estilo para el color del texto de las opciones de navegación */
+.navbar-nav .nav-link {
+  color: var(--color-texto-terciario); /* Color blanco, puedes cambiarlo al color que desees */
+  transition: color 0.3s; /* Agrega una transición de 0.3 segundos a la propiedad color */
 }
 
-.sidebar ul li {
-    padding: 10px;
+
+/* Estilo para el color del texto de las opciones de navegación al pasar el mouse */
+.navbar-nav .nav-link:hover {
+  color: var(--color-secundario); /* Cambia a tu color preferido al pasar el mouse */
 }
 
-.sidebar ul li a {
-    text-decoration: none;
-    color: #fff;
-    display: block;
+/* Estilo para el título de la barra lateral */
+.offcanvas-title {
+  color: var(--color-texto-principal);
+  font-size: 2rem; /* Tamaño del texto del título */
+  margin-bottom: 20px; /* Espaciado inferior */
+}
+
+/* Estilo para el nombre de usuario */
+#usernamePlaceholder {
+  font-weight: bold; /* Texto en negrita */
+}
+
+/* Estilo para los enlaces de la lista */
+.offcanvas-body a {
+  color: var(--color-texto-secundario); /* Color del texto de los enlaces */
+  text-decoration: none; /* Sin subrayado */
+  display: flex;
+  align-items: center;
+  font-size: 24px; /* Tamaño del texto */
+  margin-bottom: 20px; /* Espaciado inferior entre enlaces en pantallas grandes */
+}
+
+/* Estilo para los iconos */
+.offcanvas-body i {
+  margin-right: 10px; /* Espaciado a la derecha de los iconos */
+}
+
+/* Estilo para los enlaces al pasar el ratón por encima */
+.offcanvas-body a:hover {
+  color: var(--color-texto-principal); /* Cambia el color al pasar el ratón por encima */
+}
+
+/* Estilo para la sección principal */
+.principal {
+  background-color: var(--color-terciario); /* Color de fondo */
+  padding: 20px; /* Espaciado interno */
+  margin-bottom: 20px; /* Margen inferior */
+  border-radius: 10px;
+}
+
+/* Estilo para la tarjeta dentro de la sección */
+.principal .card {
+  background-color: var(--color-secundario); /* Color de fondo de la tarjeta */
+  border: 1px solid var(--color-principal); /* Borde de la tarjeta */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra de la tarjeta */
+}
+
+/* Estilo para el título de la tarjeta */
+.principal .card-title {
+  color: var(--color-texto-principal); /* Color del título */
+  font-size: 34px; /* Tamaño del título */
+}
+
+/* Estilo para el texto de la tarjeta */
+.principal .card-text {
+  color: var(--color-texto-secundario); /* Color del texto */
+  font-size: 16px; /* Tamaño del texto */
+  margin-bottom: 10px; /* Margen inferior del texto */
+}
+
+/* Estilo para la sección de rankings */
+.rankings {
+  background-color: var(--color-terciario);
+  padding: 20px; /* Espaciado interno */
+  margin-bottom: 20px; /* Margen inferior */
+  border-radius: 10px;
+}
+
+/* Estilo para las pestañas */
+.nav-tabs {
+  background-color: var(--color-secundario); /* Color de fondo de las pestañas */
+  border: 1px solid var(--color-principal); /* Borde de las pestañas */
+  border-radius: 5px; /* Bordes redondeados */
+}
+
+/* Estilo para los enlaces de las pestañas */
+.nav-link {
+  color: var(--color-texto-principal); /* Color del texto de las pestañas */
+}
+
+/* Estilo para las pestañas activas */
+.nav-link.active {
+  background-color: #007bff; /* Color de fondo de la pestaña activa */
+  color: var(--color-texto-secundario); /* Color del texto de la pestaña activa */
+  border-color: var(--color-principal); /* Color del borde de la pestaña activa */
+}
+
+/* Estilo para el contenido de las pestañas */
+.tab-content {
+  background-color: var(--color-secundario); /* Color de fondo del contenido de las pestañas */
+  border: 1px solid var(--color-principal); /* Borde del contenido de las pestañas */
+  border-radius: 5px; /* Bordes redondeados */
+  padding: 20px; /* Espaciado interno del contenido de las pestañas */
+}
+
+/* Estilo para el texto del contenido de las pestañas */
+.tab-pane p {
+  color: #555; /* Color del texto del contenido de las pestañas */
+  font-size: 16px; /* Tamaño del texto del contenido de las pestañas */
+}
+
+/* Estilo para la seccion 3 */
+
+section.row > .col-md-6 > .card {
+  background-color: var(--color-secundario);
+  border: 1px solid var(--color-principal);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+/* Estilo para el título de las tarjetas en la nueva sección */
+section.row > .col-md-6 > .card > .card-body > .card-title {
+  color: var(--color-texto-principal);
+  font-size: 24px;
+}
+
+/* Estilo para el texto de las tarjetas en la nueva sección */
+section.row > .col-md-6 > .card > .card-body > .card-text {
+  color: var(--color-texto-secundario);
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+/* Estilo del pie de página (si es necesario) */
+footer {
+  background-color: #343a40;
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+}
+
+
+
+/* queries*/
+
+@media (max-width: 768px) {
+  .navbar-brand img {
+      max-width: 100%;
+  }
+}
+
+/* query para sidebar */
+@media (max-width: 576px) {
+  .offcanvas-body a {
+    font-size: 18px; /* Ajusta el tamaño del texto para pantallas pequeñas */
+    margin-bottom: 8px; /* Ajusta el espaciado inferior entre enlaces */
+  }
+
+  .offcanvas-body i {
+    margin-right: 8px; /* Ajusta el espaciado a la derecha de los iconos para pantallas pequeñas */
+  }
 }

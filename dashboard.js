@@ -1,50 +1,16 @@
-/* globals Chart:false */
+  // mostrar/ocultar el "Dashboard"
+$(document).ready(function () {
+  // Agrega un evento de clic a la pestaña "Dashboard"
+  $('.nav-link[href="#mobileMenu"]').on('click', function () {
+      // Alterna el estado del menú desplegable
+      $('#mobileMenu').offcanvas('toggle');
+  });
+});
 
-(() => {
-    'use strict'
-  
-    // Graphs
-    const ctx = document.getElementById('myChart')
-    // eslint-disable-next-line no-unused-vars
-    const myChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: [
-          'Sunday',
-          'Monday',
-          'Tuesday',
-          'Wednesday',
-          'Thursday',
-          'Friday',
-          'Saturday'
-        ],
-        datasets: [{
-          data: [
-            15339,
-            21345,
-            18483,
-            24003,
-            23489,
-            24092,
-            12034
-          ],
-          lineTension: 0,
-          backgroundColor: 'transparent',
-          borderColor: '#007bff',
-          borderWidth: 4,
-          pointBackgroundColor: '#007bff'
-        }]
-      },
-      options: {
-        plugins: {
-          legend: {
-            display: false
-          },
-          tooltip: {
-            boxPadding: 3
-          }
-        }
-      }
-    })
-  })()
-  
+//nombre de usuario del dashboard
+
+// Supongamos que obtienes el nombre de usuario de alguna manera, por ejemplo, de una variable llamada 'nombreUsuario'
+var nombreUsuario = "UsuarioEjemplo";
+
+// Actualiza el contenido del span con el ID 'usernamePlaceholder'
+document.getElementById("usernamePlaceholder").textContent = nombreUsuario;
