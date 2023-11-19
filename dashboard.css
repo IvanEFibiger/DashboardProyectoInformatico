@@ -1,16 +1,16 @@
 :root {
-  --color-principal: rgb(248, 240, 229);
-  --color-secundario: rgb(234, 219, 200);
-  --color-terciario: rgb(218, 192, 163);
-  --color-extra: rgb(16, 44, 87);
-  --color-texto-principal: rgb(0, 41, 0);
-  --color-texto-secundario: rgb(75, 74, 74);
-  --color-texto-terciario: rgb(255, 255, 255);
+  --color-principal: rgb(116, 114, 113);
+  --color-secundario: rgb(0, 0, 0);
+  --color-terciario: rgb(71, 70, 70);
+  --color-extra: rgb(0, 0, 0);
+  --color-texto-principal: rgb(245, 99, 1);
+  --color-texto-secundario: rgb(255, 255, 255);
+  --color-texto-terciario: rgb(207, 205, 205);
 }
 
 /* Estilo general */
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: 'ABeeZee', sans-serif;
   background-color: var(--color-principal);
 }
 
@@ -25,6 +25,11 @@ body {
 /* Estilo para el color del texto de las opciones de navegación al pasar el mouse */
 .navbar-nav .nav-link:hover {
   color: var(--color-secundario); /* Cambia a tu color preferido al pasar el mouse */
+}
+
+
+#mobileMenu {
+  background-color: var(--color-terciario); /* Reemplaza 'your_color_code' con el código de color que desees */
 }
 
 /* Estilo para el título de la barra lateral */
@@ -110,7 +115,7 @@ body {
 
 /* Estilo para las pestañas activas */
 .nav-link.active {
-  background-color: #007bff; /* Color de fondo de la pestaña activa */
+  background-color: var(--color-principal); /* Color de fondo de la pestaña activa */
   color: var(--color-texto-secundario); /* Color del texto de la pestaña activa */
   border-color: var(--color-principal); /* Color del borde de la pestaña activa */
 }
@@ -125,7 +130,7 @@ body {
 
 /* Estilo para el texto del contenido de las pestañas */
 .tab-pane p {
-  color: #555; /* Color del texto del contenido de las pestañas */
+  color: var(--color-texto-secundario); /* Color del texto del contenido de las pestañas */
   font-size: 16px; /* Tamaño del texto del contenido de las pestañas */
 }
 
