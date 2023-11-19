@@ -152,15 +152,79 @@ section.row > .col-md-6 > .card > .card-body > .card-text {
   margin-bottom: 10px;
 }
 
-/* Estilo del pie de página (si es necesario) */
-footer {
-  background-color: #343a40;
-  color: white;
-  padding: 10px 0;
+
+
+/* CLIENTES */
+/* ListaClientes */
+#clientesListContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
   text-align: center;
 }
 
+#clientesListContainer h2 {
+  font-size: 34px;
+  color: var(--color-texto-principal);
+  position: relative;
+  margin-top: 20px;
+}
 
+#clientesTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+#clientesTable th, #clientesTable td {
+  border: 1px solid var(--color-principal);
+  padding: 8px;
+  text-align: left;
+}
+
+#clientesTable th {
+  background-color: var(--color-secundario);
+}
+
+#clientesTable tbody tr:hover {
+  background-color: var(--color-terciario);
+}
+
+/* alta */
+.altaClienteContainer {
+  max-width: 600px;
+  margin: auto; /* Centra el contenedor en la pantalla */
+  padding: 20px; /* Añade espacio interno al contenedor */
+}
+
+#altaClienteForm {
+  display: none;
+  text-align: center; /* Centra el texto dentro del formulario */
+}
+
+#altaClienteForm h2 {
+  margin-bottom: 20px; /* Aumenta el espacio inferior del título */
+  color: var(--color-texto-principal);
+}
+/* Modificación */
+
+/* alta */
+.modificarClienteContainer {
+  max-width: 600px;
+  margin: auto; /* Centra el contenedor en la pantalla */
+  padding: 20px; /* Añade espacio interno al contenedor */
+}
+
+#modificarClienteForm {
+  display: none;
+  text-align: center; /* Centra el texto dentro del formulario */
+}
+
+#modificarClienteForm h2 {
+  margin-bottom: 20px; /* Aumenta el espacio inferior del título */
+  color: var(--color-texto-principal);
+}
 
 /* queries*/
 
@@ -179,5 +243,14 @@ footer {
 
   .offcanvas-body i {
     margin-right: 8px; /* Ajusta el espaciado a la derecha de los iconos para pantallas pequeñas */
+  }
+}
+
+/* query para tabla de clientes */
+/* Media query para pantallas más pequeñas */
+@media (max-width: 767px) {
+  #clientesTable {
+    overflow-x: auto;
+    display: block;
   }
 }

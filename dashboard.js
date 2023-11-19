@@ -10,7 +10,8 @@ $(document).ready(function () {
 //nombre de usuario del dashboard
 
 // Supongamos que obtienes el nombre de usuario de alguna manera, por ejemplo, de una variable llamada 'nombreUsuario'
+// Supongamos que obtienes el nombre de usuario de alguna manera, por ejemplo, de una variable llamada 'nombreUsuario'
 var nombreUsuario = "UsuarioEjemplo";
 
-// Actualiza el contenido del span con el ID 'usernamePlaceholder'
-document.getElementById("usernamePlaceholder").textContent = nombreUsuario;
+// Actualiza el contenido del span con el ID 'usernamePlaceholder' usando jQuery
+$("#usernamePlaceholder").text(nombreUsuario);
