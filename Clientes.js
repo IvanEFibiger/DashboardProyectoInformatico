@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.addEventListener('DOMContentLoaded', function () {
   var mainContent = document.querySelector('main');
-  var clientesListContainer = document.getElementById('clientesListContainer');
+  var clientesListContainer = document.getElementById('prodListContainer');
 
   // Function to show the clientesListContainer
   function showClientesList() {
