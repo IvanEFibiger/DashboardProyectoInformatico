@@ -26,12 +26,12 @@ CREATE TABLE IF NOT EXISTS clientes (
 );
 
 INSERT INTO clientes VALUES
-(1, 'Dai', 'dai@gmail.com', 'calle 1 120',23385638574, 1),
-(2, 'maria', 'maria@gmail.com', 'calle 2 240', 1),
-(3, 'marta', 'marta@gmail.com', 'calle 3 360', 2),
-(4, 'jose', 'jose@gmail.com', 'calle 4 480', 2),
-(5, 'lucia', 'lucia@gmail.com', 'calle 5 600', 2),
-(6, 'matias', 'matias@gmail.com', 'calle 8 320', 2);
+(1, 'Dai', 'dai@gmail.com', 'calle 1 120', 23385638574, 1),
+(2, 'maria', 'maria@gmail.com', 'calle 2 240', 23205628575, 1),
+(3, 'marta', 'marta@gmail.com', 'calle 3 360',23345628578, 2),
+(4, 'jose', 'jose@gmail.com', 'calle 4 480', 20223458764, 2),
+(5, 'lucia', 'lucia@gmail.com', 'calle 5 600',23385625572, 2),
+(6, 'matias', 'matias@gmail.com', 'calle 8 320', 20323441764, 2);
 
 CREATE TABLE IF NOT EXISTS factura (
     id INT(10) NOT NULL AUTO_INCREMENT,

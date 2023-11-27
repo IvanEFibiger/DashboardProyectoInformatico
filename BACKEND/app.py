@@ -36,7 +36,7 @@ def login():
 
     # Control: Verificar las credenciales en la base de datos
     cur = mysql.connection.cursor()
-    cur.execute('SELECT * FROM users WHERE email = %s AND password = %s', (auth.username, auth.password))
+    cur.execute('SELECT * FROM usuarios WHERE email = %s AND password = %s', (auth.username, auth.password))
     row = cur.fetchone()
 
     if not row:
