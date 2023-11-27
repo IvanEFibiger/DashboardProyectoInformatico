@@ -1,15 +1,15 @@
-CREATE DATABASE IF NOT EXISTS  db_pryecto_informatico;
+CREATE DATABASE IF NOT EXISTS  db_proyecto_informatico;
 USE db_proyecto_informatico;
 
-CREATE TABLE IF NOT EXISTS usuario (
+CREATE TABLE IF NOT EXISTS usuarios (
     id INT(10) NOT NULL AUTO_INCREMENT,
     user VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    contrasena VARCHAR(255) NOT NULL,
     PRIMARY KEY (id)
 );
 
-INSERT INTO usuario VALUES
+INSERT INTO usuarios VALUES
 (1, 'Juan', 'juan@mail.com', 'pass'),
 (2, 'Ana', 'ana@mail.com', 'pass');
 
@@ -19,13 +19,14 @@ CREATE TABLE IF NOT EXISTS clientes (
     nombre VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     direccion VARCHAR(255) NOT NULL,
+    cuit INT(11) NOT NULL,
     PRIMARY KEY (id),
     id_usuario INT(10),
     FOREIGN KEY (id_usuario) REFERENCES usuario (id)
 );
 
 INSERT INTO clientes VALUES
-(1, 'Dai', 'dai@gmail.com', 'calle 1 120', 1),
+(1, 'Dai', 'dai@gmail.com', 'calle 1 120',23385638574, 1),
 (2, 'maria', 'maria@gmail.com', 'calle 2 240', 1),
 (3, 'marta', 'marta@gmail.com', 'calle 3 360', 2),
 (4, 'jose', 'jose@gmail.com', 'calle 4 480', 2),

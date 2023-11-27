@@ -4,6 +4,8 @@ import jwt
 import datetime
 from functools import wraps
 from flask_cors import CORS
+from Clients import *
+from Users import *
 
 # Crear una instancia de la aplicación Flask
 app = Flask(__name__)
@@ -13,7 +15,7 @@ CORS(app)  # Habilitar el manejo de solicitudes CORS
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'user_api_flask'
 app.config['MYSQL_PASSWORD'] ='19Ivan88'
-app.config['MYSQL_DB'] = 'db_pryecto_informatico'
+app.config['MYSQL_DB'] = 'db_proyecto_informatico'
 app.config['SECRET_KEY'] = 'app_123'
 
 
@@ -34,7 +36,7 @@ def login():
 
     # Control: Verificar las credenciales en la base de datos
     cur = mysql.connection.cursor()
-    cur.execute('SELECT * FROM usaurio WHERE user = %s AND password = %s', (auth.username, auth.password))
+    cur.execute('SELECT * FROM usuarios WHERE email = %s AND password = %s', (auth.username, auth.password))
     row = cur.fetchone()
 
     if not row:
@@ -82,6 +84,19 @@ def token_required(func):
 
 
 
+def user_resources(func):
+    @wraps(func)
+    def decorated(*args, **kwargs):
+        id_user_route = kwargs['id_user']
+        user_id = request.headers['user-id']
+
+        # Control: Verificar si el ID del usuario en la ruta coincide con el ID del usuario autenticado
+        if int(id_user_route) != int(user_id):
+            return jsonify({"message": "no tiene permisos para acceder a este recurso de usuario"}), 401
+        return func(*args, **kwargs)
+    return decorated
+
+
 
 
 
@@ -116,4 +131,4 @@ def token_required(func):
 
 # Ejecutar la aplicación en modo de depuración en el puerto 4500
 if __name__ == "__main__":
-    app.run(debug=True, port=4500)
+    app.run(debug=True, port=5500)
