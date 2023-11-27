@@ -29,6 +29,7 @@
   "keyToString": {
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "BACK",
     "last_opened_file_path": "H:/UPSO/UPSO/PROYECTO_INFORMATICO/PROYECTO INFORMATICO/BACKEND",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
