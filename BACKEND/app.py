@@ -6,7 +6,7 @@ from functools import wraps
 from flask_cors import CORS
 from Clientes import *
 from Productos import *
-from Servicios import *
+from BACKEND.Servicios import *
 
 # Crear una instancia de la aplicación Flask
 app = Flask(__name__)
