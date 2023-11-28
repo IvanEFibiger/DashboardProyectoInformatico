@@ -5,6 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2f7399b8-beae-4cda-ad1a-a31d64d95881" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/BACKEND/Productos.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Servicios.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BACKEND/Clients.py" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/Clientes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BACKEND/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BACKEND/db.sql" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/db.sql" afterDir="false" />
     </list>
@@ -28,16 +32,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;BACK&quot;,
-    &quot;last_opened_file_path&quot;: &quot;H:/UPSO/UPSO/PROYECTO_INFORMATICO/PROYECTO INFORMATICO/BACKEND&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "BACK",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "H:/UPSO/UPSO/PROYECTO_INFORMATICO/PROYECTO INFORMATICO",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="PROYECTO INFORMATICO" />
