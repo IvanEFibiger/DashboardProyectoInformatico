@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS factura (
 
 
 
-CREATE TABLE IF NOT EXISTS Servicio (
+CREATE TABLE IF NOT EXISTS servicios (
     id INT(10) NOT NULL AUTO_INCREMENT,
     nombre VARCHAR(255) NOT NULL,
     descripcion TEXT,
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS Servicio (
 );
 
 
-CREATE TABLE IF NOT EXISTS Producto (
+CREATE TABLE IF NOT EXISTS productos (
     id INT(10) NOT NULL AUTO_INCREMENT,
     nombre VARCHAR(255) NOT NULL,
     descripcion TEXT,
@@ -92,8 +92,8 @@ CREATE TABLE IF NOT EXISTS Detalle_factura (
     subtotal DECIMAL(10, 2),
     PRIMARY KEY (id),
     FOREIGN KEY (id_factura) REFERENCES factura (id),
-    FOREIGN KEY (id_producto) REFERENCES Producto (id),
-    FOREIGN KEY (id_servicio) REFERENCES Servicio (id)
+    FOREIGN KEY (id_producto) REFERENCES productos (id),
+    FOREIGN KEY (id_servicio) REFERENCES servicios (id)
 );
 
 

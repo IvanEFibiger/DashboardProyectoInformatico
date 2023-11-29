@@ -6,7 +6,9 @@ from functools import wraps
 from flask_cors import CORS
 from Clientes import *
 from Productos import *
-from BACKEND.Servicios import *
+from Servicios import *
+from detalle_factura import *
+from factura import *
 
 # Crear una instancia de la aplicación Flask
 app = Flask(__name__)
@@ -383,17 +385,170 @@ def get_servicio_by_id(id):
     return jsonify({"message": "Servicio no encontrado"})
 
 
+"""Detalle Factura"""
+
+@app.route('/detalle_factura', methods=['GET'])
+def get_all_detalle_factura():
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM Detalle_factura')
+    data = cur.fetchall()
+    detalleList = []
+
+    for row in data:
+        objDetalle = DetalleFactura(row)
+        detalleList.append(objDetalle.to_json())
+
+    return jsonify(detalleList)
+
+@app.route('/detalle_factura', methods=['POST'])
+def create_detalle_factura():
+    try:
+        id_factura = request.get_json()["id_factura"]
+        id_producto = request.get_json()["id_producto"]
+        id_servicio = request.get_json()["id_servicio"]
+        cantidad = request.get_json()["cantidad"]
+        precio_unitario = request.get_json()["precio_unitario"]
+        subtotal = request.get_json()["subtotal"]
+
+        cur = mysql.connection.cursor()
+
+        cur.execute('INSERT INTO Detalle_factura (id_factura, id_producto, id_servicio, cantidad, precio_unitario, subtotal) VALUES (%s, %s, %s, %s, %s, %s)',
+                    (id_factura, id_producto, id_servicio, cantidad, precio_unitario, subtotal))
+        mysql.connection.commit()
+
+        cur.execute('SELECT LAST_INSERT_ID()')
+        row = cur.fetchone()
+        detalle_id = row[0]
+
+        return jsonify({"id_factura": id_factura, "id_producto": id_producto, "id_servicio": id_servicio, "cantidad": cantidad, "precio_unitario": precio_unitario, "subtotal": subtotal, "detalle_id": detalle_id})
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
+
+@app.route('/detalle_factura/<int:detalle_id>', methods=['PUT'])
+def update_detalle_factura(detalle_id):
+    id_factura = request.get_json()["id_factura"]
+    id_producto = request.get_json()["id_producto"]
+    id_servicio = request.get_json()["id_servicio"]
+    cantidad = request.get_json()["cantidad"]
+    precio_unitario = request.get_json()["precio_unitario"]
+    subtotal = request.get_json()["subtotal"]
+
+    cur = mysql.connection.cursor()
+    cur.execute("UPDATE Detalle_factura SET id_factura = %s, id_producto = %s, id_servicio = %s, cantidad = %s, precio_unitario = %s, subtotal = %s WHERE id = %s",
+                (id_factura, id_producto, id_servicio, cantidad, precio_unitario, subtotal, detalle_id))
+    mysql.connection.commit()
+
+    return jsonify({"detalle_id": detalle_id, "id_factura": id_factura, "id_producto": id_producto, "id_servicio": id_servicio, "cantidad": cantidad, "precio_unitario": precio_unitario, "subtotal": subtotal})
+
+@app.route('/detalle_factura/<int:detalle_id>', methods=['DELETE'])
+def remove_detalle_factura(detalle_id):
+    cur = mysql.connection.cursor()
+    cur.execute('DELETE FROM Detalle_factura WHERE id = {0}'.format(detalle_id))
+    mysql.connection.commit()
+
+    return jsonify({"message": "eliminado", "detalle_id": detalle_id})
+
+@app.route('/detalle_factura/<int:detalle_id>', methods=['GET'])
+def get_detalle_factura_by_id(detalle_id):
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM Detalle_factura WHERE id = %s', (detalle_id,))
+    data = cur.fetchall()
+
+    if cur.rowcount > 0:
+        objDetalle = DetalleFactura(data[0])
+        return jsonify(objDetalle.to_json())
+
+    return jsonify({"message": "Detalle de factura no encontrado"})
 
 
 
+"""factura"""
+
+@app.route('/facturas', methods=['GET'])
+def get_all_facturas():
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM factura')
+    data = cur.fetchall()
+    facturaList = []
+
+    for row in data:
+        objFactura = Factura(row)
+        facturaList.append(objFactura.to_json())
+
+    return jsonify(facturaList)
+
+@app.route('/facturas', methods=['POST'])
+
+def create_factura():
+    try:
+        fecha_emision = request.get_json()["fecha_emision"]
+        id_clientes = request.get_json()["id_clientes"]
+        id_usuario = request.get_json()["id_usuario"]
+        productos = request.get_json()["productos"]
+        servicios = request.get_json()["servicios"]
+
+        cur = mysql.connection.cursor()
+
+        # Guarda la factura
+        cur.execute('INSERT INTO Factura (fecha_emision, id_clientes, id_usuario) VALUES (%s, %s, %s)',
+                    (fecha_emision, id_clientes, id_usuario))
+        mysql.connection.commit()
+
+        # Obtiene el ID de la factura recién creada
+        cur.execute('SELECT LAST_INSERT_ID()')
+        row = cur.fetchone()
+        factura_id = row[0]
+
+        # Guarda los detalles de la factura
+        for producto_id in productos:
+            cur.execute('INSERT INTO Detalle_factura (id_factura, id_producto, cantidad, precio_unitario, subtotal) VALUES (%s, %s, %s, %s, %s)',
+                        (factura_id, producto_id, 1, 0, 0))  # Ajusta los valores según tu lógica
+            mysql.connection.commit()
+
+        for servicio_id in servicios:
+            cur.execute('INSERT INTO Detalle_factura (id_factura, id_servicio, cantidad, precio_unitario, subtotal) VALUES (%s, %s, %s, %s, %s)',
+                        (factura_id, servicio_id, 1, 0, 0))  # Ajusta los valores según tu lógica
+            mysql.connection.commit()
+
+        return jsonify({"factura_id": factura_id})
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
 
 
+@app.route('/facturas/<int:factura_id>', methods=['PUT'])
+def update_factura(factura_id):
+    fecha_emision = request.get_json()["fecha_emision"]
+    id_clientes = request.get_json()["id_clientes"]
+    id_usuario = request.get_json()["id_usuario"]
 
+    cur = mysql.connection.cursor()
+    cur.execute("UPDATE factura SET fecha_emision = %s, id_clientes = %s, id_usuario = %s WHERE id = %s",
+                (fecha_emision, id_clientes, id_usuario, factura_id))
+    mysql.connection.commit()
 
+    return jsonify({"factura_id": factura_id, "fecha_emision": fecha_emision, "id_clientes": id_clientes, "id_usuario": id_usuario})
 
+@app.route('/facturas/<int:factura_id>', methods=['DELETE'])
+def remove_factura(factura_id):
+    cur = mysql.connection.cursor()
+    cur.execute('DELETE FROM factura WHERE id = {0}'.format(factura_id))
+    mysql.connection.commit()
 
+    return jsonify({"message": "eliminada", "factura_id": factura_id})
 
+@app.route('/facturas/<int:factura_id>', methods=['GET'])
+def get_factura_by_id(factura_id):
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM factura WHERE id = %s', (factura_id,))
+    data = cur.fetchall()
 
+    if cur.rowcount > 0:
+        objFactura = Factura(data[0])
+        return jsonify(objFactura.to_json())
+
+    return jsonify({"message": "Factura no encontrada"})
 
 
 
