@@ -17,3 +17,4 @@ class Producto:
             'cantidad': self._cantidad,
             'id_usuario': self._id_usuario
         }
+
