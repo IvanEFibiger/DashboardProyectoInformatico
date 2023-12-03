@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS factura (
     fecha_emision DATE NOT NULL,
     id_clientes INT(10),
     id_usuario INT(10),
+    total DECIMAL(10, 2) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (id_clientes) REFERENCES clientes (id),
     FOREIGN KEY (id_usuario) REFERENCES usuario (id)
@@ -71,18 +72,19 @@ INSERT INTO productos VALUES
 (5, 'lucia', 'lucia@gmail.com', 'calle 5 600',23385625572, 2),
 (6, 'matias', 'matias@gmail.com', 'calle 8 320', 20323441764, 2);
 
-CREATE TABLE IF NOT EXISTS Movimiento_stock (
+CREATE TABLE IF NOT EXISTS movimiento_stock (
     id INT(10) NOT NULL AUTO_INCREMENT,
     producto_id INT(10) NOT NULL,
     tipo VARCHAR(255) NOT NULL,
     cantidad INT(10) NOT NULL,
     fecha DATE NOT NULL,
+    stock_real INT(10) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (producto_id) REFERENCES Producto (id)
 );
 
 
-CREATE TABLE IF NOT EXISTS Detalle_factura (
+CREATE TABLE IF NOT EXISTS detalle_factura (
     id INT(10) NOT NULL AUTO_INCREMENT,
     id_factura INT(10),
     id_producto INT(10),

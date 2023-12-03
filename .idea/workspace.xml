@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2f7399b8-beae-4cda-ad1a-a31d64d95881" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/BACKEND/movimiento_stock.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BACKEND/Productos.py" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/Productos.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BACKEND/Users.py" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/Users.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BACKEND/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BACKEND/db.sql" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/db.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BACKEND/movimiento_stock.py" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/movimiento_stock.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +26,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="appmap.scannerView" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2YYBmvcG0unoUsP4VsoM1eaDffv" />
   <component name="ProjectViewState">

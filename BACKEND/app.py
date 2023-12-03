@@ -177,7 +177,7 @@ def update_cliente(id):
     email = request.get_json()["email"]
     direccion = request.get_json()["direccion"]
     cuit = request.get_json()["cuit"]
-    #id_usuario = request.get_json()["id_usuario"]
+
 
     cur = mysql.connection.cursor()
     cur.execute("UPDATE clientes SET nombre = %s, email = %s, direccion = %s, cuit = %s WHERE id = %s", (nombre, email, direccion, cuit, id))
@@ -248,19 +248,35 @@ def create_producto():
             return jsonify({"message": "producto ya registrado"})
 
         # Agregar el producto a la tabla productos
-        cur.execute('INSERT INTO productos (nombre, descripcion, precio, cantidad, id_usuario) VALUES (%s, %s, %s, %s, %s)', (nombre, descripcion, precio, cantidad, id_usuario))
+        cur.execute(
+            'INSERT INTO productos (nombre, descripcion, precio, cantidad, id_usuario) VALUES (%s, %s, %s, %s, %s)',
+            (nombre, descripcion, precio, cantidad, id_usuario))
         mysql.connection.commit()
 
         # Obtener el ID del registro creado
         cur.execute('SELECT LAST_INSERT_ID()')
         row = cur.fetchone()
-        producto_id = row[0]
 
-        # Agregar el movimiento a la tabla movimiento_stock
-        cur.execute('INSERT INTO movimiento_stock (producto_id, tipo, cantidad, fecha) VALUES (%s, %s, %s, %s)', (producto_id, 'entrada', cantidad, date.today()))
-        mysql.connection.commit()
+        if row and row[0] is not None:
+            producto_id = row[0]
 
-        return jsonify({"nombre": nombre, "descripcion": descripcion, "precio": precio, "cantidad": cantidad, "id_usuario": id_usuario, "id": producto_id})
+            # Agregar el movimiento a la tabla movimiento_stock
+            cur.execute(
+                'INSERT INTO movimiento_stock (producto_id, tipo, cantidad, fecha, stock_real) VALUES (%s, %s, %s, %s, %s)',
+                (producto_id, 'entrada', cantidad, date.today(), cantidad))
+            mysql.connection.commit()
+
+            return jsonify({
+                "nombre": nombre,
+                "descripcion": descripcion,
+                "precio": precio,
+                "cantidad": cantidad,
+                "id_usuario": id_usuario,
+                "id": producto_id
+            })
+
+        return jsonify({"message": "Error al obtener el ID del producto"}), 500
+
     except Exception as e:
         return jsonify({"message": str(e)}), 500
 
@@ -282,6 +298,8 @@ def update_producto(id):
 
 
 """modificar cantidad para control stock"""
+
+
 @app.route('/productos/<int:id>/stock', methods=['PUT'])
 def update_stock_producto(id):
     try:
@@ -289,25 +307,21 @@ def update_stock_producto(id):
 
         cur = mysql.connection.cursor()
 
-        # Obtener la cantidad actual del producto
-        cur.execute('SELECT cantidad FROM productos WHERE id = %s', (id,))
-        cantidad_actual = cur.fetchone()[0]
+        # Obtener el último valor de stock_real para ese producto
+        cur.execute('SELECT stock_real FROM movimiento_stock WHERE producto_id = %s ORDER BY id DESC LIMIT 1', (id,))
+        ultimo_stock_real = cur.fetchone()
 
-        # Calcular la nueva cantidad sumando la cantidad actual y la nueva cantidad
-        nueva_cantidad_total = cantidad_actual + nueva_cantidad
+        # Calcular la nueva cantidad en stock_real
+        nuevo_stock_real = nueva_cantidad if ultimo_stock_real is None else ultimo_stock_real[0] + nueva_cantidad
 
-        # Actualizar la cantidad en la tabla productos
-        cur.execute('UPDATE productos SET cantidad = %s WHERE id = %s', (nueva_cantidad_total, id))
-        mysql.connection.commit()
-
-        # Registrar en movimiento_stock como "entrada" la nueva cantidad
-        cur.execute('INSERT INTO movimiento_stock (producto_id, tipo, cantidad, fecha) VALUES (%s, %s, %s, %s)',
-                    (id, 'entrada', nueva_cantidad, datetime.now()))
+        # Actualizar stock_real en movimiento_stock
+        cur.execute('INSERT INTO movimiento_stock (producto_id, tipo, cantidad, fecha, stock_real) VALUES (%s, %s, %s, %s, %s)', (id, 'entrada', nueva_cantidad, datetime.now(), nuevo_stock_real))
         mysql.connection.commit()
 
         return jsonify({"message": "Cantidad actualizada"})
     except Exception as e:
         return jsonify({"message": str(e)}), 500
+
 
 
 """ELIMINAR Producto"""
@@ -533,40 +547,63 @@ def create_factura():
 
         cur = mysql.connection.cursor()
 
-        # Guarda la factura
+        # Guardar la factura
         cur.execute('INSERT INTO Factura (fecha_emision, id_clientes, id_usuario) VALUES (%s, %s, %s)',
                     (fecha_emision, id_clientes, id_usuario))
         mysql.connection.commit()
 
-        # Obtiene el ID de la factura recién creada
+        # Obtener el ID de la factura recién creada
         cur.execute('SELECT LAST_INSERT_ID()')
         row = cur.fetchone()
 
         if row and row[0] is not None:
             factura_id = row[0]
 
-            # Guarda los detalles de la factura
+            # Guardar los detalles de la factura
             for producto_servicio in productos_servicios:
                 cantidad = producto_servicio["cantidad"]
                 id_producto = producto_servicio.get("id_producto")
                 id_servicio = producto_servicio.get("id_servicio")
 
-                # Descuenta la cantidad de productos en movimiento_stock
-                if id_producto:
-                    cur.execute(
-                        'SELECT cantidad FROM movimiento_stock WHERE producto_id = %s ORDER BY fecha ASC LIMIT %s',
-                        (id_producto, cantidad))
-                    entradas = cur.fetchall()
+                # Verificar que la cantidad de cada producto sea mayor que cero
+                for producto_servicio in productos_servicios:
+                    cantidad = producto_servicio["cantidad"]
+                    if cantidad <= 0:
+                        return jsonify({"message": "La cantidad de cada producto debe ser mayor que cero"}), 400
 
-                    if not entradas or sum(entrada[0] for entrada in entradas) < cantidad:
-                        return jsonify({
-                                           "message": f"No hay suficiente stock disponible para el producto con ID {id_producto}"}), 500
+                # Obtener la fecha de la factura
+                fecha_factura = fecha_emision
 
-                    cur.execute('UPDATE movimiento_stock SET cantidad = cantidad - %s WHERE producto_id = %s AND tipo = "entrada" ORDER BY fecha DESC LIMIT %s', (cantidad, id_producto, cantidad))
-                    mysql.connection.commit()
-                    print(f"Stock de producto con ID {id_producto} actualizado.")
+                cur = mysql.connection.cursor()
 
-                # Obtén el precio del producto o servicio
+                # Obtener el último valor de stock_real para ese producto
+                cur.execute(
+                    'SELECT stock_real FROM movimiento_stock WHERE producto_id = %s ORDER BY fecha DESC LIMIT 1',
+                    (id_producto,))
+                ultimo_stock_real = cur.fetchone()
+
+                # Obtener la cantidad de la factura
+                cantidad_factura = producto_servicio["cantidad"]
+
+                # Obtener el último stock_real o establecerlo en 0 si no hay registros
+                stock_anterior = ultimo_stock_real[0] if ultimo_stock_real else 0
+
+                # Verificar si hay suficiente stock disponible
+                if stock_anterior < cantidad_factura:
+                    # Si no hay suficiente stock, devolver un mensaje de error
+                    return jsonify({
+                        "message": f"No hay suficiente stock disponible para el producto con ID {id_producto}"}), 500
+
+                # Calcular el nuevo stock_real
+                nuevo_stock_real = stock_anterior - cantidad_factura if isinstance(stock_anterior, int) else 0
+
+                # Restar la cantidad en la columna stock_real en movimiento_stock
+                cur.execute(
+                    'INSERT INTO movimiento_stock (producto_id, tipo, cantidad, fecha, stock_real) VALUES (%s, %s, %s, %s, %s)',
+                    (id_producto, 'salida', cantidad_factura, fecha_factura, nuevo_stock_real))
+                mysql.connection.commit()
+
+                # Obtener el precio del producto o servicio
                 if id_producto:
                     cur.execute('SELECT precio FROM productos WHERE id = %s', (id_producto,))
                 elif id_servicio:
@@ -578,21 +615,23 @@ def create_factura():
                     precio_unitario = precio_unitario_row[0]
                     subtotal = cantidad * precio_unitario
 
-                    # Guarda un detalle de la factura por cada producto o servicio
-                    cur.execute('INSERT INTO Detalle_factura (id_factura, id_producto, id_servicio, cantidad, precio_unitario, subtotal) VALUES (%s, %s, %s, %s, %s, %s)',
-                                (factura_id, id_producto, id_servicio, cantidad, precio_unitario, subtotal))
+                    # Guardar un detalle de la factura por cada producto o servicio
+                    cur.execute(
+                        'INSERT INTO Detalle_factura (id_factura, id_producto, id_servicio, cantidad, precio_unitario, subtotal) VALUES (%s, %s, %s, %s, %s, %s)',
+                        (factura_id, id_producto, id_servicio, cantidad, precio_unitario, subtotal))
                     mysql.connection.commit()
                 else:
-                    return jsonify({"message": f"No se encontró el precio para el {'producto' if id_producto else 'servicio'} con ID {id_producto or id_servicio}"}), 500
+                    return jsonify(
+                        {"message": f"No se encontró el precio para el {'producto' if id_producto else 'servicio'} con ID {id_producto or id_servicio}"}), 500
 
-            # Calcula y actualiza la columna total
+            # Calcular y actualizar la columna total
             cur.execute('SELECT SUM(subtotal) FROM Detalle_factura WHERE id_factura = %s', (factura_id,))
             total_row = cur.fetchone()
 
             if total_row and total_row[0] is not None:
                 total = total_row[0]
 
-                # Actualiza la columna total en la tabla Factura
+                # Actualizar la columna total en la tabla Factura
                 cur.execute('UPDATE Factura SET total = %s WHERE id = %s', (total, factura_id))
                 mysql.connection.commit()
 
@@ -605,6 +644,7 @@ def create_factura():
 
     except Exception as e:
         return jsonify({"message": str(e)}), 500
+
 
 
 
@@ -652,10 +692,6 @@ def get_factura_by_id(factura_id):
     return jsonify({"message": "Factura no encontrada"})
 
 
-
-
-
-
 @app.route('/consultar_factura/<int:id_factura>', methods=['GET'])
 def consultar_factura(id_factura):
     cur = mysql.connection.cursor()
@@ -698,7 +734,7 @@ def consultar_factura(id_factura):
             obj_servicio = Servicio(data_servicio)
             productos_servicios_list.append(obj_servicio.to_json())
 
-    # Organizar la salida en el orden solicitado
+    # Organizar la salida
     output = {
         "factura": factura_info,
         "detalles": detalle_list,
@@ -714,23 +750,53 @@ def consultar_factura(id_factura):
 def get_stock_movimientos():
     try:
         cur = mysql.connection.cursor()
-        cur.execute('SELECT producto_id, tipo, SUM(cantidad) AS stock_actual FROM movimiento_stock GROUP BY producto_id, tipo')
+        cur.execute('SELECT producto_id, tipo, cantidad, fecha, stock_real FROM movimiento_stock')
+
+        data = cur.fetchall()
+        stock_movimientos = {}
+
+        for row in data:
+            producto_id = row[0]
+            stock_info = {
+                "tipo": row[1],
+                "cantidad": row[2],
+                "fecha": row[3],
+                "stock_real": int(row[4])
+            }
+
+            # Actualizamos la información de stock para cada producto en cada iteración
+            stock_movimientos[producto_id] = stock_info
+
+        return jsonify(list(stock_movimientos.values()))
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
+
+
+@app.route('/stock_movimientos/<int:producto_id>', methods=['GET'])
+def get_stock_movimientos_by_producto(producto_id):
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT tipo, cantidad, fecha, stock_real FROM movimiento_stock WHERE producto_id = %s ORDER BY fecha', (producto_id,))
 
         data = cur.fetchall()
         stock_movimientos = []
 
         for row in data:
-            stock_info = {
-                "producto_id": row[0],
-                "tipo": row[1],
-                "stock_actual": int(row[2])
+            movimiento_info = {
+                "tipo": row[0],
+                "cantidad": row[1],
+                "fecha": row[2],
+                "stock_real": int(row[3])
             }
-            stock_movimientos.append(stock_info)
+            stock_movimientos.append(movimiento_info)
 
         return jsonify(stock_movimientos)
 
     except Exception as e:
         return jsonify({"message": str(e)}), 500
+
+
 
 
 # Ejecutar la aplicación en modo de depuración en el puerto 4500
