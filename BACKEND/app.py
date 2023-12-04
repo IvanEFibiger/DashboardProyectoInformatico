@@ -251,7 +251,6 @@ def create_cliente(id_user):
        return jsonify({"message": str(e)}), 500  # Devolver un mensaje de error y código 500 en caso de excepción
 
 
-
 """Actualizar el cliente"""
 @app.route('/usuarios/<int:id_user>/clientes/<int:id_client>', methods=['PUT'])
 @token_required
@@ -283,7 +282,6 @@ def remove_clientes(id_user, id_client):
 
 
 """obtener cliente por id"""
-
 @app.route('/usuarios/<int:id_user>/clientes/<int:id_client>', methods=['GET'])
 @token_required
 @user_resources
@@ -298,7 +296,6 @@ def get_cliente_by_id(id_user, id_client):
        return jsonify(objcliente.to_json())
 
    return jsonify({"message": "ID no encontrado o cliente inactivo"})
-
 
 
 
@@ -321,7 +318,6 @@ def get_all_productos(id_user):
 
 
 """Crear nuevo producto"""
-
 @app.route('/usuarios/<int:id_user>/productos', methods=['POST'])
 @token_required
 @user_resources
@@ -386,7 +382,6 @@ def create_producto(id_user):
         return jsonify({"message": str(e)}), 500
 
 
-
 """Modificar producto"""
 @app.route('/usuarios/<int:id_user>/productos/<int:id_producto>', methods=['PUT'])
 @token_required
@@ -406,8 +401,6 @@ def update_producto(id_user, id_producto):  # Agregar id_user como parámetro
 
 
 """modificar cantidad para control stock"""
-
-
 @app.route('/usuarios/<int:id_user>/productos/<int:id_producto>/stock', methods=['PUT'])
 @token_required
 @user_resources
@@ -441,7 +434,6 @@ def update_stock_producto(id_user, id_producto):
         return jsonify({"message": str(e)}), 500
 
 
-
 """ELIMINAR Producto"""
 @app.route('/usuarios/<int:id_user>/productos/<int:id_producto>', methods=['DELETE'])
 @token_required
@@ -461,9 +453,7 @@ def remove_producto(id_user, id_producto):
         return jsonify({"message": str(e)}), 500
 
 
-
 """Consultar producto por id"""
-
 @app.route('/usuarios/<int:id_user>/productos/<int:id_producto>', methods=['GET'])
 @token_required
 @user_resources
@@ -502,11 +492,7 @@ def get_all_servicios(id_user):
 
     return jsonify(servList)
 
-
-
-
 """Crear nuevo servicio"""
-
 @app.route('/usuarios/<int:id_user>/servicios', methods=['POST'])
 @token_required
 @user_resources
@@ -577,7 +563,6 @@ def update_servicio(id_user, id_servicio):  # Agregar id_user e id_servicio como
         return jsonify({"message": str(e)}), 500  # Devolver un mensaje de error y código 500 en caso de excepción
 
 
-
 """Borrar lógicamente el servicio"""
 @app.route('/usuarios/<int:id_user>/servicios/<int:id_servicio>', methods=['DELETE'])
 @token_required
@@ -594,7 +579,6 @@ def remove_servicios(id_user, id_servicio):
 
 
 """Consultar servicio por id"""
-
 @app.route('/usuarios/<int:id_user>/servicios/<int:id_servicio>', methods=['GET'])
 @token_required
 @user_resources
@@ -612,101 +596,9 @@ def get_servicio_by_id(id_user, id_servicio):  # Agregar id_user e id_servicio c
 
 
 
-"""Detalle Factura"""
-"""
-@app.route('/usuarios/<int:id_user>/factura/<int:id_factura>/detalle_factura', methods=['GET'])
-@token_required
-@user_resources
-@factura_resource
-def get_all_detalle_factura():
-   cur = mysql.connection.cursor()
-   cur.execute('SELECT * FROM Detalle_factura')
-   data = cur.fetchall()
-   detalleList = []
-
-   for row in data:
-       objDetalle = DetalleFactura(row)
-       detalleList.append(objDetalle.to_json())
-
-   return jsonify(detalleList)
-
-@app.route('/usuarios/<int:id_user>/factura/<int:id_factura>/detalle_factura', methods=['POST'])
-@token_required
-@user_resources
-@factura_resource
-def create_detalle_factura():
-   try:
-       id_factura = request.get_json()["id_factura"]
-       id_producto = request.get_json()["id_producto"]
-       id_servicio = request.get_json()["id_servicio"]
-       cantidad = request.get_json()["cantidad"]
-       precio_unitario = request.get_json()["precio_unitario"]
-       subtotal = request.get_json()["subtotal"]
-
-       cur = mysql.connection.cursor()
-
-       cur.execute('INSERT INTO Detalle_factura (id_factura, id_producto, id_servicio, cantidad, precio_unitario, subtotal) VALUES (%s, %s, %s, %s, %s, %s)',
-                   (id_factura, id_producto, id_servicio, cantidad, precio_unitario, subtotal))
-       mysql.connection.commit()
-
-       cur.execute('SELECT LAST_INSERT_ID()')
-       row = cur.fetchone()
-       detalle_id = row[0]
-
-       return jsonify({"id_factura": id_factura, "id_producto": id_producto, "id_servicio": id_servicio, "cantidad": cantidad, "precio_unitario": precio_unitario, "subtotal": subtotal, "detalle_id": detalle_id})
-
-   except Exception as e:
-       return jsonify({"message": str(e)}), 500
-
-@app.route('/usuarios/<int:id_user>/factura/<int:id_factura>/detalle_factura/<int:id_detalle_factura>', methods=['PUT'])
-@token_required
-@user_resources
-@factura_resource
-def update_detalle_factura(detalle_id):
-   id_factura = request.get_json()["id_factura"]
-   id_producto = request.get_json()["id_producto"]
-   id_servicio = request.get_json()["id_servicio"]
-   cantidad = request.get_json()["cantidad"]
-   precio_unitario = request.get_json()["precio_unitario"]
-   subtotal = request.get_json()["subtotal"]
-
-   cur = mysql.connection.cursor()
-   cur.execute("UPDATE Detalle_factura SET id_factura = %s, id_producto = %s, id_servicio = %s, cantidad = %s, precio_unitario = %s, subtotal = %s WHERE id = %s",
-               (id_factura, id_producto, id_servicio, cantidad, precio_unitario, subtotal, detalle_id))
-   mysql.connection.commit()
-
-   return jsonify({"detalle_id": detalle_id, "id_factura": id_factura, "id_producto": id_producto, "id_servicio": id_servicio, "cantidad": cantidad, "precio_unitario": precio_unitario, "subtotal": subtotal})
-
-@app.route('/usuarios/<int:id_user>/factura/<int:id_factura>/detalle_factura/<int:id_detalle_factura>', methods=['DELETE'])
-@token_required
-@user_resources
-@factura_resource
-def remove_detalle_factura(detalle_id):
-   cur = mysql.connection.cursor()
-   cur.execute('DELETE FROM Detalle_factura WHERE id = {0}'.format(detalle_id))
-   mysql.connection.commit()
-
-   return jsonify({"message": "eliminado", "detalle_id": detalle_id})
-
-@app.route('/usuarios/<int:id_user>/factura/<int:id_factura>/detalle_factura/<int:id_detalle_factura>', methods=['GET'])
-@token_required
-@user_resources
-@factura_resource
-def get_detalle_factura_by_id(detalle_id):
-   cur = mysql.connection.cursor()
-   cur.execute('SELECT * FROM Detalle_factura WHERE id = %s', (detalle_id,))
-   data = cur.fetchall()
-
-   if cur.rowcount > 0:
-       objDetalle = DetalleFactura(data[0])
-       return jsonify(objDetalle.to_json())
-
-   return jsonify({"message": "Detalle de factura no encontrado"})"""
-
-
-
 """factura"""
 
+"Obtener todas las facturas"
 @app.route('/usuarios/<int:id_user>/factura', methods=['GET'])
 @token_required
 @user_resources
@@ -723,7 +615,7 @@ def get_all_facturas(id_user):
    return jsonify(facturaList)
 
 
-
+"""Crear factura"""
 @app.route('/usuarios/<int:id_user>/factura', methods=['POST'])
 @token_required
 @user_resources
@@ -844,7 +736,7 @@ def create_factura(id_user):
        return jsonify({"message": str(e)}), 500
 
 
-
+"""Actualizar factura por id"""
 @app.route('/usuarios/<int:id_user>/factura/<int:id_factura>', methods=['PUT'])
 @token_required
 @user_resources
@@ -861,6 +753,7 @@ def update_factura(id_user, id_factura):  # Agregar 'id_user' como parámetro
     return jsonify({"factura_id": id_factura, "fecha_emision": fecha_emision, "id_clientes": id_clientes})
 
 
+"""Eliminar factura por id"""
 @app.route('/usuarios/<int:id_user>/factura/<int:id_factura>', methods=['DELETE'])
 @token_required
 @user_resources
@@ -883,7 +776,7 @@ def remove_factura(id_user, id_factura):  # Asegúrate de utilizar 'id_user' y '
         return jsonify({"message": str(e)}), 500
 
 
-
+"""Consultar factura completa por id"""
 @app.route('/usuarios/<int:id_user>/factura/<int:id_factura>', methods=['GET'])
 @token_required
 @user_resources
@@ -941,7 +834,7 @@ def consultar_factura(id_user, id_factura):  # Agregar id_user e id_factura como
 
 
 
-
+"""Obtener los movimientos de stock"""
 @app.route('/usuarios/<int:id_user>/stock_movimientos', methods=['GET'])
 @token_required
 @user_resources
@@ -972,6 +865,7 @@ def get_stock_movimientos(id_user):
        return jsonify({"message": str(e)}), 500
 
 
+"""Obtener el movimiento de stock por producto"""
 @app.route('/usuarios/<int:id_user>/stock_movimientos/<int:id_producto>', methods=['GET'])
 @token_required
 @user_resources
