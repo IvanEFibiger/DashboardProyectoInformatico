@@ -22,7 +22,8 @@ CREATE TABLE IF NOT EXISTS clientes (
     cuit INT(11) NOT NULL,
     PRIMARY KEY (id),
     id_usuario INT(10),
-    FOREIGN KEY (id_usuario) REFERENCES usuario (id)
+    FOREIGN KEY (id_usuario) REFERENCES usuario (id),
+    activo BOOLEAN DEFAULT 1
 );
 
 INSERT INTO clientes VALUES
@@ -52,7 +53,8 @@ CREATE TABLE IF NOT EXISTS servicios (
     nombre VARCHAR(255) NOT NULL,
     descripcion TEXT,
     precio DECIMAL(10, 2) NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    activo BOOLEAN DEFAULT 1
 );
 
 
@@ -61,7 +63,8 @@ CREATE TABLE IF NOT EXISTS productos (
     nombre VARCHAR(255) NOT NULL,
     descripcion TEXT,
     precio DECIMAL(10, 2) NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    activo BOOLEAN DEFAULT 1
 );
 
 INSERT INTO productos VALUES
