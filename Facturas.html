@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="dashboard.css">
+  <title>ID DASHBOARD</title>
+</head>
+<body>
+
+<!-- Header -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="main-navbar">
+  <div class="container-fluid">
+      <div class="row justify-content-between">
+          <div class="col-6 col-md-6">
+              <a class="navbar-brand" href="#">
+                  <img src="img/logo.png" alt="Logo" class="w-75"> 
+              </a>
+          </div>
+          <div class="col-6 col-md-6 text-md-right">
+              <button class="navbar-toggler ml-auto" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#navbarNav">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+
+              <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav ml-auto justify-content-end"> 
+                      <li class="nav-item">
+                          <a class="nav-link" href="#mobileMenu">Dashboard</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">Inicio</a>
+                    </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="#services">Soporte</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="#contact">Salir</a>
+                      </li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </div>
+</nav>
+
+ 
+
+
+
+<!-- Offcanvas sidebar -->
+<div class="offcanvas offcanvas-start" id="mobileMenu" tabindex="-1" aria-labelledby="mobileMenuLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="mobileMenuLabel">Bienvenido <span id="usernamePlaceholder">nombre_de_usuario</span></h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <!-- Contenido del menú para pantallas pequeñas -->
+    <ul class="list-unstyled">
+        <li><a href="Facturas.html" data-target="listaFact"><i class="bi bi-box-seam"></i> Facturas</a></li>
+        <li><a href="Facturas.html" data-target="altaFactForm"><i class="bi bi-plus-square"></i> Nueva Factura</a></li>
+        <li><a href="Facturas.html" data-target="modificarFactForm"><i class="bi bi-pencil"></i> Modificar Facturas</a></li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- Main Content -->
+<main>
+  <!-- Lista de Facturas -->
+  <div class="container prodListContainer" id="prodListContainer">
+    <h2 class="mb-3">LISTA DE FACTURAS</h2>
+  
+    <!-- Tabla para mostrar la lista de facturas -->
+    <table id="producTable" class="table table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Fecha de Emisión</th>
+          <th>Cliente</th>
+          <th>Valor</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Ejemplo con tres facturas -->
+        <tr>
+          <td>1</td>
+          <td>10/05/21</td>
+          <td>Cliente 1</td>
+          <td>$50000</td>
+          <td>
+            <button class="btn btn-primary btn-sm verFacturaBtn" data-id="1">Ver</button>
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>23/05/21</td>
+          <td>Cliente 2</td>
+          <td>$20000</td>
+          <td>
+            <button class="btn btn-primary btn-sm verFacturaBtn" data-id="2">Ver</button>
+          </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>31/05/21</td>
+          <td>Cliente 3</td>
+          <td>$30000</td>
+          <td>
+            <button class="btn btn-primary btn-sm verFacturaBtn" data-id="3">Ver</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal para visualizar factura -->
+  <div class="modal fade" id="facturaModal" tabindex="-1" aria-labelledby="facturaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="facturaModalLabel">FACTURA</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <!-- Contenido de la factura -->
+                <div class="row mb-3">
+                    <!-- Información del usuario (izquierda) -->
+                    <div class="col-md-6">
+                        <!-- Agrega el logo y el nombre del usuario aquí -->
+                        <h6>Nombre del Usuario</h6>
+                    </div>
+
+                    <!-- Título y número de factura (derecha) -->
+                    <div class="col-md-6 text-right">
+                        <h6>FACTURA</h6>
+                        <p class="mb-0">Número de Factura: <span class="font-weight-bold">00000 00000000</span></p>
+                        <p class="mb-0">Fecha de Emisión: <span class="font-weight-bold">${factura.fechaEmision}</span></p>
+                    </div>
+                </div>
+
+                <!-- CUIT y nombre del cliente -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <p class="mb-0">CUIT del Cliente: <span class="font-weight-bold">12345678901</span></p>
+                        <p class="mb-0">Nombre del Cliente: <span class="font-weight-bold">${factura.cliente}</span></p>
+                    </div>
+                </div>
+
+                <!-- Detalles del producto o servicio -->
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Producto o Servicio</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio Unitario</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Detalles de los productos o servicios -->
+                                <tr>
+                                    <td>${factura.idProducto}</td>
+                                    <td>Nombre del Producto o Servicio</td>
+                                    <td>${factura.cantidad}</td>
+                                    <td>${factura.precioUnitario}</td>
+                                    <td>${factura.subtotal}</td>
+                                </tr>
+                                <!-- Agregar más filas según sea necesario -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Sección del recuadro inferior -->
+                <div class="border-top mt-3 pt-3">
+                    <p class="mb-1">Subtotal: $${factura.subtotal}</p>
+                    <p class="mb-0">Importe Total: $${factura.total}</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Formulario de NUEVA FACTURA -->
+
+<div class="container">
+  <h2 class="mb-3">Nueva Factura</h2>
+  <form id="nuevaFacturaForm">
+    <!-- Cliente -->
+    <div class="mb-3">
+      <label for="cliente" class="form-label">Cliente:</label>
+      <input type="text" class="form-control" id="cliente" name="cliente" required>
+    </div>
+
+    <!-- Fecha de Emisión -->
+    <div class="mb-3">
+      <label for="fechaEmision" class="form-label">Fecha de Emisión:</label>
+      <input type="date" class="form-control" id="fechaEmision" name="fechaEmision" required>
+    </div>
+
+    <!-- Detalles de Productos/Servicios -->
+    <div id="detallesProductos">
+      <div class="mb-3">
+        <label for="producto1" class="form-label">Producto/Servicio:</label>
+        <input type="text" class="form-control producto" id="producto1" name="producto[]">
+      </div>
+      <div class="mb-3">
+        <label for="cantidad1" class="form-label">Cantidad:</label>
+        <input type="number" class="form-control cantidad" id="cantidad1" name="cantidad[]">
+      </div>
+      <div class="mb-3">
+        <label for="precio1" class="form-label">Precio:</label>
+        <input type="number" class="form-control precio" id="precio1" name="precio[]" readonly>
+      </div>
+    </div>
+
+    <!-- Botones para agregar más productos y generar factura -->
+    <button type="button" class="btn btn-success mb-3" id="agregarProducto">Agregar Producto</button>
+    <button type="submit" class="btn btn-primary mb-3" id="generarFactura">Generar Factura</button>
+  </form>
+</div>
+
+<!-- Modal de Confirmación -->
+<div class="modal" tabindex="-1" role="dialog" id="confirmacionModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmar Generación de Factura</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Contenido de la factura generada se insertará aquí -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="confirmarGenerar">Confirmar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Formulario de Modificación de Factura -->
+
+
+
+</main>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+<script src="dashboard.js"></script>
+<script src="Facturas.js"></script>
+</body>
+</html>
