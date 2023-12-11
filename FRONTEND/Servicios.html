@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="dashboard.css">
+  <title>ID DASHBOARD</title>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="main-navbar">
+    <div class="container-fluid">
+      <div class="row justify-content-between">
+        <div class="col-6 col-md-6">
+          <a class="navbar-brand" href="#">
+            <img src="img/logo.png" alt="Logo" class="w-75">
+          </a>
+        </div>
+        <div class="col-6 col-md-6 text-md-right">
+          <button class="navbar-toggler ml-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto justify-content-end">
+              <li class="nav-item">
+                <a class="nav-link" href="#mobileMenu">Dashboard</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="dashboard.html">Inicio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#services">Soporte</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#contact">Salir</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+
+
+
+
+  <!-- Offcanvas sidebar -->
+  <div class="offcanvas offcanvas-start" id="mobileMenu" tabindex="-1" aria-labelledby="mobileMenuLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="mobileMenuLabel">Bienvenido <span
+          id="usernamePlaceholder">nombre_de_usuario</span></h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <!-- Contenido del menú para pantallas pequeñas -->
+      <ul class="list-unstyled">
+        <li><a href="Servicios.html" data-target="listaServicios"><i class="bi bi-box-tools"></i> Servicios</a></li>
+        <li><a href="Servicios.html" data-target="altaServiForm"><i class="bi bi-plus-square"></i> Agregar Servicios</a>
+        </li>
+        <li><a href="Servicios.html" data-target="modificarServiForm"><i class="bi bi-pencil"></i> Modificar
+            Servicios</a></li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- Main Content -->
+  <main>
+
+    <!-- Formulario de Clientes -->
+    <div class="container sevicListContainer" id="sevicListContainer">
+      <h2 class="mb-3">LISTA DE SERVICIOS</h2>
+
+      <!-- Aquí se utiliza una tabla para mostrar la lista de clientes -->
+      <table id="servicTable" class="table table-striped">
+        <thead class="table-dark">
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Ejemplo de 5 productos -->
+          <tr>
+            <td>1</td>
+            <td>Servicio 1</td>
+            <td>Esta es la descripción del Servicio 1</td>
+            <td>$5000</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Servicio 2</td>
+            <td>Esta es la descripción del Servicio 2</td>
+            <td>$2000</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Servicio 3</td>
+            <td>Esta es la descripción del Servicio 3</td>
+            <td>$3000</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    </div>
+
+    <!-- Formulario de Alta de producto -->
+    <div class="container altaServicContainer">
+
+      <form id="altaServicForm" style="display: none;">
+        <h2 class="mb-3">CARGAR SERVICIO</h2>
+
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre:</label>
+          <input type="text" id="nombre" name="nombre" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="descripcion" class="form-label">Descripción:</label>
+          <input type="text" id="descripcion" name="descripcion" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="precio" class="form-label">Precio:</label>
+          <input type="text" id="precio" name="precio" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </form>
+      <!-- Mensaje de confirmación -->
+      <div id="mensajeServicioGuardado" class="alert alert-success mt-3" style="display: none;">
+        Servicio agregado correctamente.
+      </div>
+    </div>
+
+    <!-- Formulario de Modificación de Cliente -->
+    <div class="container modificarServicContainer">
+      <!-- Formulario de Alta de Cliente -->
+      <form id="modificarServiceForm" style="display: none;">
+        <h2 class="mb-3">MODIFICAR SERVICIO</h2>
+
+        <div class="mb-3">
+          <label for="nombreServicMod" class="form-label">Nombre:</label>
+          <input type="text" id="nombreServicMod" name="nombreServicMod" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="descripcion" class="form-label">Descripción:</label>
+          <input type="text" id="descripcion" name="descripcion" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="precioMod" class="form-label">Precio:</label>
+          <input type="text" id="precioMod" name="precioMod" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+      </form>
+      <!-- Mensaje de confirmación -->
+      <div id="mensajeServicModificado" class="alert alert-success mt-3" style="display: none;">
+        Servicio modificado correctamente.
+      </div>
+    </div>
+
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="dashboard.js"></script>
+  <script src="Servicios.js"></script>
+</body>
+
+</html>

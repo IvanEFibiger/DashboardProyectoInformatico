@@ -1,0 +1,301 @@
+DOCUMENTACIÓN BACKEND
+
+
+RUTAS:
+
+@app.route("/login", methods=['POST'])
+Autenticación de usuarios.
+
+Rutas de clientes:
+
+
+@app.route('/usuarios/<int:id_user>/clientes', methods=['GET'])
+Ruta para obtener todos los clientes de un usuario.
+Salida:
+[{
+    "cliente_id": 1,
+    "cuit": "30504978552",
+    "direccion": "calle 7 100",
+    "email": "coope@mail.com",
+    "id_usuario": 1,
+    "nombre": "Cooperativa"
+  }]
+
+@app.route('/usuarios/<int:id_user>/clientes', methods=['POST'])
+Ruta para agregar un cliente a un usuario.
+Para ingresar un nuevo cliente:
+{
+  "nombre": "Cooperativa",
+  "email": "coope@mail.com",
+  "direccion": "calle 7 100",
+  "cuit": 30504978552,
+  "id_usuario": 1
+}
+
+@app.route('/usuarios/<int:id_user>/clientes/<int:id_client>', methods=['PUT'])
+Ruta para actualizar un cliente:
+{
+  "nombre": "Cooperativa",
+  "email": "coope@mail.com",
+  "direccion": "calle 7 100",
+  "cuit": 30504978552
+}
+
+@app.route('/usuarios/<int:id_user>/clientes/<int:id_client>', methods=['DELETE'])
+Ruta para eliminar un cliente. (Borrado Logico).
+Devuelve el id del cliente y un mensaje.
+{
+  "id": 1,
+  "message": "borrado lógico realizado"
+}
+
+@app.route('/usuarios/<int:id_user>/clientes/<int:id_client>', methods=['GET'])
+Ruta para obtener el cliente por su id.
+
+
+Rutas de Productos:
+
+
+@app.route('/usuarios/<int:id_user>/productos', methods=['POST'])
+Ruta para crear nuevo producto.
+Entrada:
+{
+  "nombre": "PC AIO ASUS v1",
+  "descripcion": "i7 13900, 32gb Ram DDR5, SSD M.2 512gb",
+  "precio": 250000,
+  "cantidad":20,
+  "id_usuario": 1
+}
+
+
+@app.route('/usuarios/<int:id_user>/productos/<int:id_producto>', methods=['PUT'])
+Ruta para modificar producto por su id.
+entrada:
+{
+  "nombre": "PC AIO SAMSUNG",
+  "descripcion": "i7 12900, 16 RAM DDR4, SSD M.2 980GB",
+  "precio": 600000,
+  "cantidad": 10
+}
+
+
+@app.route('/usuarios/<int:id_user>/productos/<int:id_producto>/stock', methods=['PUT'])
+Ruta para unicamente modificar la cantidad para el control stock.
+entrada:
+{
+  "cantidad": 20
+}
+
+
+@app.route('/usuarios/<int:id_user>/productos/<int:id_producto>', methods=['DELETE'])
+Ruta para eliminar un producto.
+
+
+@app.route('/usuarios/<int:id_user>/productos/<int:id_producto>', methods=['GET'])
+Ruta para obtener un producto por su id.
+
+Rutas de Servicios:
+
+
+@app.route('/usuarios/<int:id_user>/servicios', methods=['GET'])
+Ruta para obtener todos los servicios.
+Salida:
+[{
+    "descripcion": "borrado y reinstalación de Sistema operativo y programas basicos",
+    "id_usuario": 1,
+    "nombre": "Formateo",
+    "precio": "8000.00",
+    "servicio_id": 7
+  }]
+
+
+@app.route('/usuarios/<int:id_user>/servicios', methods=['POST'])
+Ruta para crear un nuevo servicio
+Entrada:
+{
+  "nombre": "Formateo v4",
+  "descripcion": "borrado y reinstalación de Sistema operativo y programas basicos",
+  "precio": 5500,
+  "id_usuario": 1
+}
+
+
+@app.route('/usuarios/<int:id_user>/servicios/<int:id_servicio>', methods=['PUT'])
+ruta para modificar un servicio:
+{
+  "nombre": "Formateo v34",
+  "descripcion": "borrado y reinstalación de Sistema operativo y programas basicos",
+  "precio": 9000
+}
+
+
+@app.route('/usuarios/<int:id_user>/servicios/<int:id_servicio>', methods=['DELETE'])
+Ruta para borrado lógico de servicio.
+
+
+@app.route('/usuarios/<int:id_user>/servicios/<int:id_servicio>', methods=['GET'])
+Obtener servicio por id.
+
+
+Rutas para Facturas:
+
+
+@app.route('/usuarios/<int:id_user>/factura', methods=['GET'])
+Ruta para obtener todas las facturas de un usuario.
+Salida:
+[{
+    "factura_id": 70,
+    "fecha_emision": "Tue, 21 Nov 2023 00:00:00 GMT",
+    "id_clientes": 4,
+    "id_usuario": 1
+  }]
+
+
+@app.route('/usuarios/<int:id_user>/factura', methods=['POST'])
+Ruta para crear una nueva factura.
+entrada para un solo producto o servicio:
+{
+    "fecha_emision": "2023-11-21",
+    "id_clientes": 4,
+    "id_usuario": 1,
+    "productos_servicios": [
+        {
+            "cantidad": 5,
+            "id_producto": 21,
+            "id_servicio": null
+        }
+            ]
+}
+
+Para dos o mas:
+
+{
+    "fecha_emision": "2023-11-21",
+    "id_clientes": 4,
+    "id_usuario": 1,
+    "productos_servicios": [
+        {
+            "cantidad": 5,
+            "id_producto": 21,
+            "id_servicio": null
+        },
+        {
+            "cantidad": 5,
+            "id_producto": 23,
+            "id_servicio": null
+        },
+        {
+            "cantidad": 1,
+            "id_producto": null,
+            "id_servicio": 8
+        }
+    ]
+}
+
+"""Actualizar factura por id"""
+@app.route('/usuarios/<int:id_user>/factura/<int:id_factura>', methods=['PUT'])
+actualizar factura por id. Solo se permite la modificación de cliente y fecha.
+Entrada:
+{
+  "fecha_emision": "2023-08-21",
+  "id_clientes": 1
+}
+
+
+@app.route('/usuarios/<int:id_user>/factura/<int:id_factura>', methods=['DELETE'])
+Borrado lógico de factura.
+
+
+@app.route('/usuarios/<int:id_user>/factura/<int:id_factura>', methods=['GET'])
+Consultar factura por id. En este caso se muestra la factura con todos sus detalles.
+Salida:
+{
+  "detalles": [
+    {
+      "cantidad": 20,
+      "detalle_id": 25,
+      "id_factura": 89,
+      "id_producto": 21,
+      "id_servicio": null,
+      "precio_unitario": "300000.00",
+      "subtotal": "6000000.00"
+    }
+  ],
+  "factura": {
+    "factura_id": 89,
+    "fecha_emision": "Tue, 21 Nov 2023 00:00:00 GMT",
+    "id_clientes": 4,
+    "id_usuario": 1
+  },
+  "productos_servicios": [
+    {
+      "cantidad": 20,
+      "descripcion": "i7 13900, 32gb Ram DDR5, SSD M.2 512gb",
+      "id_usuario": 1,
+      "nombre": "PC AIO ASUS v1",
+      "precio": "300000.00",
+      "producto_id": 21
+    }
+  ],
+  "total": "6000000.00"
+}
+
+Rutas Movimientos de Stock:
+
+
+@app.route('/usuarios/<int:id_user>/stock_movimientos', methods=['GET'])
+Ruta para obtener todos los movimientos de stock de un usuario.
+Salida:
+[{
+    "cantidad": 20,
+    "fecha": "Sun, 03 Dec 2023 00:00:00 GMT",
+    "id": 29,
+    "producto_id": 21,
+    "stock_real": 20,
+    "tipo": "entrada"
+  },
+  {
+    "cantidad": 5,
+    "fecha": "Sun, 03 Dec 2023 00:00:00 GMT",
+    "id": 30,
+    "producto_id": 21,
+    "stock_real": 15,
+    "tipo": "salida"
+  }]
+
+@app.route('/usuarios/<int:id_user>/stock_movimientos/<int:id_producto>', methods=['GET'])
+Ruta para obtener los movimientos de stock de un producto.
+Salida:
+[
+  {
+    "cantidad": 1,
+    "fecha": "Tue, 21 Nov 2023 00:00:00 GMT",
+    "stock_real": 34,
+    "tipo": "salida"
+  },
+  {
+    "cantidad": 20,
+    "fecha": "Sun, 03 Dec 2023 00:00:00 GMT",
+    "stock_real": 20,
+    "tipo": "entrada"
+  },
+  {
+    "cantidad": 5,
+    "fecha": "Sun, 03 Dec 2023 00:00:00 GMT",
+    "stock_real": 15,
+    "tipo": "salida"
+  },
+  {
+    "cantidad": 20,
+    "fecha": "Sun, 03 Dec 2023 00:00:00 GMT",
+    "stock_real": 35,
+    "tipo": "entrada"
+  }
+]
+
+
+
+
+
+
+
