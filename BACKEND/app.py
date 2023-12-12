@@ -2,16 +2,18 @@ import datetime
 from functools import wraps
 from datetime import timedelta
 import jwt
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, g
 from flask_cors import CORS
 from flask_mysqldb import MySQL
 from datetime import datetime
 from datetime import date
+from Users import *
 from Clientes import *
 from Productos import *
 from Servicios import *
 from detalle_factura import *
 from factura import *
+from collections import Counter
 
 # Crear una instancia de la aplicación Flask
 app = Flask(__name__)
@@ -55,6 +57,29 @@ def login():
    }, app.config['SECRET_KEY'])
 
    return jsonify({"token": token, 'username': auth.username, "id": row[0]})
+
+
+@app.route("/logout", methods=['POST'])
+
+def logout():
+    auth_header = request.headers.get('Authorization')
+
+    # Control: Verificar si se proporciona el encabezado de autorización
+    if not auth_header:
+        return jsonify({"error": 'No se proporcionó el encabezado de autorización'}), 401
+
+    # Obtener el token del encabezado de autorización
+    token = auth_header.split(" ")[1] if auth_header else None
+
+    # Control: Verificar si se proporciona un token
+    if not token:
+        return jsonify({"error": 'No se proporcionó un token válido'}), 401
+
+    # Enviar una respuesta exitosa
+    return jsonify({"message": 'Sesión cerrada correctamente'}), 200
+
+
+
 
 
 def token_required(func):
@@ -183,6 +208,33 @@ def detalle_factura_resource(func):
        return func(*args, **kwargs)
    return decorated
 
+"""usuarios"""
+# Definir la ruta para obtener los datos del usuario por ID
+@app.route('/usuarios/<int:id_user>', methods=['GET'])
+@token_required
+@user_resources
+def get_user_by_id(id_user):
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT * FROM usuarios WHERE id = %s', (id_user,))
+        data = cur.fetchall()
+
+        if cur.rowcount > 0:
+            objusuario = User(data[0])
+            user_data = objusuario.to_dict()
+
+            # Devuelve el nombre del usuario junto con los demás datos
+            return jsonify({"user_data": user_data, "message": "Usuario obtenido exitosamente"}), 200
+
+        return jsonify({"message": "ID de usuario no encontrado"}), 404
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
+
+
+
+
+
 """Clientes"""
 
 """Obtener todos los clientes"""
@@ -297,6 +349,36 @@ def get_cliente_by_id(id_user, id_client):
 
    return jsonify({"message": "ID no encontrado o cliente inactivo"})
 
+"""Obtener la cantidad de clientes por cada usuario"""
+@app.route('/usuarios/<int:id_user>/cantidad-clientes', methods=['GET'])
+@token_required
+@user_resources
+def get_cantidad_clientes_por_usuario(id_user):
+    try:
+        cur = mysql.connection.cursor()
+
+        # Consultar la cantidad de clientes para un usuario específico
+        cur.execute('''
+            SELECT COUNT(*) AS cantidad_clientes
+            FROM clientes
+            WHERE id_usuario = %s AND activo = 1
+        ''', (id_user,))
+
+        cantidad_clientes = cur.fetchone()
+
+        if not cantidad_clientes:
+            return jsonify({"message": "No hay clientes registrados para este usuario"}), 404
+
+        # Crear un objeto de resultado
+        result = {
+            "id_usuario": id_user,
+            "cantidad_clientes": cantidad_clientes[0]
+        }
+
+        return jsonify(result)
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
 
 
 """Productos"""
@@ -468,6 +550,51 @@ def get_producto_by_id(id_user, id_producto):  # Cambiar el nombre del parámetr
         return jsonify(objproducto.to_json())
 
     return jsonify({"message": "ID no encontrado o producto sin stock"})
+
+
+
+"""Obtener un ranking de los productos más vendidos"""
+@app.route('/usuarios/<int:id_user>/ranking-productos', methods=['GET'])
+@token_required
+@user_resources
+def get_ranking_productos(id_user):
+    try:
+        cur = mysql.connection.cursor()
+
+        # Consultar el ranking de productos más vendidos para un usuario específico
+        cur.execute('''
+            SELECT P.nombre, COUNT(DF.id_producto) as cantidad_vendida
+            FROM detalle_factura DF
+            JOIN productos P ON DF.id_producto = P.id
+            JOIN factura F ON DF.id_factura = F.id
+            WHERE F.id_usuario = %s
+            GROUP BY DF.id_producto
+            ORDER BY cantidad_vendida DESC
+        ''', (id_user,))
+
+        ranking_productos = cur.fetchall()
+
+        if not ranking_productos:
+            return jsonify({"message": "No hay productos vendidos para este usuario"}), 404
+
+        # Crear una lista de resultados
+        resultados = []
+
+        for producto in ranking_productos:
+            nombre_producto = producto[0]
+            cantidad_vendida = producto[1]
+
+            resultado = {
+                "nombre_producto": nombre_producto,
+                "cantidad_vendida": cantidad_vendida
+            }
+
+            resultados.append(resultado)
+
+        return jsonify(resultados)
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
 
 
 
@@ -831,6 +958,79 @@ def consultar_factura(id_user, id_factura):  # Agregar id_user e id_factura como
     }
 
     return jsonify(output)
+
+from flask import jsonify
+
+@app.route('/usuarios/<int:id_user>/factura/total', methods=['GET'])
+@token_required
+@user_resources
+def get_total_facturas(id_user):
+    try:
+        cur = mysql.connection.cursor()
+
+        # Consultar todos los totales de las facturas para el usuario específico
+        cur.execute('SELECT total FROM Factura WHERE id_usuario = %s', (id_user,))
+        total_rows = cur.fetchall()
+
+        if not total_rows:
+            return jsonify({"message": f"No hay facturas para el usuario con ID {id_user}"}), 404
+
+        # Calcular el valor total sumando todos los totales
+        total_value = sum(row[0] for row in total_rows)
+
+        return jsonify({"total_facturas_usuario": total_value})
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
+
+@app.route('/usuarios/<int:id_user>/factura/cantidad', methods=['GET'])
+@token_required
+@user_resources
+def get_cantidad_facturas(id_user):
+    try:
+        cur = mysql.connection.cursor()
+
+        # Contar la cantidad de facturas para el usuario específico
+        cur.execute('SELECT COUNT(*) FROM Factura WHERE id_usuario = %s', (id_user,))
+        cantidad_facturas = cur.fetchone()[0]
+
+        return jsonify({"cantidad_facturas_usuario": cantidad_facturas})
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
+
+
+@app.route('/usuarios/<int:id_user>/factura/producto-mas-vendido', methods=['GET'])
+@token_required
+@user_resources
+def get_producto_mas_vendido(id_user):
+    try:
+        cur = mysql.connection.cursor()
+
+        # Consultar los productos más vendidos para el usuario específico
+        cur.execute('''
+            SELECT P.nombre, COUNT(DF.id_producto) as cantidad_vendida
+            FROM detalle_factura DF
+            JOIN productos P ON DF.id_producto = P.id
+            JOIN factura F ON DF.id_factura = F.id
+            WHERE F.id_usuario = %s
+            GROUP BY DF.id_producto
+            ORDER BY cantidad_vendida DESC
+            LIMIT 1
+        ''', (id_user,))
+
+        producto_mas_vendido = cur.fetchone()
+
+        if not producto_mas_vendido:
+            return jsonify({"message": f"No hay productos vendidos para el usuario con ID {id_user}"}), 404
+
+        nombre_producto = producto_mas_vendido[0]
+        cantidad_vendida = producto_mas_vendido[1]
+
+        return jsonify({"producto_mas_vendido": nombre_producto, "cantidad_vendida": cantidad_vendida})
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
 
 
 

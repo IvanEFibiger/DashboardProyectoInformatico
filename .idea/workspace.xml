@@ -5,11 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2f7399b8-beae-4cda-ad1a-a31d64d95881" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/DOCUMENTACION/documentacion.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/PROYECTO INFORMATICO.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PROYECTO INFORMATICO.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BACKEND/pyvenv.cfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BACKEND/Users.py" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/Users.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BACKEND/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BACKEND/factura.py" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/factura.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FRONTEND/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/FRONTEND/dashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FRONTEND/dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/FRONTEND/dashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FRONTEND/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/FRONTEND/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FRONTEND/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/FRONTEND/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,22 +37,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "BACK",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "H:/UPSO/UPSO/PROYECTO_INFORMATICO/PROYECTO INFORMATICO",
-    "run.code.analysis.last.selected.profile": "aDefault",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;H:/UPSO/UPSO/PROYECTO_INFORMATICO/PROYECTO INFORMATICO&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   },
-  "keyToStringList": {
-    "stardust.markdown.MarkdownSplitEditorSuppressor:keyList": [
+  &quot;keyToStringList&quot;: {
+    &quot;stardust.markdown.MarkdownSplitEditorSuppressor:keyList&quot;: [
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Dai\Desktop\Proyecto Informático\DashboardProyectoInformatico\BACKEND\api\models" />
@@ -82,6 +85,9 @@
       <module name="PROYECTO INFORMATICO" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/.." />
       <option name="IS_MODULE_SDK" value="true" />

@@ -37,11 +37,11 @@
                           <a class="nav-link" href="#mobileMenu">Dashboard</a>
                       </li>
                       <li class="nav-item">
-                          <a class="nav-link" href="#services">Soporte</a>
+                          <a class="nav-link" href="#soporte">Soporte</a>
                       </li>
-                      <li class="nav-item">
-                          <a class="nav-link" href="#contact">Salir</a>
-                      </li>
+                      <li class="nav-item" id="logoutNavItem">
+                        <a class="nav-link" href="#" id="logoutLink">Salir</a>
+                    </li>
                   </ul>
               </div>
           </div>
@@ -80,10 +80,10 @@
     <div class="card">
       <div class="card-body">
         <h2 class="card-title">Información General</h2>
-        <p class="card-text">Ingresos: $1,000,000</p>
-        <p class="card-text">Total de facturas emitidas: 100</p>
-        <p class="card-text">Producto más vendido: Producto A</p>
-        <p class="card-text">Cantidad de clientes: 50</p>
+        <p class="card-text" id="ingresos-totales">Ingresos: $1,000,000</p>
+        <p class="card-text" id="facturas-emitidas">Total de facturas emitidas: 100</p>
+        <p class="card-text" id="producto-principal">Producto más vendido: Producto A</p>
+        <p class="card-text" id="clientes-cantidad">Cantidad de clientes: 50</p>
       </div>
     </div>
   </section>
@@ -112,6 +112,9 @@
       <div class="tab-pane fade" id="producto" role="tabpanel" aria-labelledby="producto-tab">
         <!-- Contenido de la pestaña de Producto (puede ser un gráfico) -->
         <p>Ranking de Producto.</p>
+        <div id="producto-ranking">
+          <!-- Aquí se mostrará la tabla de productos más vendidos -->
+        </div>
       </div>
       <div class="tab-pane fade" id="servicio" role="tabpanel" aria-labelledby="servicio-tab">
         <!-- Contenido de la pestaña de Servicio (puede ser un gráfico) -->
@@ -150,7 +153,9 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="logueo_deslogueo.js"></script>
 <script src="dashboard.js"></script>
+
 
 </body>
 </html>
