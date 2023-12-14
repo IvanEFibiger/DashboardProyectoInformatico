@@ -91,9 +91,7 @@
   <!-- Sección 2 -->
   <section class="rankings">
     <ul class="nav nav-tabs" id="rankingsTab" role="tablist">
-      <li class="nav-item">
-        <a class="nav-link active" id="ventas-tab" data-bs-toggle="tab" href="#ventas" role="tab" aria-controls="ventas" aria-selected="true">Ventas</a>
-      </li>
+
       <li class="nav-item">
         <a class="nav-link" id="producto-tab" data-bs-toggle="tab" href="#producto" role="tab" aria-controls="producto" aria-selected="false">Producto</a>
       </li>
@@ -105,10 +103,7 @@
       </li>
     </ul>
     <div class="tab-content mt-3">
-      <div class="tab-pane fade show active" id="ventas" role="tabpanel" aria-labelledby="ventas-tab">
-        <!-- Contenido de la pestaña de Ventas (puede ser un gráfico) -->
-        <p>Ranking de Ventas.</p>
-      </div>
+
       <div class="tab-pane fade" id="producto" role="tabpanel" aria-labelledby="producto-tab">
         <!-- Contenido de la pestaña de Producto (puede ser un gráfico) -->
         <p>Ranking de Producto.</p>
@@ -119,10 +114,16 @@
       <div class="tab-pane fade" id="servicio" role="tabpanel" aria-labelledby="servicio-tab">
         <!-- Contenido de la pestaña de Servicio (puede ser un gráfico) -->
         <p>Ranking de Servicio.</p>
+        <div id="servicio-ranking">
+          <!-- Aquí se mostrará la tabla de productos más vendidos -->
+        </div>
       </div>
       <div class="tab-pane fade" id="cliente" role="tabpanel" aria-labelledby="cliente-tab">
         <!-- Contenido de la pestaña de Cliente (puede ser un gráfico) -->
         <p>Ranking de Clientes.</p>
+        <div id="cliente-ranking">
+          <!-- Aquí se mostrará la tabla de productos más vendidos -->
+        </div>
       </div>
     </div>
   </section>
@@ -134,7 +135,9 @@
         <div class="card-body">
           <h5 class="card-title">Control de Stock</h5>
           <!-- Contenido de control de stock -->
-          <p>Contenido del control de stock.</p>
+          <div id="contenidoControlStock">
+
+          </div>
         </div>
       </div>
     </div>
@@ -142,8 +145,9 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Historial de Ventas</h5>
-          <!-- Contenido del historial de ventas -->
-          <p>Contenido del historial de ventas.</p>
+          <div id="historialVentasList">
+            <!-- Aquí se mostrará la tabla historial -->
+          </div>
         </div>
       </div>
     </div>

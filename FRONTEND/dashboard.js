@@ -335,3 +335,326 @@ document.addEventListener("DOMContentLoaded", function () {
 
   mostrarNombreDeUsuarioEnUI();
 });
+
+
+
+//ranking servicios
+
+document.addEventListener("DOMContentLoaded", function () {
+  const servMasVendidosElement = document.getElementById("servicio-ranking");
+
+  if (servMasVendidosElement) {
+    const userId = obtenerUserIdDesdeLocalStorage();
+    const token = obtenerTokenDesdeLocalStorage();
+
+    if (!userId || !token) {
+      console.error("No se pudo obtener el ID de usuario o el token desde localStorage.");
+      return;
+    }
+
+    fetch(`http://127.0.0.1:5500/usuarios/${userId}/ranking-servicios`, {
+      method: 'GET',
+      headers: {
+        'x-access-token': token,
+        'user-id': userId
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const servMasVendidos = data;
+
+        if (servMasVendidos.length > 0) {
+          const table = document.createElement("table");
+          table.classList.add("table");
+
+          const thead = document.createElement("thead");
+          const headerRow = document.createElement("tr");
+
+          const nombreHeader = document.createElement("th");
+          nombreHeader.scope = "col";
+          nombreHeader.textContent = "Servicio";
+
+          const cantidadHeader = document.createElement("th");
+          cantidadHeader.scope = "col";
+          cantidadHeader.textContent = "Cantidad Vendida";
+
+          headerRow.appendChild(nombreHeader);
+          headerRow.appendChild(cantidadHeader);
+          thead.appendChild(headerRow);
+          table.appendChild(thead);
+
+          const tbody = document.createElement("tbody");
+
+          // Mostrar solo los primeros 5 productos más vendidos
+          for (let i = 0; i < Math.min(5, servMasVendidos.length); i++) {
+            const servicio = servMasVendidos[i];
+
+            const row = document.createElement("tr");
+
+            const nombreCell = document.createElement("td");
+            nombreCell.textContent = servicio.nombre_servicio;
+
+            const cantidadCell = document.createElement("td");
+            cantidadCell.textContent = servicio.cantidad_vendida;
+
+            row.appendChild(nombreCell);
+            row.appendChild(cantidadCell);
+
+            tbody.appendChild(row);
+          }
+
+          table.appendChild(tbody);
+
+          servMasVendidosElement.appendChild(table);
+        } else {
+          servMasVendidosElement.textContent = "No hay servicios vendidos.";
+        }
+      })
+      .catch(error => console.error("Error al obtener los servicios más vendidos:", error));
+  } else {
+    console.error("No se encontró el elemento con id 'servicio-principal' en el DOM.");
+  }
+
+  mostrarNombreDeUsuarioEnUI();
+});
+
+
+//Ranking clientes
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const clienteDestacadoElement = document.getElementById("cliente-ranking");
+
+  if (clienteDestacadoElement) {
+    const userId = obtenerUserIdDesdeLocalStorage();
+    const token = obtenerTokenDesdeLocalStorage();
+
+    if (!userId || !token) {
+      console.error("No se pudo obtener el ID de usuario o el token desde localStorage.");
+      return;
+    }
+
+    fetch(`http://127.0.0.1:5500/usuarios/${userId}/ranking-clientes`, {
+      method: 'GET',
+      headers: {
+        'x-access-token': token,
+        'user-id': userId
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const clienteDestacado = data;
+
+        if (clienteDestacado.length > 0) {
+          const table = document.createElement("table");
+          table.classList.add("table");
+
+          const thead = document.createElement("thead");
+          const headerRow = document.createElement("tr");
+
+          const nombreHeader = document.createElement("th");
+          nombreHeader.scope = "col";
+          nombreHeader.textContent = "Cliente";
+
+          const cantidadHeader = document.createElement("th");
+          cantidadHeader.scope = "col";
+          cantidadHeader.textContent = "Total gastado";
+
+          headerRow.appendChild(nombreHeader);
+          headerRow.appendChild(cantidadHeader);
+          thead.appendChild(headerRow);
+          table.appendChild(thead);
+
+          const tbody = document.createElement("tbody");
+
+          // Mostrar solo los primeros 5 productos más vendidos
+          for (let i = 0; i < Math.min(5, clienteDestacado.length); i++) {
+            const cliente = clienteDestacado[i];
+
+            const row = document.createElement("tr");
+
+            const nombreCell = document.createElement("td");
+            nombreCell.textContent = cliente.nombre_cliente;
+
+            const cantidadCell = document.createElement("td");
+            cantidadCell.textContent = cliente.total_gastado;
+
+            row.appendChild(nombreCell);
+            row.appendChild(cantidadCell);
+
+            tbody.appendChild(row);
+          }
+
+          table.appendChild(tbody);
+
+          clienteDestacadoElement.appendChild(table);
+        } else {
+          clienteDestacadoElement.textContent = "No hay clientes para mostrar.";
+        }
+      })
+      .catch(error => console.error("Error al obtener los clientes destacados:", error));
+  } else {
+    console.error("No se encontró el elemento con id 'servicio-principal' en el DOM.");
+  }
+
+  mostrarNombreDeUsuarioEnUI();
+});
+
+
+
+//STOCK
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const contenidoControlStockElement = document.getElementById("contenidoControlStock");
+
+  if (contenidoControlStockElement) {
+    const userId = obtenerUserIdDesdeLocalStorage();
+    const token = obtenerTokenDesdeLocalStorage();
+
+    if (!userId || !token) {
+      console.error("No se pudo obtener el ID de usuario o el token desde localStorage.");
+      return;
+    }
+
+    function actualizarContenido(id_user, token) {
+      fetch(`http://127.0.0.1:5500/usuarios/${id_user}/stock_movimientos`, {
+        method: 'GET',
+        headers: {
+          'x-access-token': token,
+          'user-id': id_user
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Agrupar productos por colores
+          const productosPorColores = {};
+          data.forEach(producto => {
+            const colorFondo = producto.stock_real > 5 ? 'green' : (producto.stock_real >= 1 && producto.stock_real <= 4 ? 'yellow' : 'red');
+            productosPorColores[colorFondo] = productosPorColores[colorFondo] || [];
+            productosPorColores[colorFondo].push(producto);
+          });
+    
+          // Construir la tabla con el contenido actualizado
+          var tablaContenido = '<table class="table">';
+          tablaContenido += '<thead><tr><th>Producto</th><th>Stock actual</th></tr></thead>';
+          tablaContenido += '<tbody>';
+    
+          Object.keys(productosPorColores).forEach(color => {
+            //tablaContenido += `<tr><th colspan="2" style="background-color: ${color};">${color}</th></tr>`;
+            productosPorColores[color].forEach(producto => {
+              tablaContenido += `<tr><td  style="background-color: ${color};">${producto.producto}</td><td style="background-color: ${color};">${producto.stock_real}</td></tr>`;
+            });
+          });
+    
+          tablaContenido += '</tbody></table>';
+    
+          // Actualizar el contenido de la tarjeta de control de stock
+          contenidoControlStockElement.innerHTML = tablaContenido;
+        })
+        .catch(error => console.error("Error al obtener los movimientos de stock:", error));
+    }
+
+    // Llamada inicial al cargar la página
+    actualizarContenido(userId, token);
+
+    // Llamada repetitiva cada 5 segundos
+    setInterval(function () {
+      actualizarContenido(userId, token);
+    }, 5000);
+  } else {
+    console.error("No se encontró el elemento con id 'contenidoControlStock' en el DOM.");
+  }
+
+  mostrarNombreDeUsuarioEnUI();
+});
+
+
+
+//historial ventas
+
+document.addEventListener("DOMContentLoaded", function () {
+  const historialVentasList = document.getElementById("historialVentasList");
+
+  if (historialVentasList) {
+    const userId = obtenerUserIdDesdeLocalStorage();
+    const token = obtenerTokenDesdeLocalStorage();
+
+    if (!userId || !token) {
+      console.error("No se pudo obtener el ID de usuario o el token desde localStorage.");
+      return;
+    }
+
+    function mostrarUltimasVentas(id_user, token) {
+      fetch(`http://127.0.0.1:5500/usuarios/${id_user}/historial_ventas`, {
+        method: 'GET',
+        headers: {
+          'x-access-token': token,
+          'user-id': id_user
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Limpiar el contenido actual
+          historialVentasList.innerHTML = '';
+
+          // Construir la tabla con las últimas 10 ventas
+          const table = document.createElement("table");
+          table.classList.add("table");
+
+          const thead = document.createElement("thead");
+          const headerRow = document.createElement("tr");
+
+          const productoHeader = document.createElement("th");
+          productoHeader.textContent = "Producto";
+
+          const cantidadHeader = document.createElement("th");
+          cantidadHeader.textContent = "Cantidad";
+
+          const fechaHeader = document.createElement("th");
+          fechaHeader.textContent = "Fecha de Venta";
+
+          headerRow.appendChild(productoHeader);
+          headerRow.appendChild(cantidadHeader);
+          headerRow.appendChild(fechaHeader);
+
+          thead.appendChild(headerRow);
+          table.appendChild(thead);
+
+          const tbody = document.createElement("tbody");
+
+          for (let i = 0; i < Math.min(5, data.length); i++) {
+            const venta = data[i];
+            const row = document.createElement("tr");
+
+            const productoCell = document.createElement("td");
+            productoCell.textContent = venta.producto;
+
+            const cantidadCell = document.createElement("td");
+            cantidadCell.textContent = venta.cantidad;
+
+            const fechaCell = document.createElement("td");
+            fechaCell.textContent = venta.fecha_emision;
+
+            row.appendChild(productoCell);
+            row.appendChild(cantidadCell);
+            row.appendChild(fechaCell);
+
+            tbody.appendChild(row);
+          }
+
+          table.appendChild(tbody);
+
+          // Agregar la tabla al contenedor
+          historialVentasList.appendChild(table);
+        })
+        .catch(error => console.error("Error al obtener el historial de ventas:", error));
+    }
+
+    // Llamar a la función inicialmente al cargar la página
+    mostrarUltimasVentas(userId, token);
+
+  } else {
+    console.error("No se encontró el elemento con id 'historialVentasList' en el DOM.");
+  }
+});

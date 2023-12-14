@@ -381,6 +381,91 @@ def get_cantidad_clientes_por_usuario(id_user):
         return jsonify({"message": str(e)}), 500
 
 
+@app.route('/usuarios/<int:id_user>/cliente-destacado', methods=['GET'])
+@token_required
+@user_resources
+def get_cliente_destacado(id_user):
+    try:
+        cur = mysql.connection.cursor()
+
+        # Consultar el cliente que más gastó para el usuario específico
+        cur.execute('''
+            SELECT C.nombre, SUM(F.total) as total_gastado
+            FROM factura F
+            JOIN clientes C ON F.id_clientes = C.id
+            WHERE F.id_usuario = %s
+            GROUP BY F.id_clientes
+            ORDER BY total_gastado DESC
+            LIMIT 1
+        ''', (id_user,))
+
+        cliente_destacado = cur.fetchone()
+
+        if not cliente_destacado:
+            return jsonify({"message": f"No hay facturas para el usuario con ID {id_user}"}), 404
+
+        nombre_cliente = cliente_destacado[0]
+        total_gastado = cliente_destacado[1]
+
+        return jsonify({"cliente_destacado": nombre_cliente, "total_gastado": total_gastado})
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
+
+
+
+from flask import jsonify
+
+from flask import jsonify
+
+@app.route('/usuarios/<int:id_user>/ranking-clientes', methods=['GET'])
+@token_required
+@user_resources
+def get_ranking_clientes(id_user):
+    try:
+        cur = mysql.connection.cursor()
+
+        # Consultar el ranking de los 5 clientes que más gastaron para el usuario específico
+        cur.execute('''
+            SELECT C.nombre, SUM(F.total) as total_gastado
+            FROM factura F
+            JOIN clientes C ON F.id_clientes = C.id
+            WHERE F.id_usuario = %s
+            GROUP BY F.id_clientes
+            ORDER BY total_gastado DESC
+        ''', (id_user,))
+
+        ranking_clientes = cur.fetchall()
+
+        if not ranking_clientes:
+            return jsonify({"message": f"No hay facturas para el usuario con ID {id_user}"}), 404
+
+        # Crear una lista de resultados
+        resultados = []
+
+        # Iterar sobre los resultados y agregarlos a la lista
+        for cliente in ranking_clientes:
+            nombre_cliente = cliente[0]
+            total_gastado = cliente[1]
+
+            resultado = {
+                "nombre_cliente": nombre_cliente,
+                "total_gastado": total_gastado
+            }
+
+            resultados.append(resultado)
+
+        # Limitar a los primeros 5 resultados si hay más de 5 clientes
+        resultados = resultados[:5]
+
+        return jsonify(resultados)
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
+
+
+
+
 """Productos"""
 
 """Obtener todos los productos"""
@@ -563,7 +648,7 @@ def get_ranking_productos(id_user):
 
         # Consultar el ranking de productos más vendidos para un usuario específico
         cur.execute('''
-            SELECT P.nombre, COUNT(DF.id_producto) as cantidad_vendida
+            SELECT P.nombre, SUM(DF.cantidad) as cantidad_vendida
             FROM detalle_factura DF
             JOIN productos P ON DF.id_producto = P.id
             JOIN factura F ON DF.id_factura = F.id
@@ -595,7 +680,6 @@ def get_ranking_productos(id_user):
 
     except Exception as e:
         return jsonify({"message": str(e)}), 500
-
 
 
 """servicios"""
@@ -723,6 +807,58 @@ def get_servicio_by_id(id_user, id_servicio):  # Agregar id_user e id_servicio c
 
 
 
+
+
+
+@app.route('/usuarios/<int:id_user>/ranking-servicios', methods=['GET'])
+@token_required
+@user_resources
+def get_ranking_servicios(id_user):
+    try:
+        cur = mysql.connection.cursor()
+
+        # Consultar el ranking de servicios más vendidos para un usuario específico
+        cur.execute('''
+            SELECT S.nombre, SUM(DF.cantidad) as cantidad_vendida
+            FROM detalle_factura DF
+            JOIN servicios S ON DF.id_servicio = S.id
+            JOIN factura F ON DF.id_factura = F.id
+            WHERE F.id_usuario = %s
+            GROUP BY DF.id_servicio
+            ORDER BY cantidad_vendida DESC
+            LIMIT 5
+        ''', (id_user,))
+
+        ranking_servicios = cur.fetchall()
+
+        if not ranking_servicios:
+            return jsonify({"message": "No hay servicios vendidos para este usuario"}), 404
+
+        # Crear una lista de resultados
+        resultados = []
+
+        for servicio in ranking_servicios:
+            nombre_servicio = servicio[0]
+            cantidad_vendida = servicio[1]
+
+            resultado = {
+                "nombre_servicio": nombre_servicio,
+                "cantidad_vendida": cantidad_vendida
+            }
+
+            resultados.append(resultado)
+
+        return jsonify(resultados)
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
+
+
+
+
 """factura"""
 
 "Obtener todas las facturas"
@@ -742,125 +878,93 @@ def get_all_facturas(id_user):
    return jsonify(facturaList)
 
 
-"""Crear factura"""
+from flask import request, jsonify
+
 @app.route('/usuarios/<int:id_user>/factura', methods=['POST'])
 @token_required
 @user_resources
 def create_factura(id_user):
-   try:
-       fecha_emision = request.get_json()["fecha_emision"]
-       id_clientes = request.get_json()["id_clientes"]
-       id_usuario = request.get_json()["id_usuario"]
-       productos_servicios = request.get_json()["productos_servicios"]
+    try:
+        fecha_emision = request.get_json()["fecha_emision"]
+        id_clientes = request.get_json()["id_clientes"]
+        id_usuario = request.get_json()["id_usuario"]
+        productos_servicios = request.get_json()["productos_servicios"]
 
-       cur = mysql.connection.cursor()
+        cur = mysql.connection.cursor()
 
-       # Guardar la factura
-       cur.execute('INSERT INTO Factura (fecha_emision, id_clientes, id_usuario) VALUES (%s, %s, %s)',
-                   (fecha_emision, id_clientes, id_usuario))
-       mysql.connection.commit()
+        # Guardar la factura
+        cur.execute('INSERT INTO Factura (fecha_emision, id_clientes, id_usuario) VALUES (%s, %s, %s)',
+                    (fecha_emision, id_clientes, id_usuario))
+        mysql.connection.commit()
 
-       # Obtener el ID de la factura recién creada
-       cur.execute('SELECT LAST_INSERT_ID()')
-       row = cur.fetchone()
+        # Obtener el ID de la factura recién creada
+        cur.execute('SELECT LAST_INSERT_ID()')
+        row = cur.fetchone()
 
-       if row and row[0] is not None:
-           factura_id = row[0]
+        if row and row[0] is not None:
+            factura_id = row[0]
 
-           # Guardar los detalles de la factura
-           for producto_servicio in productos_servicios:
-               cantidad = producto_servicio["cantidad"]
-               id_producto = producto_servicio.get("id_producto")
-               id_servicio = producto_servicio.get("id_servicio")
+            # Guardar los detalles de la factura
+            for producto_servicio in productos_servicios:
+                cantidad = producto_servicio["cantidad"]
+                id_producto = producto_servicio.get("id_producto")
+                id_servicio = producto_servicio.get("id_servicio")
 
-               # Verificar que la cantidad de cada producto sea mayor que cero
-               for producto_servicio in productos_servicios:
-                   cantidad = producto_servicio["cantidad"]
-                   if cantidad <= 0:
-                       return jsonify({"message": "La cantidad de cada producto debe ser mayor que cero"}), 400
+                # Verificar que la cantidad de cada producto sea mayor que cero
+                if cantidad <= 0:
+                    return jsonify({"message": "La cantidad de cada producto debe ser mayor que cero"}), 400
 
-               # Obtener la fecha de la factura
-               fecha_factura = fecha_emision
+                # Obtener la fecha de la factura
+                fecha_factura = fecha_emision
 
-               cur = mysql.connection.cursor()
+                # Obtener el precio del producto o servicio
+                if id_producto:
+                    cur.execute('SELECT precio FROM productos WHERE id = %s', (id_producto,))
+                elif id_servicio:
+                    cur.execute('SELECT precio FROM servicios WHERE id = %s', (id_servicio,))
 
-               # Obtener el último valor de stock_real para ese producto
-               cur.execute(
-                   'SELECT stock_real FROM movimiento_stock WHERE producto_id = %s ORDER BY fecha DESC LIMIT 1',
-                   (id_producto,))
-               ultimo_stock_real = cur.fetchone()
+                precio_unitario_row = cur.fetchone()
 
-               # Obtener la cantidad de la factura
-               cantidad_factura = producto_servicio["cantidad"]
+                if precio_unitario_row and precio_unitario_row[0] is not None:
+                    precio_unitario = precio_unitario_row[0]
+                    subtotal = cantidad * precio_unitario
 
-               if "id_producto" in producto_servicio and producto_servicio["id_producto"]:
-                   id_producto = producto_servicio["id_producto"]
+                    # Guardar un detalle de la factura por cada producto o servicio
+                    cur.execute(
+                        'INSERT INTO Detalle_factura (id_factura, id_producto, id_servicio, cantidad, precio_unitario, subtotal) VALUES (%s, %s, %s, %s, %s, %s)',
+                        (factura_id, id_producto, id_servicio, cantidad, precio_unitario, subtotal))
+                    mysql.connection.commit()
 
-                   # Obtener el último valor de stock_real para ese producto
-                   cur.execute(
-                       'SELECT stock_real FROM movimiento_stock WHERE producto_id = %s ORDER BY fecha DESC LIMIT 1',
-                       (id_producto,))
-                   ultimo_stock_real = cur.fetchone()
+                    # Actualizar el control de stock para el producto
+                    cur.execute(
+                        'INSERT INTO movimiento_stock (producto_id, tipo, cantidad, fecha) VALUES (%s, %s, %s, %s)',
+                        (id_producto, 'salida', cantidad, fecha_factura))
+                    mysql.connection.commit()
 
-                   # Obtener el último stock_real o establecerlo en 0 si no hay registros
-                   stock_anterior = ultimo_stock_real[0] if ultimo_stock_real else 0
+                else:
+                    return jsonify(
+                        {"message": f"No se encontró el precio para el {'producto' if id_producto else 'servicio'} con ID {id_producto or id_servicio}"}), 500
 
-                   # Verificar si hay suficiente stock disponible
-                   if stock_anterior < cantidad_factura:
-                       # Si no hay suficiente stock, devolver un mensaje de error
-                       return jsonify({
-                           "message": f"No hay suficiente stock disponible para el producto con ID {id_producto}"}), 500
+            # Calcular y actualizar la columna total
+            cur.execute('SELECT SUM(subtotal) FROM Detalle_factura WHERE id_factura = %s', (factura_id,))
+            total_row = cur.fetchone()
 
-                   # Calcular el nuevo stock_real
-                   nuevo_stock_real = stock_anterior - cantidad_factura if isinstance(stock_anterior, int) else 0
+            if total_row and total_row[0] is not None:
+                total = total_row[0]
 
-                   # Restar la cantidad en la columna stock_real en movimiento_stock
-                   cur.execute(
-                       'INSERT INTO movimiento_stock (producto_id, tipo, cantidad, fecha, stock_real) VALUES (%s, %s, %s, %s, %s)',
-                       (id_producto, 'salida', cantidad_factura, fecha_factura, nuevo_stock_real))
-                   mysql.connection.commit()
+                # Actualizar la columna total en la tabla Factura
+                cur.execute('UPDATE Factura SET total = %s WHERE id = %s', (total, factura_id))
+                mysql.connection.commit()
 
-               # Obtener el precio del producto o servicio
-               if id_producto:
-                   cur.execute('SELECT precio FROM productos WHERE id = %s', (id_producto,))
-               elif id_servicio:
-                   cur.execute('SELECT precio FROM servicios WHERE id = %s', (id_servicio,))
+                return jsonify({"factura_id": factura_id})
+            else:
+                return jsonify({"message": "Error al calcular el total de la factura"}), 500
 
-               precio_unitario_row = cur.fetchone()
+        else:
+            return jsonify({"message": "Error al obtener el ID de la factura"}), 500
 
-               if precio_unitario_row and precio_unitario_row[0] is not None:
-                   precio_unitario = precio_unitario_row[0]
-                   subtotal = cantidad * precio_unitario
-
-                   # Guardar un detalle de la factura por cada producto o servicio
-                   cur.execute(
-                       'INSERT INTO Detalle_factura (id_factura, id_producto, id_servicio, cantidad, precio_unitario, subtotal) VALUES (%s, %s, %s, %s, %s, %s)',
-                       (factura_id, id_producto, id_servicio, cantidad, precio_unitario, subtotal))
-                   mysql.connection.commit()
-               else:
-                   return jsonify(
-                       {"message": f"No se encontró el precio para el {'producto' if id_producto else 'servicio'} con ID {id_producto or id_servicio}"}), 500
-
-           # Calcular y actualizar la columna total
-           cur.execute('SELECT SUM(subtotal) FROM Detalle_factura WHERE id_factura = %s', (factura_id,))
-           total_row = cur.fetchone()
-
-           if total_row and total_row[0] is not None:
-               total = total_row[0]
-
-               # Actualizar la columna total en la tabla Factura
-               cur.execute('UPDATE Factura SET total = %s WHERE id = %s', (total, factura_id))
-               mysql.connection.commit()
-
-               return jsonify({"factura_id": factura_id})
-           else:
-               return jsonify({"message": "Error al calcular el total de la factura"}), 500
-
-       else:
-           return jsonify({"message": "Error al obtener el ID de la factura"}), 500
-
-   except Exception as e:
-       return jsonify({"message": str(e)}), 500
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
 
 
 """Actualizar factura por id"""
@@ -959,7 +1063,7 @@ def consultar_factura(id_user, id_factura):  # Agregar id_user e id_factura como
 
     return jsonify(output)
 
-from flask import jsonify
+
 
 @app.route('/usuarios/<int:id_user>/factura/total', methods=['GET'])
 @token_required
@@ -1009,7 +1113,7 @@ def get_producto_mas_vendido(id_user):
 
         # Consultar los productos más vendidos para el usuario específico
         cur.execute('''
-            SELECT P.nombre, COUNT(DF.id_producto) as cantidad_vendida
+            SELECT P.nombre, SUM(DF.id_producto) as cantidad_vendida
             FROM detalle_factura DF
             JOIN productos P ON DF.id_producto = P.id
             JOIN factura F ON DF.id_factura = F.id
@@ -1033,37 +1137,76 @@ def get_producto_mas_vendido(id_user):
         return jsonify({"message": str(e)}), 500
 
 
+@app.route('/usuarios/<int:id_user>/factura/servicio-mas-vendido', methods=['GET'])
+@token_required
+@user_resources
+def get_servicio_mas_vendido(id_user):
+    try:
+        cur = mysql.connection.cursor()
+
+        # Consultar el servicio más vendido para el usuario específico
+        cur.execute('''
+            SELECT S.nombre, SUM(DF.cantidad) as cantidad_vendida
+            FROM detalle_factura DF
+            JOIN servicios S ON DF.id_servicio = S.id
+            JOIN factura F ON DF.id_factura = F.id
+            WHERE F.id_usuario = %s
+            GROUP BY DF.id_servicio
+            ORDER BY cantidad_vendida DESC
+            LIMIT 1
+        ''', (id_user,))
+
+        servicio_mas_vendido = cur.fetchone()
+
+        if not servicio_mas_vendido:
+            return jsonify({"message": f"No hay servicios vendidos para el usuario con ID {id_user}"}), 404
+
+        nombre_servicio = servicio_mas_vendido[0]
+        cantidad_vendida = servicio_mas_vendido[1]
+
+        return jsonify({"servicio_mas_vendido": nombre_servicio, "cantidad_vendida": cantidad_vendida})
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
+
+
 
 """Obtener los movimientos de stock"""
 @app.route('/usuarios/<int:id_user>/stock_movimientos', methods=['GET'])
 @token_required
 @user_resources
 def get_stock_movimientos(id_user):
-   try:
-       cur = mysql.connection.cursor()
-       cur.execute('SELECT id, producto_id, tipo, cantidad, fecha, stock_real FROM movimiento_stock')
+    try:
+        cur = mysql.connection.cursor()
 
-       data = cur.fetchall()
-       stock_movimientos = []
+        # Consulta para obtener el último movimiento de stock para cada producto del usuario
+        cur.execute('''
+            SELECT P.nombre as producto, MS.stock_real
+            FROM productos P
+            JOIN movimiento_stock MS ON P.id = MS.producto_id
+            WHERE MS.id = (
+                SELECT MAX(id)
+                FROM movimiento_stock
+                WHERE producto_id = P.id
+            )
+            AND P.id_usuario = %s
+        ''', (id_user,))
 
-       for row in data:
-           movimiento_info = {
-               "id": row[0],
-               "producto_id": row[1],
-               "tipo": row[2],
-               "cantidad": row[3],
-               "fecha": row[4],
-               "stock_real": int(row[5])
-           }
+        data = cur.fetchall()
+        stock_movimientos = []
 
-           # Actualizamos la información de stock para cada producto en cada iteración
-           stock_movimientos.append(movimiento_info)
+        for row in data:
+            movimiento_info = {
+                "producto": row[0],
+                "stock_real": int(row[1])
+            }
 
-       return jsonify(stock_movimientos)
+            stock_movimientos.append(movimiento_info)
 
-   except Exception as e:
-       return jsonify({"message": str(e)}), 500
+        return jsonify(stock_movimientos)
 
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
 
 """Obtener el movimiento de stock por producto"""
 @app.route('/usuarios/<int:id_user>/stock_movimientos/<int:id_producto>', methods=['GET'])
@@ -1093,7 +1236,39 @@ def get_stock_movimientos_by_producto(id_user, id_producto):  # Asegúrate de ut
         return jsonify({"message": str(e)}), 500
 
 
+"""Obtener el historial de ventas"""
+@app.route('/usuarios/<int:id_user>/historial_ventas', methods=['GET'])
+@token_required
+@user_resources
+def get_historial_ventas(id_user):
+    try:
+        cur = mysql.connection.cursor()
 
+        # Consulta para obtener el historial de ventas para cada producto del usuario
+        cur.execute('''
+            SELECT P.nombre as producto, DF.cantidad, F.fecha_emision
+            FROM productos P
+            JOIN detalle_factura DF ON P.id = DF.id_producto
+            JOIN factura F ON DF.id_factura = F.id
+            WHERE P.id_usuario = %s
+        ''', (id_user,))
+
+        data = cur.fetchall()
+        historial_ventas = []
+
+        for row in data:
+            venta_info = {
+                "producto": row[0],
+                "cantidad": int(row[1]),
+                "fecha_emision": row[2].strftime('%Y-%m-%d')  # Formatear la fecha a cadena
+            }
+
+            historial_ventas.append(venta_info)
+
+        return jsonify(historial_ventas)
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
 
 
 # Ejecutar la aplicación en modo de depuración en el puerto 4500
