@@ -33,7 +33,7 @@ function obtenerUserIdDesdeLocalStorage() {
   }
 }
 
-// Ejemplo de uso:
+
 
 
 function obtenerNombreDeUsuarioDesdeLocalStorage() {
@@ -558,10 +558,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Llamada inicial al cargar la página
     actualizarContenido(userId, token);
 
-    // Llamada repetitiva cada 5 segundos
-    setInterval(function () {
-      actualizarContenido(userId, token);
-    }, 5000);
   } else {
     console.error("No se encontró el elemento con id 'contenidoControlStock' en el DOM.");
   }

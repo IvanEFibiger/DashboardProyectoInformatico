@@ -237,6 +237,16 @@ def get_user_by_id(id_user):
 
 """Clientes"""
 
+"""@app.route('/usuarios/<user_id>/clientes', methods=['OPTIONS'])
+def handle_options(user_id):
+    # Configurar los encabezados CORS necesarios
+    response_headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST',
+        'Access-Control-Allow-Headers': 'Content-Type, x-access-token, user-id',
+    }
+    return ('', 204, response_headers)"""
+
 """Obtener todos los clientes"""
 @app.route('/usuarios/<int:id_user>/clientes', methods=['GET'])
 @token_required
@@ -414,9 +424,7 @@ def get_cliente_destacado(id_user):
 
 
 
-from flask import jsonify
 
-from flask import jsonify
 
 @app.route('/usuarios/<int:id_user>/ranking-clientes', methods=['GET'])
 @token_required
@@ -463,6 +471,56 @@ def get_ranking_clientes(id_user):
     except Exception as e:
         return jsonify({"message": str(e)}), 500
 
+
+# Endpoint para obtener el total de clientes
+@app.route('/usuarios/<int:id_user>/clientes/total', methods=['GET'])
+@token_required
+@user_resources
+def get_total_clientes(id_user):
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT COUNT(*) FROM clientes WHERE id_usuario = {0} AND activo = 1'.format(id_user))
+    total_clientes = cur.fetchone()[0]
+    return jsonify({'total': total_clientes})
+
+
+from math import ceil
+
+@app.route('/usuarios/<int:id_user>/clientes-paginados', methods=['GET'])
+@token_required
+@user_resources
+def get_paginated_clientes(id_user):
+    try:
+        page = request.args.get('page', 1, type=int)
+        per_page = 5  # Número de clientes por página
+
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT COUNT(*) FROM clientes WHERE id_usuario = %s AND activo = 1', (id_user,))
+        total_clients = cur.fetchone()[0]
+
+        cur.execute('SELECT * FROM clientes WHERE id_usuario = %s AND activo = 1 LIMIT %s OFFSET %s', (id_user, per_page, (page - 1) * per_page))
+        print(cur.mogrify('SELECT * FROM clientes WHERE id_usuario = %s AND activo = 1 LIMIT %s OFFSET %s',
+                          (id_user, per_page, (page - 1) * per_page)))
+        data = cur.fetchall()
+
+        personList = []
+
+        for row in data:
+            objCliente = Clientes(row)
+            personList.append(objCliente.to_json())
+
+        total_pages = ceil(total_clients / per_page)
+        current_page = page
+
+        response_data = {
+            "total_pages": total_pages,
+            "current_page": current_page,
+            "clients": personList
+        }
+
+        return jsonify(response_data)
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
 
 
 
@@ -853,8 +911,7 @@ def get_ranking_servicios(id_user):
     except Exception as e:
         return jsonify({"message": str(e)}), 500
 
-    except Exception as e:
-        return jsonify({"message": str(e)}), 500
+
 
 
 
