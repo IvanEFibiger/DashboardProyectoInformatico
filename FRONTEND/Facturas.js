@@ -302,7 +302,11 @@ $('#confirmarEliminarFacturaModal').on('hidden.bs.modal', function () {
 });
 
 
+
+//Crear factura
 let selectedClientId;
+let addingProduct = false;
+let addingService = false;
 
 
 // Función para cargar clientes
@@ -317,6 +321,7 @@ function cargarClientes() {
     success: function (data) {
       const clienteDropdown = $('#cliente');
       clienteDropdown.empty(); // Limpia opciones existentes
+      clienteDropdown.append('<option value="">Seleccione cliente</option>');
 
       // Agrega opciones al dropdown
       data.forEach(function (cliente) {
@@ -401,12 +406,12 @@ function agregarProductoServicio() {
       <input type="number" min="1" required>
 
       <label>Producto:</label>
-      <select class="producto" required>
+      <select class="producto" ${addingProduct ? '' : 'disabled'} required>
         <!-- Opciones se llenarán dinámicamente con JavaScript -->
       </select>
 
       <label>Servicio:</label>
-      <select class="servicio" required>
+      <select class="servicio" ${addingService ? '' : 'disabled'} required>
         <!-- Opciones se llenarán dinámicamente con JavaScript -->
       </select>
     </div>
@@ -418,6 +423,22 @@ function agregarProductoServicio() {
   cargarProductos();
   cargarServicios();
 }
+
+
+// Manejador de clic para el botón "Agregar Producto"
+function agregarProducto() {
+  addingProduct = true;
+  addingService = false;
+  agregarProductoServicio();
+}
+
+// Manejador de clic para el botón "Agregar Servicio"
+function agregarServicio() {
+  addingProduct = false;
+  addingService = true;
+  agregarProductoServicio();
+}
+
 
 // Función para crear la factura
 
@@ -460,6 +481,14 @@ $(document).on('change', '.servicio', function () {
 
 // Función para crear la factura
 function crearFactura() {
+  const fechaEmision = $('#fecha_emision').val();
+  const clienteSeleccionado = $('#cliente').val();
+
+  // Validación de la fecha y cliente seleccionado
+  if (!fechaEmision || !clienteSeleccionado) {
+    alert('Por favor, complete los campos solicitados.');
+    return;
+  }
   // Obtiene los valores del formulario
   const formData = {
     fecha_emision: $('#fecha_emision').val(),
@@ -498,6 +527,7 @@ function crearFactura() {
     data: JSON.stringify(formData),
     success: function (data) {
       console.log('Factura creada exitosamente:', data);
+      location.reload();
     },
     error: function (error) {
       console.error('Error al crear factura:', error);
@@ -508,4 +538,3 @@ function crearFactura() {
 
 // Cargar clientes al inicio
 cargarClientes();
-

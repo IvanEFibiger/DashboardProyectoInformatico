@@ -132,25 +132,27 @@
 
 <div class="container altaFactura">
     
-    <form id="facturaForm">
-      <h2 class="mb-3">Crear Nueva Factura</h2>
-      <label for="fecha_emision">Fecha de Emisión:</label>
-      <input type="date" id="fecha_emision" required><br>
+  <form id="facturaForm">
+    <h2 class="mb-3">Crear Nueva Factura</h2>
+    <label for="fecha_emision">Fecha de Emisión:</label>
+    <input type="date" id="fecha_emision" required><br>
 
-      <label for="cliente">Cliente:</label>
-      <select id="cliente" required>
-        <!-- Options serán llenados dinámicamente con JavaScript -->
-      </select><br>
+    <label for="cliente">Cliente:</label>
+    <select id="cliente" required>
+      <!-- Options serán llenados dinámicamente con JavaScript -->
+    </select><br>
 
-      <div id="productosServicios">
-        <!-- Aquí se agregarán dinámicamente los campos para productos y servicios -->
-      </div>
+    <div id="productosServicios">
+      <!-- Aquí se agregarán dinámicamente los campos para productos y servicios -->
+    </div>
 
-      <button type="button" onclick="agregarProductoServicio()">Agregar Producto/Servicio</button><br>
+    <button type="button" onclick="agregarProducto()">Agregar Producto</button>
+    <button type="button" onclick="agregarServicio()">Agregar Servicio</button><br>
 
-      <button type="button" onclick="crearFactura()">Crear Factura</button>
-    </form>
+    <button type="button" onclick="crearFactura()">Crear Factura</button>
+  </form>
 </div>
+
 
 
 </main>
