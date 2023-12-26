@@ -169,10 +169,10 @@ section.row > .col-md-6 > .card > .card-body > .card-text {
   text-align: center;
 }
 
-#clientesListContainer h2 {
+#clientesListContainer  h2  {
   font-size: 34px;
   color: var(--color-texto-principal);
-  position: relative;
+  position: center;
   margin-top: 20px;
 }
 
@@ -208,7 +208,7 @@ section.row > .col-md-6 > .card > .card-body > .card-text {
   text-align: center; /* Centra el texto dentro del formulario */
 }
 
-#altaClienteForm h2 {
+#crearClienteForm h2 {
   margin-bottom: 20px; /* Aumenta el espacio inferior del título */
   color: var(--color-texto-principal);
 }
@@ -230,6 +230,223 @@ section.row > .col-md-6 > .card > .card-body > .card-text {
   margin-bottom: 20px; /* Aumenta el espacio inferior del título */
   color: var(--color-texto-principal);
 }
+
+
+/* pRODUCTOS */
+/* ListaPRODUCTOS */
+#productosListContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  text-align: center;
+}
+
+ #productosListContainer h2 {
+  font-size: 34px;
+  color: var(--color-texto-principal);
+  text-align: center;
+  margin-top: 20px;
+}
+
+#productosTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+#productosTable th, #productosTable td {
+  border: 1px solid var(--color-principal);
+  padding: 8px;
+  text-align: left;
+}
+
+#productosTable th {
+  background-color: var(--color-secundario);
+}
+
+#productosTable tbody tr:hover {
+  background-color: var(--color-terciario);
+}
+
+/* alta */
+.altaProductoContainer {
+  max-width: 600px;
+  margin: auto; /* Centra el contenedor en la pantalla */
+  padding: 20px; /* Añade espacio interno al contenedor */
+}
+
+#altaProductoForm {
+  display: none;
+  text-align: center; /* Centra el texto dentro del formulario */
+}
+
+#crearProductoForm h2 {
+  margin-bottom: 20px; /* Aumenta el espacio inferior del título */
+  color: var(--color-texto-principal);
+}
+
+/* SERVICIOS */
+/* ListaServicios */
+#serviciosListContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  text-align: center;
+}
+
+ #serviciosListContainer h2 {
+  font-size: 34px;
+  color: var(--color-texto-principal);
+  text-align: center;
+  margin-top: 20px;
+}
+
+#serviciosTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+#serviciosTable th, #serviciosTable td {
+  border: 1px solid var(--color-principal);
+  padding: 8px;
+  text-align: left;
+}
+
+#serviciosTable th {
+  background-color: var(--color-secundario);
+}
+
+#serviciosTable tbody tr:hover {
+  background-color: var(--color-terciario);
+}
+
+/* alta */
+.altaServicioContainer {
+  max-width: 600px;
+  margin: auto; /* Centra el contenedor en la pantalla */
+  padding: 20px; /* Añade espacio interno al contenedor */
+}
+
+#altaServicioForm {
+  display: none;
+  text-align: center; /* Centra el texto dentro del formulario */
+}
+
+#crearServicioForm h2 {
+  margin-bottom: 20px; /* Aumenta el espacio inferior del título */
+  color: var(--color-texto-principal);
+}
+
+
+/* FACTURAS */
+/* ListaFACTURAS */
+#facturasListContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  text-align: center;
+}
+
+ #facturasListContainer h2 {
+  font-size: 34px;
+  color: var(--color-texto-principal);
+  text-align: center;
+  margin-top: 20px;
+}
+
+#facturasTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+#facturasTable th, #facturasTable td {
+  border: 1px solid var(--color-principal);
+  padding: 8px;
+  text-align: left;
+}
+
+#facturasTable th {
+  background-color: var(--color-secundario);
+}
+
+#facturasTable tbody tr:hover {
+  background-color: var(--color-terciario);
+}
+
+/* alta */
+.altaFacturaContainer {
+  max-width: 600px;
+  margin: auto; /* Centra el contenedor en la pantalla */
+  padding: 20px; /* Añade espacio interno al contenedor */
+}
+
+#facturaForm h2 {
+  margin-bottom: 20px; /* Aumenta el espacio inferior del título */
+  color: var(--color-texto-principal);
+}
+
+form {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: var;
+
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #052506;
+  color: #fff;
+  padding: 10px 15px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+#productosServicios {
+  margin-bottom: 16px;
+}
+
+.productoServicio {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.productoServicio input,
+.productoServicio select {
+  width: calc(50% - 4px);
+  margin-bottom: 0;
+}
+
+.productoServicio button {
+  width: calc(50% - 4px);
+  margin-left: 8px;
+}
+
 
 /* queries*/
 
@@ -255,6 +472,34 @@ section.row > .col-md-6 > .card > .card-body > .card-text {
 /* Media query para pantallas más pequeñas */
 @media (max-width: 767px) {
   #clientesTable {
+    overflow-x: auto;
+    display: block;
+  }
+}
+
+/* query para tabla de productos */
+/* Media query para pantallas más pequeñas */
+@media (max-width: 767px) {
+  #productosTable {
+    overflow-x: auto;
+    display: block;
+  }
+}
+
+/* query para tabla de servicios */
+/* Media query para pantallas más pequeñas */
+@media (max-width: 767px) {
+  #serviciosTable {
+    overflow-x: auto;
+    display: block;
+  }
+}
+
+
+/* query para tabla de facturas */
+/* Media query para pantallas más pequeñas */
+@media (max-width: 767px) {
+  #facturasTable {
     overflow-x: auto;
     display: block;
   }

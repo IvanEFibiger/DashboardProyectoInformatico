@@ -56,7 +56,7 @@
 <main>
   <!-- Lista de Facturas -->
   <div class="container facturasListContainer" id="facturasListContainer">
-    <h2 class="mb-3">LISTA DE CLIENTES</h2>
+    <h2 class="mb-3">LISTA DE FACTURAS</h2>
   
     <!-- Aquí se utiliza una tabla para mostrar la lista de clientes -->
     <table id="facturasTable" class="table table-striped">
@@ -130,26 +130,27 @@
   </div>
 </div>
 
+<div class="container altaFactura">
+    
+    <form id="facturaForm">
+      <h2 class="mb-3">Crear Nueva Factura</h2>
+      <label for="fecha_emision">Fecha de Emisión:</label>
+      <input type="date" id="fecha_emision" required><br>
 
-<h1>Crear Nueva Factura</h1>
+      <label for="cliente">Cliente:</label>
+      <select id="cliente" required>
+        <!-- Options serán llenados dinámicamente con JavaScript -->
+      </select><br>
 
-<form id="facturaForm">
-  <label for="fecha_emision">Fecha de Emisión:</label>
-  <input type="date" id="fecha_emision" required><br>
+      <div id="productosServicios">
+        <!-- Aquí se agregarán dinámicamente los campos para productos y servicios -->
+      </div>
 
-  <label for="cliente">Cliente:</label>
-  <select id="cliente" required>
-    <!-- Options serán llenados dinámicamente con JavaScript -->
-  </select><br>
+      <button type="button" onclick="agregarProductoServicio()">Agregar Producto/Servicio</button><br>
 
-  <div id="productosServicios">
-    <!-- Aquí se agregarán dinámicamente los campos para productos y servicios -->
-  </div>
-
-  <button type="button" onclick="agregarProductoServicio()">Agregar Producto/Servicio</button><br>
-
-  <button type="button" onclick="crearFactura()">Crear Factura</button>
-</form>
+      <button type="button" onclick="crearFactura()">Crear Factura</button>
+    </form>
+</div>
 
 
 </main>
