@@ -1,0 +1,75 @@
+@media print {
+    body * {
+      visibility: hidden;
+    }
+  
+    #facturaModal,
+    #facturaModal * {
+      visibility: visible;
+    }
+  
+    #facturaModal {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  
+    #facturaModal .modal-dialog {
+      width: 100%;
+      max-width: none;
+    }
+  
+    #facturaModal .modal-content {
+      height: auto;
+      min-height: 100%;
+      border: none;
+    }
+  
+    #facturaModal .modal-body {
+      text-align: center;
+    }
+  
+    #facturaModal .table {
+      width: 100%;
+    }
+  
+    #tituloFactura {
+      font-size: 28px;
+      font-weight: bold;
+    }
+  
+    #nombreUsuario {
+      font-size: 20px;
+      font-weight: bold;
+    }
+  
+    #nombreCliente {
+        margin-bottom: 0; /* Evita espacio adicional debajo de "Nombre del Cliente" */
+      }
+      
+      #cuitCliente {
+        margin-bottom: 1rem; /* Añade espacio entre "CUIT del Cliente" y otros elementos */
+      }
+      
+      #tituloFactura,
+      #numeroFactura,
+      #fechaFactura {
+        margin-bottom: 0; /* Evita espacio adicional debajo de los elementos del encabezado */
+      }
+      
+      #numeroFactura,
+      #fechaFactura {
+        margin-left: 1rem; /* Añade espacio entre "Número de Factura" y "Fecha de Emisión" */
+      }
+  
+    #divTotal {
+      text-align: left;
+      padding-top: 15px;
+    }
+  
+    .table th,
+    .table td {
+      text-align: center;
+    }
+  }
+  

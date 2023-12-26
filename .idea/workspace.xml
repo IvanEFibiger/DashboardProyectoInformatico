@@ -7,9 +7,13 @@
     <list default="true" id="2f7399b8-beae-4cda-ad1a-a31d64d95881" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BACKEND/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FRONTEND/Clientes.html" beforeDir="false" afterPath="$PROJECT_DIR$/FRONTEND/Clientes.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FRONTEND/Clientes.js" beforeDir="false" afterPath="$PROJECT_DIR$/FRONTEND/Clientes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FRONTEND/dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/FRONTEND/dashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FRONTEND/Facturas.html" beforeDir="false" afterPath="$PROJECT_DIR$/FRONTEND/Facturas.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FRONTEND/Facturas.js" beforeDir="false" afterPath="$PROJECT_DIR$/FRONTEND/Facturas.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FRONTEND/Productos.html" beforeDir="false" afterPath="$PROJECT_DIR$/FRONTEND/Productos.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FRONTEND/Productos.js" beforeDir="false" afterPath="$PROJECT_DIR$/FRONTEND/Productos.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FRONTEND/Servicios.html" beforeDir="false" afterPath="$PROJECT_DIR$/FRONTEND/Servicios.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FRONTEND/Servicios.js" beforeDir="false" afterPath="$PROJECT_DIR$/FRONTEND/Servicios.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

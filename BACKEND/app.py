@@ -13,7 +13,7 @@ from Productos import *
 from Servicios import *
 from detalle_factura import *
 from factura import *
-from collections import Counter
+from math import ceil
 
 # Crear una instancia de la aplicación Flask
 app = Flask(__name__)
@@ -237,15 +237,6 @@ def get_user_by_id(id_user):
 
 """Clientes"""
 
-"""@app.route('/usuarios/<user_id>/clientes', methods=['OPTIONS'])
-def handle_options(user_id):
-    # Configurar los encabezados CORS necesarios
-    response_headers = {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST',
-        'Access-Control-Allow-Headers': 'Content-Type, x-access-token, user-id',
-    }
-    return ('', 204, response_headers)"""
 
 """Obtener todos los clientes"""
 @app.route('/usuarios/<int:id_user>/clientes', methods=['GET'])
@@ -253,7 +244,7 @@ def handle_options(user_id):
 @user_resources
 def get_all_clientes(id_user):
    cur = mysql.connection.cursor()
-   cur.execute('SELECT * FROM clientes WHERE id_usuario = {0} AND activo = 1'.format(id_user))
+   cur.execute('SELECT * FROM clientes WHERE id_usuario = %s AND activo = 1', (id_user,))
    data = cur.fetchall()
    personList = []
 
@@ -483,7 +474,7 @@ def get_total_clientes(id_user):
     return jsonify({'total': total_clientes})
 
 
-from math import ceil
+
 
 @app.route('/usuarios/<int:id_user>/clientes-paginados', methods=['GET'])
 @token_required
@@ -540,6 +531,39 @@ def get_all_productos(id_user):
        prodList.append(objProd.to_json())
 
    return jsonify(prodList)
+
+
+@app.route('/usuarios/<int:id_user>/productos/stock-positivo', methods=['GET'])
+@token_required
+@user_resources
+def get_productos_con_stock_positivo(id_user):
+    try:
+        cur = mysql.connection.cursor()
+
+        cur.execute('''
+            SELECT P.*
+            FROM productos P
+            JOIN (
+                SELECT MS.producto_id, MAX(MS.id) AS ultimo_id
+                FROM movimiento_stock MS
+                GROUP BY MS.producto_id
+            ) ultimos_movimientos ON P.id = ultimos_movimientos.producto_id
+            JOIN movimiento_stock MS ON P.id = MS.producto_id AND MS.id = ultimos_movimientos.ultimo_id
+            WHERE MS.stock_real > 0
+            AND P.id_usuario = %s  
+        ''', (id_user,))
+
+        data = cur.fetchall()
+        prodList = []
+
+        for row in data:
+            objProd = Producto(row)
+            prodList.append(objProd.to_json())
+
+        return jsonify(prodList)
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
 
 
 """Crear nuevo producto"""
@@ -740,6 +764,61 @@ def get_ranking_productos(id_user):
         return jsonify({"message": str(e)}), 500
 
 
+# Endpoint para obtener el total de clientes
+@app.route('/usuarios/<int:id_user>/productos/total', methods=['GET'])
+@token_required
+@user_resources
+def get_total_productos(id_user):
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT COUNT(*) FROM productos WHERE id_usuario = {0} AND activo = 1'.format(id_user))
+    total_productos = cur.fetchone()[0]
+    return jsonify({'total': total_productos})
+
+
+
+
+@app.route('/usuarios/<int:id_user>/productos-paginados', methods=['GET'])
+@token_required
+@user_resources
+def get_paginated_productos(id_user):
+    try:
+        page = request.args.get('page', 1, type=int)
+        per_page = 5  # Número de productos por página
+
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT COUNT(*) FROM productos WHERE id_usuario = %s AND activo = 1', (id_user,))
+        total_products = cur.fetchone()[0]
+
+        cur.execute('SELECT * FROM productos WHERE id_usuario = %s AND activo = 1 LIMIT %s OFFSET %s', (id_user, per_page, (page - 1) * per_page))
+        print(cur.mogrify('SELECT * FROM productos WHERE id_usuario = %s AND activo = 1 LIMIT %s OFFSET %s',
+                          (id_user, per_page, (page - 1) * per_page)))
+        data = cur.fetchall()
+
+        productList = []
+
+        for row in data:
+            objProductos = Producto(row)
+            productList.append(objProductos.to_json())
+
+        total_pages = ceil(total_products / per_page)
+        current_page = page
+
+        response_data = {
+            "total_pages": total_pages,
+            "current_page": current_page,
+            "Products": productList
+        }
+
+        return jsonify(response_data)
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
+
+
+
+
+
+
 """servicios"""
 
 """Obtener todos los servicios activos"""
@@ -911,6 +990,57 @@ def get_ranking_servicios(id_user):
     except Exception as e:
         return jsonify({"message": str(e)}), 500
 
+# Endpoint para obtener el total de clientes
+@app.route('/usuarios/<int:id_user>/servicios/total', methods=['GET'])
+@token_required
+@user_resources
+def get_total_servicios(id_user):
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT COUNT(*) FROM servicios WHERE id_usuario = {0} AND activo = 1'.format(id_user))
+    total_servicios = cur.fetchone()[0]
+    return jsonify({'total': total_servicios})
+
+
+
+
+@app.route('/usuarios/<int:id_user>/servicios-paginados', methods=['GET'])
+@token_required
+@user_resources
+def get_paginated_servicios(id_user):
+    try:
+        page = request.args.get('page', 1, type=int)
+        per_page = 5  # Número de servicios por página
+
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT COUNT(*) FROM servicios WHERE id_usuario = %s AND activo = 1', (id_user,))
+        total_products = cur.fetchone()[0]
+
+        cur.execute('SELECT * FROM servicios WHERE id_usuario = %s AND activo = 1 LIMIT %s OFFSET %s', (id_user, per_page, (page - 1) * per_page))
+        print(cur.mogrify('SELECT * FROM servicios WHERE id_usuario = %s AND activo = 1 LIMIT %s OFFSET %s',
+                          (id_user, per_page, (page - 1) * per_page)))
+        data = cur.fetchall()
+
+        serviceList = []
+
+        for row in data:
+            objServicios = Servicio(row)
+            serviceList.append(objServicios.to_json())
+
+        total_pages = ceil(total_products / per_page)
+        current_page = page
+
+        response_data = {
+            "total_pages": total_pages,
+            "current_page": current_page,
+            "service": serviceList
+        }
+
+        return jsonify(response_data)
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
+
+
 
 
 
@@ -935,7 +1065,7 @@ def get_all_facturas(id_user):
    return jsonify(facturaList)
 
 
-from flask import request, jsonify
+
 
 @app.route('/usuarios/<int:id_user>/factura', methods=['POST'])
 @token_required
@@ -967,9 +1097,7 @@ def create_factura(id_user):
                 id_producto = producto_servicio.get("id_producto")
                 id_servicio = producto_servicio.get("id_servicio")
 
-                # Verificar que la cantidad de cada producto sea mayor que cero
-                if cantidad <= 0:
-                    return jsonify({"message": "La cantidad de cada producto debe ser mayor que cero"}), 400
+
 
                 # Obtener la fecha de la factura
                 fecha_factura = fecha_emision
@@ -992,15 +1120,33 @@ def create_factura(id_user):
                         (factura_id, id_producto, id_servicio, cantidad, precio_unitario, subtotal))
                     mysql.connection.commit()
 
-                    # Actualizar el control de stock para el producto
-                    cur.execute(
-                        'INSERT INTO movimiento_stock (producto_id, tipo, cantidad, fecha) VALUES (%s, %s, %s, %s)',
-                        (id_producto, 'salida', cantidad, fecha_factura))
-                    mysql.connection.commit()
+                    # Actualizar el control de stock para el producto si id_producto no es nulo
+                    if id_producto:
+                        # Obtener el último stock real del producto
+                        cur.execute(
+                            'SELECT stock_real FROM movimiento_stock WHERE producto_id = %s ORDER BY id DESC LIMIT 1',
+                            (id_producto,))
+                        last_stock_row = cur.fetchone()
+
+                        if last_stock_row and last_stock_row[0] is not None:
+                            last_stock_real = last_stock_row[0]
+                            new_stock_real = last_stock_real - cantidad
+
+                            # Insertar un nuevo movimiento de stock con la salida
+                            cur.execute(
+                                'INSERT INTO movimiento_stock (producto_id, tipo, cantidad, fecha, stock_real) VALUES (%s, %s, %s, %s, %s)',
+                                (id_producto, 'salida', cantidad, fecha_factura, new_stock_real))
+                            mysql.connection.commit()
+                        else:
+                            return jsonify({
+                                "message": f"No se encontró el último stock para el producto con ID {id_producto}"}), 500
 
                 else:
                     return jsonify(
-                        {"message": f"No se encontró el precio para el {'producto' if id_producto else 'servicio'} con ID {id_producto or id_servicio}"}), 500
+                        {
+                            "message": f"No se encontró el precio para el {'producto' if id_producto else 'servicio'} con ID {id_producto or id_servicio}"}), 500
+
+
 
             # Calcular y actualizar la columna total
             cur.execute('SELECT SUM(subtotal) FROM Detalle_factura WHERE id_factura = %s', (factura_id,))
@@ -1069,11 +1215,20 @@ def remove_factura(id_user, id_factura):  # Asegúrate de utilizar 'id_user' y '
 @token_required
 @user_resources
 @factura_resource
-def consultar_factura(id_user, id_factura):  # Agregar id_user e id_factura como parámetros
+def consultar_factura(id_user, id_factura):
     cur = mysql.connection.cursor()
 
-    # Consultar factura por ID
-    cur.execute('SELECT * FROM Factura WHERE id = %s', (id_factura,))
+    # Consultar factura y detalles por ID
+    cur.execute('''
+        SELECT
+            factura.*,
+            clientes.nombre,
+            clientes.cuit
+        FROM factura
+        INNER JOIN clientes ON factura.id_clientes = Clientes.id
+        WHERE factura.id = %s
+    ''', (id_factura,))
+
     data_factura = cur.fetchall()
 
     if cur.rowcount == 0:
@@ -1083,12 +1238,12 @@ def consultar_factura(id_user, id_factura):  # Agregar id_user e id_factura como
     factura_info = obj_factura.to_json()
 
     # Calcular el total de la factura
-    cur.execute('SELECT total FROM Factura WHERE id = %s', (id_factura,))
+    cur.execute('SELECT total FROM factura WHERE id = %s', (id_factura,))
     total_row = cur.fetchone()
     total = total_row[0] if total_row and total_row[0] is not None else 0
 
     # Consultar detalle de factura por ID de factura
-    cur.execute('SELECT * FROM Detalle_factura WHERE id_factura = %s', (id_factura,))
+    cur.execute('SELECT * FROM detalle_factura WHERE id_factura = %s', (id_factura,))
     data_detalle = cur.fetchall()
 
     detalle_list = []
@@ -1100,12 +1255,12 @@ def consultar_factura(id_user, id_factura):  # Agregar id_user e id_factura como
     productos_servicios_list = []
     for detalle in detalle_list:
         if detalle["id_producto"]:
-            cur.execute('SELECT * FROM Productos WHERE id = %s', (detalle["id_producto"],))
+            cur.execute('SELECT * FROM productos WHERE id = %s', (detalle["id_producto"],))
             data_producto = cur.fetchone()
             obj_producto = Producto(data_producto)
             productos_servicios_list.append(obj_producto.to_json())
         elif detalle["id_servicio"]:
-            cur.execute('SELECT * FROM Servicios WHERE id = %s', (detalle["id_servicio"],))
+            cur.execute('SELECT * FROM servicios WHERE id = %s', (detalle["id_servicio"],))
             data_servicio = cur.fetchone()
             obj_servicio = Servicio(data_servicio)
             productos_servicios_list.append(obj_servicio.to_json())
@@ -1113,12 +1268,17 @@ def consultar_factura(id_user, id_factura):  # Agregar id_user e id_factura como
     # Organizar la salida
     output = {
         "factura": factura_info,
+        "cliente": {
+            "nombre_cliente": data_factura[0][5],  # Usando el índice correcto para 'nombre'
+            "cuit_cliente": data_factura[0][6]  # Usando el índice correcto para 'cuit'
+        },
         "detalles": detalle_list,
         "productos_servicios": productos_servicios_list,
         "total": total
     }
 
     return jsonify(output)
+
 
 
 
@@ -1227,7 +1387,94 @@ def get_servicio_mas_vendido(id_user):
         return jsonify({"message": str(e)}), 500
 
 
+@app.route('/usuarios/<int:id_user>/facturas/total', methods=['GET'])
+@token_required
+@user_resources
+def get_total_facturas_creadas(id_user):
+    try:
+        cur = mysql.connection.cursor()
 
+        # Contar la cantidad de facturas para el usuario específico
+        cur.execute('SELECT COUNT(*) FROM Factura WHERE id_usuario = %s', (id_user,))
+        total_facturas = cur.fetchone()[0]
+
+        return jsonify({"total_facturas_creadas": total_facturas})
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
+
+
+
+@app.route('/usuarios/<int:id_user>/facturas/detalles', methods=['GET'])
+@token_required
+@user_resources
+def get_detalles_facturas_paginadas(id_user):
+    try:
+        page = request.args.get('page', 1, type=int)
+        per_page = 5  # Número de facturas por página
+
+        cur = mysql.connection.cursor()
+
+        # Consultar todas las facturas para el usuario específico
+        cur.execute('SELECT * FROM factura WHERE id_usuario = %s', (id_user,))
+        data_facturas = cur.fetchall()
+
+        if not data_facturas:
+            return jsonify({"message": f"No hay facturas para el usuario con ID {id_user}"}), 404
+
+        total_facturas = len(data_facturas)
+
+        # Calcular el rango de facturas para la página actual
+        start_index = (page - 1) * per_page
+        end_index = start_index + per_page
+
+        # Filtrar las facturas para la página actual
+        facturas_paginadas = data_facturas[start_index:end_index]
+
+        factura_list = []
+
+        for factura_data in facturas_paginadas:
+            factura_id = factura_data[0]
+            fecha_emision = factura_data[1]
+            id_cliente = factura_data[2]
+
+            # Obtener el nombre del cliente
+            cur.execute('SELECT nombre FROM clientes WHERE id = %s', (id_cliente,))
+            nombre_cliente = cur.fetchone()[0]  # Asegúrate de seleccionar el primer elemento de la tupla
+
+            total = factura_data[4]
+
+            factura_info = {
+                "factura_id": factura_id,
+                "fecha_emision": fecha_emision,
+                "nombre_cliente": nombre_cliente,
+                "total": total
+            }
+
+            factura_list.append(factura_info)
+
+        total_pages = ceil(total_facturas / per_page)
+        current_page = page
+
+        response_data = {
+            "total_pages": total_pages,
+            "current_page": current_page,
+            "facturas_detalles": factura_list
+        }
+
+        return jsonify(response_data)
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
+
+
+
+
+
+
+
+
+"""Stock"""
 """Obtener los movimientos de stock"""
 @app.route('/usuarios/<int:id_user>/stock_movimientos', methods=['GET'])
 @token_required
@@ -1264,6 +1511,38 @@ def get_stock_movimientos(id_user):
 
     except Exception as e:
         return jsonify({"message": str(e)}), 500
+
+
+
+
+@app.route('/usuarios/<int:id_user>/productos/<int:id_producto>/ultimo_stock', methods=['GET'])
+@token_required
+@user_resources
+@producto_resource
+def get_ultimo_stock_producto(id_user, id_producto):
+    try:
+        cur = mysql.connection.cursor()
+
+        # Consulta para obtener el último movimiento de stock para un producto específico del usuario
+        cur.execute('''
+            SELECT MS.stock_real
+            FROM movimiento_stock MS
+            WHERE MS.producto_id = %s
+            ORDER BY MS.id DESC
+            LIMIT 1
+        ''', (id_producto,))
+
+        ultimo_stock = cur.fetchone()
+
+        if ultimo_stock:
+            return jsonify({"producto_id": id_producto, "stock_real": int(ultimo_stock[0])})
+        else:
+            return jsonify({"message": "No hay movimientos de stock para el producto"}), 404
+
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
+
+
 
 """Obtener el movimiento de stock por producto"""
 @app.route('/usuarios/<int:id_user>/stock_movimientos/<int:id_producto>', methods=['GET'])
