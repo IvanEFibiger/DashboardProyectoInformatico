@@ -1,8 +1,8 @@
+
 from api.models.Productos import Producto
 from api.Utilidades import *
 from flask import request, jsonify
-import datetime
-from datetime import date
+from datetime import date, datetime
 from math import ceil
 
 """Productos"""

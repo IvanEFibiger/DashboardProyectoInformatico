@@ -235,6 +235,7 @@ $('#crearServicioForm').on('submit', function (event) {
       setTimeout(function () {
         $('#mensajeServicioGuardado').hide();
       }, 3000); // Oculta el mensaje después de 3 segundos
+      location.reload();
     },
     error: function (error) {
       console.error('Error al crear servicio:', error);

@@ -350,9 +350,9 @@ $('#crearProductoForm').on('submit', function (event) {
       // Realiza cualquier acción necesaria después de la creación exitosa
       console.log('Producto creado:', response);
 
-      // Limpiar el formulario después de la creación exitosa
+      alert("Producto guardado")
       $('#crearProductoForm')[0].reset();
-
+      location.reload();
     },
     error: function (error) {
       console.error('Error al crear producto:', error);

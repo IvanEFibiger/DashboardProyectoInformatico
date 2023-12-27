@@ -32,7 +32,7 @@ function obtenerFacturasPaginadas(page) {
     },
     success: function (data) {
       // Limpia el cuerpo de la tabla
-      $('#facturasTableBody').empty();  // Utiliza el ID correcto
+      $('#facturasTableBody').empty();  
 
       // Itera sobre los datos y agrega filas a la tabla
       data.facturas_detalles.forEach(function (factura) {
@@ -47,7 +47,7 @@ function obtenerFacturasPaginadas(page) {
                          <button class="btn btn-danger btn-delete" data-factura-id="${factura.factura_id}">Eliminar</button>
                        </td>
                      </tr>`;
-        $('#facturasTableBody').append(row);  // Utiliza el ID correcto
+        $('#facturasTableBody').append(row); 
       });
 
       // Actualiza la paginación
@@ -345,7 +345,7 @@ function cargarProductos() {
   const selectProductos = $('.producto:last');
 
   $.ajax({
-    url: `http://127.0.0.1:5500/usuarios/${userId}/productos`,
+    url: `http://127.0.0.1:5500/usuarios/${userId}/productos/stock-positivo`,
     type: 'GET',
     headers: {
       'x-access-token': token,
@@ -527,6 +527,7 @@ function crearFactura() {
     data: JSON.stringify(formData),
     success: function (data) {
       console.log('Factura creada exitosamente:', data);
+      alert('Factura creada exitosamente:', data);
       location.reload();
     },
     error: function (error) {

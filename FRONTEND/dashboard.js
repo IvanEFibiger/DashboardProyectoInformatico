@@ -55,10 +55,8 @@ function obtenerNombreDeUsuarioDesdeLocalStorage() {
 }
 
 
-// Ejemplo de uso:
-// Obtener nombre de usuario cuando sea necesario
 
-// Ejemplo de uso:
+
 // Obtener token y nombre de usuario cuando sea necesario
 const token = obtenerTokenDesdeLocalStorage();
 const nombreUsuario = obtenerNombreDeUsuarioDesdeLocalStorage();
@@ -530,7 +528,7 @@ document.addEventListener("DOMContentLoaded", function () {
           // Agrupar productos por colores
           const productosPorColores = {};
           data.forEach(producto => {
-            const colorFondo = producto.stock_real > 5 ? 'green' : (producto.stock_real >= 1 && producto.stock_real <= 4 ? 'yellow' : 'red');
+            const colorFondo = producto.stock_real > 5 ? 'green' : (producto.stock_real >= 1 && producto.stock_real <= 5 ? 'yellow' : 'red');
             productosPorColores[colorFondo] = productosPorColores[colorFondo] || [];
             productosPorColores[colorFondo].push(producto);
           });
@@ -618,8 +616,8 @@ document.addEventListener("DOMContentLoaded", function () {
           table.appendChild(thead);
 
           const tbody = document.createElement("tbody");
-
-          for (let i = 0; i < Math.min(5, data.length); i++) {
+          const startIndex = Math.max(0, data.length - 5);
+          for (let i = startIndex; i < data.length; i++) {
             const venta = data[i];
             const row = document.createElement("tr");
 

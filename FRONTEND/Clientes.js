@@ -228,10 +228,10 @@ $('#crearClienteForm').on('submit', function (event) {
       success: function (response) {
           // Realiza cualquier acción necesaria después de la creación exitosa
           console.log('Cliente creado:', response);
-
+          alert('Cliente creado:', response);
           // Limpiar el formulario después de la creación exitosa
           $('#crearClienteForm')[0].reset();
-
+          location.reload();
       },
       error: function (error) {
           console.error('Error al crear cliente:', error);
