@@ -5,7 +5,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2f7399b8-beae-4cda-ad1a-a31d64d95881" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/FRONTEND/Facturas.js" beforeDir="false" afterPath="$PROJECT_DIR$/FRONTEND/Facturas.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BACKEND/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BACKEND/api/Utilidades.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BACKEND/api/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BACKEND/api/db/db.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BACKEND/api/routes/Clientes.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BACKEND/api/routes/Productos.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BACKEND/api/routes/Servicios.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BACKEND/api/routes/Users.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BACKEND/api/routes/factura.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BACKEND/api/routes/movimiento_stock.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BACKEND/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/PROYECTO INFORMATICO.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PROYECTO INFORMATICO.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BACKEND/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BACKEND/Clientes.py" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/api/models/Clientes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BACKEND/Productos.py" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/api/models/Productos.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BACKEND/Servicios.py" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/api/models/Servicios.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BACKEND/Users.py" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/api/models/Users.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BACKEND/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/api/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BACKEND/detalle_factura.py" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/api/models/detalle_factura.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BACKEND/factura.py" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/api/models/factura.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BACKEND/movimiento_stock.py" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/api/models/movimiento_stock.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FRONTEND/Clientes.html" beforeDir="false" afterPath="$PROJECT_DIR$/FRONTEND/Clientes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FRONTEND/Facturas.html" beforeDir="false" afterPath="$PROJECT_DIR$/FRONTEND/Facturas.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FRONTEND/Productos.html" beforeDir="false" afterPath="$PROJECT_DIR$/FRONTEND/Productos.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FRONTEND/Servicios.html" beforeDir="false" afterPath="$PROJECT_DIR$/FRONTEND/Servicios.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FRONTEND/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/FRONTEND/dashboard.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,10 +48,16 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2YYBmvcG0unoUsP4VsoM1eaDffv" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -48,32 +80,13 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Dai\Desktop\Proyecto Informático\DashboardProyectoInformatico\BACKEND\api\models" />
       <recent name="H:\UPSO\UPSO\PROYECTO_INFORMATICO\PROYECTO INFORMATICO\BACKEND" />
+      <recent name="H:\UPSO\UPSO\PROYECTO_INFORMATICO\PROYECTO INFORMATICO\BACKEND\api" />
+      <recent name="H:\UPSO\UPSO\PROYECTO_INFORMATICO\PROYECTO INFORMATICO\BACKEND\api\models" />
+      <recent name="C:\Users\Dai\Desktop\Proyecto Informático\DashboardProyectoInformatico\BACKEND\api\models" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.app (1)">
-    <configuration name="app (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="PROYECTO INFORMATICO" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/BACKEND" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/BACKEND/app.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager">
     <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="PROYECTO INFORMATICO" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -95,9 +108,29 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="PROYECTO INFORMATICO" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/BACKEND" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="H:\UPSO\UPSO\PROYECTO_INFORMATICO\PROYECTO INFORMATICO\BACKEND\api\app.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.app (1)" />
         <item itemvalue="Python.app" />
         <item itemvalue="Python.app" />
       </list>
