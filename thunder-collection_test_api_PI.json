@@ -1,0 +1,1163 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "test_api_PI",
+    "dateExported": "2023-12-27T05:10:41.412Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "b80006a4-b69c-4d05-960d-d8498529b7f8",
+            "name": "productos",
+            "containerId": "",
+            "created": "2023-11-28T03:55:14.723Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "dfa90d4c-cdce-4d7f-bebd-d53766846c5b",
+            "name": "Clientes",
+            "containerId": "",
+            "created": "2023-11-28T03:55:37.488Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "f48cb553-318b-48d5-8f52-fa4dbbce32d9",
+            "name": "Servicios",
+            "containerId": "",
+            "created": "2023-11-28T04:17:03.615Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "713a831b-6457-4085-b3f8-204cbe33748a",
+            "name": "Facturas",
+            "containerId": "",
+            "created": "2023-11-29T07:33:52.086Z",
+            "sortNum": 40000
+        },
+        {
+            "_id": "92426bc8-fa1b-4e80-b341-b370ed92d018",
+            "name": "Stock",
+            "containerId": "",
+            "created": "2023-12-03T17:01:55.104Z",
+            "sortNum": 50000
+        },
+        {
+            "_id": "20715b3a-2cd0-466b-9d7e-8ea855ced9f9",
+            "name": "Login",
+            "containerId": "",
+            "created": "2023-12-03T22:20:13.653Z",
+            "sortNum": 60000
+        },
+        {
+            "_id": "34b566b6-0266-47a6-9309-d444f4a93e20",
+            "name": "Usuarios",
+            "containerId": "",
+            "created": "2023-12-12T04:41:28.898Z",
+            "sortNum": 70000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "b7f41e2d-0bf2-4904-9194-31bb81ba6bf7",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "20715b3a-2cd0-466b-9d7e-8ea855ced9f9",
+            "name": "LOGIN",
+            "url": "/login",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-11-27T01:53:06.450Z",
+            "modified": "2023-12-26T06:10:34.885Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "basic",
+                "basic": {
+                    "username": "librevilla@mail.com",
+                    "password": "pass"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "7b2c4099-f67f-4c28-b3ce-fe6bc4dc23b1",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "dfa90d4c-cdce-4d7f-bebd-d53766846c5b",
+            "name": "GET cliente by ID",
+            "url": "/usuarios/1/clientes/2",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-11-28T01:28:34.284Z",
+            "modified": "2023-12-04T02:53:25.190Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAxNjY2OTM5fQ.RtM9THp0kX96fXY1A1R3Q_bRok3w_Csccr-690BvPQ4"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "0c7b3f2a-90e7-48dc-a472-7865188ae0c0",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "b80006a4-b69c-4d05-960d-d8498529b7f8",
+            "name": "GET All Productos",
+            "url": "/usuarios/2/productos",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-11-28T02:38:12.735Z",
+            "modified": "2023-12-26T23:58:12.778Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZXhwIjoxNzAzNjQ0MDY1fQ.IdZZ_RANyQ0cQFmWQwJVY7QfSr6jZnZZ_nZuZi36jvE"
+                },
+                {
+                    "name": "user-id",
+                    "value": "2"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "d7b9a437-e2a4-4317-8159-ebde8d6f0e7c",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "dfa90d4c-cdce-4d7f-bebd-d53766846c5b",
+            "name": "DELETE Cliente by ID",
+            "url": "/usuarios/1/clientes/1",
+            "method": "DELETE",
+            "sortNum": 20000,
+            "created": "2023-11-28T00:46:12.671Z",
+            "modified": "2023-12-04T02:51:44.740Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAxNjY2OTM5fQ.RtM9THp0kX96fXY1A1R3Q_bRok3w_Csccr-690BvPQ4"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "e1d7b0d2-07f7-43d9-9caa-0a31a1fa981d",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "b80006a4-b69c-4d05-960d-d8498529b7f8",
+            "name": "POST New Producto",
+            "url": "/usuarios/1/productos",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-11-28T03:30:08.155Z",
+            "modified": "2023-12-14T03:37:28.181Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAyNTI4Nzc0fQ.751DtDp8_kK4qEMIo31jNqtk4cRt9kCFiFBevG2fLXA"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nombre\": \"SmartWatch Samsung\",\n  \"descripcion\": \"Alerta de mensajes, control Cardio, pasos y sueño\",\n  \"precio\": 22000,\n  \"cantidad\":4,\n  \"id_usuario\": 1\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "5799090c-512e-4a6d-8025-05d634093592",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "dfa90d4c-cdce-4d7f-bebd-d53766846c5b",
+            "name": "PUT Cliente by ID",
+            "url": "/usuarios/1/clientes/2",
+            "method": "PUT",
+            "sortNum": 30000,
+            "created": "2023-11-28T00:29:38.508Z",
+            "modified": "2023-12-03T19:58:48.986Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAxNjM3MzQ0fQ.MF7jVLXKoGvicVqgVKT_7epLY2huayWaZ2dh_A0HHv0"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nombre\": \"Cooperativa\",\n  \"email\": \"coope@mail.com\",\n  \"direccion\": \"calle 7 100\",\n  \"cuit\": 30504978552\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "90dce962-7a16-42f9-803f-d5e693846c98",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "b80006a4-b69c-4d05-960d-d8498529b7f8",
+            "name": "PUT Producto by ID",
+            "url": "/usuarios/1/productos/22",
+            "method": "PUT",
+            "sortNum": 30000,
+            "created": "2023-11-28T03:46:34.307Z",
+            "modified": "2023-12-03T19:35:16.234Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAxNjM3MzQ0fQ.MF7jVLXKoGvicVqgVKT_7epLY2huayWaZ2dh_A0HHv0"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nombre\": \"PC AIO SAMSUNG\",\n  \"descripcion\": \"i7 12900, 16 RAM DDR4, SSD M.2 980GB\",\n  \"precio\": 600000,\n  \"cantidad\": 10\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "e36190dc-1471-402c-b3ad-3b0fea951c56",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "dfa90d4c-cdce-4d7f-bebd-d53766846c5b",
+            "name": "POST New Cliente",
+            "url": "/usuarios/1/clientes",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2023-11-27T23:58:08.586Z",
+            "modified": "2023-12-15T23:15:05.356Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAyNjg0NDkxfQ.-UPe7I78uFwVaAVgAQ-nQXRUgwhxoN7v6_IgSg8Y04o"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nombre\": \"Ivan FIbiger\",\n  \"email\": \"ifibiger@mail.com\",\n  \"direccion\": \"calle 5 500\",\n  \"cuit\": 30344978552,\n  \"id_usuario\": 1\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "0edf6e83-5871-414e-9ebb-e2b463701565",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "dfa90d4c-cdce-4d7f-bebd-d53766846c5b",
+            "name": "GET  all clients",
+            "url": "/usuarios/1/clientes",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2023-11-26T03:33:34.943Z",
+            "modified": "2023-12-16T00:49:38.369Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAyNjk2NzY4fQ.VTL7jwEAQ7wFxvB3-qYFJsGKJwzgxJvUQ4LnzqepjSA"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "da027c82-ad11-4c78-9a8d-65d75ddb8547",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "b80006a4-b69c-4d05-960d-d8498529b7f8",
+            "name": "DELETE Producto by ID",
+            "url": "/usuarios/1/productos/21",
+            "method": "DELETE",
+            "sortNum": 100000,
+            "created": "2023-11-28T04:13:13.844Z",
+            "modified": "2023-12-03T19:37:31.541Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAxNjM3MzQ0fQ.MF7jVLXKoGvicVqgVKT_7epLY2huayWaZ2dh_A0HHv0"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "f566471e-0fa1-4fb9-9725-3e6ab2a4b0b5",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "b80006a4-b69c-4d05-960d-d8498529b7f8",
+            "name": "GET Producto by ID",
+            "url": "/usuarios/1/productos/22",
+            "method": "GET",
+            "sortNum": 110000,
+            "created": "2023-11-28T04:16:07.080Z",
+            "modified": "2023-12-03T20:05:30.489Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAxNjM3MzQ0fQ.MF7jVLXKoGvicVqgVKT_7epLY2huayWaZ2dh_A0HHv0"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "85f01c1b-0a3e-4ad7-8741-37cfba7f3e73",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "f48cb553-318b-48d5-8f52-fa4dbbce32d9",
+            "name": "GET All Servicios",
+            "url": "/usuarios/1/servicios",
+            "method": "GET",
+            "sortNum": 120000,
+            "created": "2023-11-28T04:50:55.679Z",
+            "modified": "2023-12-17T16:00:36.854Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAyODM3ODIzfQ.A26eb5OapBovveCTUEBH1SHvnX0BnDIQW8K96_iCl9A"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "2fabd4ed-7c38-4253-a423-b1c90541cbd1",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "f48cb553-318b-48d5-8f52-fa4dbbce32d9",
+            "name": "POST New Servicio",
+            "url": "/usuarios/1/servicios",
+            "method": "POST",
+            "sortNum": 130000,
+            "created": "2023-11-28T04:51:52.142Z",
+            "modified": "2023-12-14T00:10:12.580Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAyNTIwNjg3fQ.bMTa04qNkvlz3P5ovlG6068XU96Ops4LPPdp7C3DWbk"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nombre\": \"Optimización\",\n  \"descripcion\": \"Optimización de Sistema\",\n  \"precio\": 5500,\n  \"id_usuario\": 1\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "f45a9d9a-f69b-41ab-b61c-206ef06a091e",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "f48cb553-318b-48d5-8f52-fa4dbbce32d9",
+            "name": "PUT Servicio by ID",
+            "url": "/usuarios/1/servicios/9",
+            "method": "PUT",
+            "sortNum": 140000,
+            "created": "2023-11-28T04:58:12.734Z",
+            "modified": "2023-12-03T20:23:55.115Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAxNjM3MzQ0fQ.MF7jVLXKoGvicVqgVKT_7epLY2huayWaZ2dh_A0HHv0"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"nombre\": \"Formateo v34\",\n  \"descripcion\": \"borrado y reinstalación de Sistema operativo y programas basicos\",\n  \"precio\": 9000\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "31e25777-7285-49ef-9296-1151e8aaafab",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "f48cb553-318b-48d5-8f52-fa4dbbce32d9",
+            "name": "DELETE Servicio by ID",
+            "url": "/usuarios/1/servicios/6",
+            "method": "DELETE",
+            "sortNum": 150000,
+            "created": "2023-11-28T05:02:06.347Z",
+            "modified": "2023-12-03T20:12:26.647Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAxNjM3MzQ0fQ.MF7jVLXKoGvicVqgVKT_7epLY2huayWaZ2dh_A0HHv0"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "29785e8b-a5a8-4101-8287-b0486a6ad933",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "f48cb553-318b-48d5-8f52-fa4dbbce32d9",
+            "name": "GET Servicio by ID",
+            "url": "/usuarios/1/servicios/9",
+            "method": "GET",
+            "sortNum": 160000,
+            "created": "2023-11-28T05:03:37.220Z",
+            "modified": "2023-12-03T20:25:01.258Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAxNjM3MzQ0fQ.MF7jVLXKoGvicVqgVKT_7epLY2huayWaZ2dh_A0HHv0"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "5dda4d5a-54fb-4411-9f0c-e1b95c368cd5",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "713a831b-6457-4085-b3f8-204cbe33748a",
+            "name": "GET all Facturas",
+            "url": "/usuarios/1/factura",
+            "method": "GET",
+            "sortNum": 170000,
+            "created": "2023-11-29T07:34:08.600Z",
+            "modified": "2023-12-18T00:05:47.874Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAyODY2OTEzfQ.MkpAptT_O0lTsghraTaeccyCk-TjGKS_0s711vSxSdc"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "d680ee60-a644-41b4-a953-e5845ca47020",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "713a831b-6457-4085-b3f8-204cbe33748a",
+            "name": "POST New Factura",
+            "url": "/usuarios/2/factura",
+            "method": "POST",
+            "sortNum": 180000,
+            "created": "2023-11-29T07:35:00.229Z",
+            "modified": "2023-12-26T06:53:21.376Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZXhwIjoxNzAzNTgwMDM0fQ.C91n2x-5dYaqP3mWHu2ucbyHTq0_ZILWbnpJagSjWPs"
+                },
+                {
+                    "name": "user-id",
+                    "value": "2"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"fecha_emision\": \"2023-12-25\",\n    \"id_clientes\": 33,\n    \"id_usuario\": 2,\n    \"productos_servicios\": [\n        {\n            \"cantidad\": 1,\n            \"id_producto\": 47,\n            \"id_servicio\": null\n        },\n        {\n            \"cantidad\": 1,\n            \"id_producto\": null,\n            \"id_servicio\": 26\n        }\n    ]\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "2196a93d-acc0-4806-b0d6-67952a934271",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "713a831b-6457-4085-b3f8-204cbe33748a",
+            "name": "PUT Factura by ID",
+            "url": "/usuarios/1/factura/87",
+            "method": "PUT",
+            "sortNum": 200000,
+            "created": "2023-11-29T07:41:34.785Z",
+            "modified": "2023-12-03T21:46:42.724Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAxNjQ3NDc2fQ.zmSXXO8hXqUkX_sM3PWOtTpPgSvx3kYbwuk8uz9h26g"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"fecha_emision\": \"2023-08-21\",\n  \"id_clientes\": 1\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "82ea30ed-a3d1-45cd-8316-26f198d2c2a1",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "713a831b-6457-4085-b3f8-204cbe33748a",
+            "name": "DELETE Factura by ID",
+            "url": "/usuarios/1/factura/95",
+            "method": "DELETE",
+            "sortNum": 210000,
+            "created": "2023-11-29T07:46:10.138Z",
+            "modified": "2023-12-03T21:50:55.117Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAxNjQ3NDc2fQ.zmSXXO8hXqUkX_sM3PWOtTpPgSvx3kYbwuk8uz9h26g"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "4f9d4918-c2bc-4927-b741-8dc48bf2f606",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "b80006a4-b69c-4d05-960d-d8498529b7f8",
+            "name": "PUT cantidad_producto",
+            "url": "/usuarios/1/productos/22/stock",
+            "method": "PUT",
+            "sortNum": 230000,
+            "created": "2023-12-01T00:40:04.460Z",
+            "modified": "2023-12-03T19:54:35.335Z",
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAxNjM3MzQ0fQ.MF7jVLXKoGvicVqgVKT_7epLY2huayWaZ2dh_A0HHv0"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"cantidad\": 20\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "817628f0-b8b6-4a5f-8571-8047c5fbb5bc",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "92426bc8-fa1b-4e80-b341-b370ed92d018",
+            "name": "GET all Stock",
+            "url": "/usuarios/1/stock_movimientos",
+            "method": "GET",
+            "sortNum": 240000,
+            "created": "2023-12-03T17:02:15.037Z",
+            "modified": "2023-12-14T02:29:28.893Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAyNTI4Nzc0fQ.751DtDp8_kK4qEMIo31jNqtk4cRt9kCFiFBevG2fLXA"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "236bf89b-8d72-4c37-b9f5-c1f560013852",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "92426bc8-fa1b-4e80-b341-b370ed92d018",
+            "name": "GET Stock by Producto ID",
+            "url": "/usuarios/1/stock_movimientos/26",
+            "method": "GET",
+            "sortNum": 250000,
+            "created": "2023-12-03T17:03:37.486Z",
+            "modified": "2023-12-14T02:41:45.281Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAyNTI4Nzc0fQ.751DtDp8_kK4qEMIo31jNqtk4cRt9kCFiFBevG2fLXA"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "2d12db6d-7950-453f-9f33-c8115b854cdd",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "713a831b-6457-4085-b3f8-204cbe33748a",
+            "name": "GET Factura Completa by ID",
+            "url": "/usuarios/1/factura/105",
+            "method": "GET",
+            "sortNum": 270000,
+            "created": "2023-12-03T20:45:00.594Z",
+            "modified": "2023-12-18T00:06:37.695Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAyODY2OTEzfQ.MkpAptT_O0lTsghraTaeccyCk-TjGKS_0s711vSxSdc"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "aa7ce5b8-c7d2-4fd6-8c32-0e25b3dabbf8",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "34b566b6-0266-47a6-9309-d444f4a93e20",
+            "name": "GET Username",
+            "url": "/usuarios/1",
+            "method": "GET",
+            "sortNum": 290000,
+            "created": "2023-12-12T04:41:55.862Z",
+            "modified": "2023-12-12T17:16:35.318Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAyNDEwMzg2fQ.3Xn5LF3sbjgN6ikE3tEhtb8fjtnOVeJUWNN1AO-mB5Y"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "4782c2ab-2643-4286-befc-caecf6bdc410",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "20715b3a-2cd0-466b-9d7e-8ea855ced9f9",
+            "name": "LOGOUT",
+            "url": "/logout",
+            "method": "POST",
+            "sortNum": 300000,
+            "created": "2023-12-12T05:18:09.281Z",
+            "modified": "2023-12-12T06:12:30.370Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZXhwIjoxNzAyMzcwNTMwfQ.T93TXS-2xi9TCPAdIefwc0KmHpd_4eUZYUsc7F9LIWA"
+                },
+                {
+                    "name": "user-id",
+                    "value": "2"
+                }
+            ],
+            "params": [],
+            "auth": {
+                "type": "basic",
+                "basic": {
+                    "username": "juan@mail.com",
+                    "password": "pass"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "bec1fae0-bdab-4526-885a-2edb2d742bcb",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "713a831b-6457-4085-b3f8-204cbe33748a",
+            "name": "GET Total",
+            "url": "/usuarios/1/factura/total",
+            "method": "GET",
+            "sortNum": 310000,
+            "created": "2023-12-12T18:43:38.723Z",
+            "modified": "2023-12-14T00:23:35.025Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAyNTIwNjg3fQ.bMTa04qNkvlz3P5ovlG6068XU96Ops4LPPdp7C3DWbk"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "f07242c0-48e4-4c66-a9e7-016379f73a67",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "713a831b-6457-4085-b3f8-204cbe33748a",
+            "name": "GET facturas Emitidas",
+            "url": "/usuarios/1/factura/cantidad",
+            "method": "GET",
+            "sortNum": 320000,
+            "created": "2023-12-12T20:15:11.080Z",
+            "modified": "2023-12-17T19:14:52.176Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAyODQ5NDc2fQ.dMuourT3QzOpFMqHmAYzgMdPTJKeACebLrFB38dI9VY"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "4e38a3dd-28d6-4442-8a5d-9bb02dff094c",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "b80006a4-b69c-4d05-960d-d8498529b7f8",
+            "name": "GET Producto mas vendido",
+            "url": "/usuarios/1/factura/producto-mas-vendido",
+            "method": "GET",
+            "sortNum": 330000,
+            "created": "2023-12-12T20:43:52.911Z",
+            "modified": "2023-12-13T22:05:19.537Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAyNTEzODQ0fQ.Nd9DJKPI9j4Nr88R7Vh2w2xHCa8rnZPlWzFHKUtMCgE"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "385133bf-3c83-485a-a285-e75b7c21cc4c",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "dfa90d4c-cdce-4d7f-bebd-d53766846c5b",
+            "name": "GET Total Clientes",
+            "url": "/usuarios/2/cantidad-clientes",
+            "method": "GET",
+            "sortNum": 340000,
+            "created": "2023-12-12T21:03:36.412Z",
+            "modified": "2023-12-12T22:55:24.704Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZXhwIjoxNzAyNDMwNjU4fQ.5Uw58IQKU8jhh1oXUpUQcpiK-qizqaYj5-g4JdZ-qNA"
+                },
+                {
+                    "name": "user-id",
+                    "value": "2"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "5c23bdd8-d093-412e-ad6d-965d1b574545",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "b80006a4-b69c-4d05-960d-d8498529b7f8",
+            "name": "GET Ranking de Productos",
+            "url": "/usuarios/1/ranking-productos",
+            "method": "GET",
+            "sortNum": 350000,
+            "created": "2023-12-12T22:53:33.078Z",
+            "modified": "2023-12-14T02:09:50.071Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAyNTI4Nzc0fQ.751DtDp8_kK4qEMIo31jNqtk4cRt9kCFiFBevG2fLXA"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "8389b314-3a6d-4abe-9e10-eaa7f3eb19aa",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "f48cb553-318b-48d5-8f52-fa4dbbce32d9",
+            "name": "GET Ranking servicios",
+            "url": "/usuarios/1/ranking-servicios",
+            "method": "GET",
+            "sortNum": 360000,
+            "created": "2023-12-13T21:43:59.873Z",
+            "modified": "2023-12-13T22:43:08.619Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAyNTE2MjQzfQ.9yLiFqksdRRa9jYlnq6KUG6lk_uPBTNFGUys9xaiAu0"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "27719887-0afb-49d4-8019-735de0c3f48e",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "f48cb553-318b-48d5-8f52-fa4dbbce32d9",
+            "name": "GET Servicio mas vendido",
+            "url": "/usuarios/1/factura/servicio-mas-vendido",
+            "method": "GET",
+            "sortNum": 370000,
+            "created": "2023-12-13T22:00:17.009Z",
+            "modified": "2023-12-13T22:00:53.246Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAyNTEzODQ0fQ.Nd9DJKPI9j4Nr88R7Vh2w2xHCa8rnZPlWzFHKUtMCgE"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "073b779a-8043-47d3-ad2b-dc9fd98c6682",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "dfa90d4c-cdce-4d7f-bebd-d53766846c5b",
+            "name": "GET Cliente destacado",
+            "url": "/usuarios/1/cliente-destacado",
+            "method": "GET",
+            "sortNum": 390000,
+            "created": "2023-12-13T23:13:12.233Z",
+            "modified": "2023-12-13T23:13:54.784Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAyNTE4MjI1fQ.NDjCLJ06SBiHUQ1AQIgiCvSJgLHa_XQbtNdyQNFP4Cs"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "80854b48-0d06-4400-bd70-b8a6bc9424ea",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "dfa90d4c-cdce-4d7f-bebd-d53766846c5b",
+            "name": "GET Ranking Clientes",
+            "url": "/usuarios/1/ranking-clientes",
+            "method": "GET",
+            "sortNum": 400000,
+            "created": "2023-12-13T23:18:41.048Z",
+            "modified": "2023-12-14T02:21:21.334Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAyNTI4Nzc0fQ.751DtDp8_kK4qEMIo31jNqtk4cRt9kCFiFBevG2fLXA"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "cd145f26-e248-4d27-ab3c-457b7bfbb870",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "92426bc8-fa1b-4e80-b341-b370ed92d018",
+            "name": "GET Historial",
+            "url": "/usuarios/1/historial_ventas",
+            "method": "GET",
+            "sortNum": 410000,
+            "created": "2023-12-14T03:42:44.869Z",
+            "modified": "2023-12-14T03:43:35.335Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAyNTI4Nzc0fQ.751DtDp8_kK4qEMIo31jNqtk4cRt9kCFiFBevG2fLXA"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "d53ec605-e2b6-4586-9b37-1951dac6a710",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "dfa90d4c-cdce-4d7f-bebd-d53766846c5b",
+            "name": "GET total Clientes",
+            "url": "/usuarios/1/clientes/total",
+            "method": "GET",
+            "sortNum": 420000,
+            "created": "2023-12-15T23:21:02.476Z",
+            "modified": "2023-12-16T00:52:13.587Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAyNjk2NzY4fQ.VTL7jwEAQ7wFxvB3-qYFJsGKJwzgxJvUQ4LnzqepjSA"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "82bfbee8-f162-41f5-a3e1-6e88967d03f9",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "dfa90d4c-cdce-4d7f-bebd-d53766846c5b",
+            "name": "GET clientes por pagina",
+            "url": "/usuarios/1/clientes-paginados?page=2",
+            "method": "GET",
+            "sortNum": 430000,
+            "created": "2023-12-16T01:04:19.127Z",
+            "modified": "2023-12-16T04:13:31.128Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAyNzA2MTczfQ.bWJIvqLxcARcvkxFN7AGB5yEtN95A6LgEsER4vl8-40"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "2",
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "d5b00fb9-0ca3-4b18-af34-d3370af30930",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "b80006a4-b69c-4d05-960d-d8498529b7f8",
+            "name": "GET Productos paginados",
+            "url": "/usuarios/1/productos-paginados?page=2",
+            "method": "GET",
+            "sortNum": 440000,
+            "created": "2023-12-16T15:02:51.262Z",
+            "modified": "2023-12-16T15:04:18.769Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAyNzQ3OTUwfQ.yOxVKWkAI0cTh01xisLlZjeARhRW7O-BWxjjA3ca0Og"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "2",
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "ff3454ed-8bf9-4b0a-9a23-6bcf48b0f03d",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "b80006a4-b69c-4d05-960d-d8498529b7f8",
+            "name": "GET Total Productos",
+            "url": "/usuarios/1/productos/total",
+            "method": "GET",
+            "sortNum": 450000,
+            "created": "2023-12-16T15:06:35.979Z",
+            "modified": "2023-12-16T15:07:24.504Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAyNzQ3OTUwfQ.yOxVKWkAI0cTh01xisLlZjeARhRW7O-BWxjjA3ca0Og"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "86bf4722-3dd0-47a6-a077-9b8a33ee8678",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "f48cb553-318b-48d5-8f52-fa4dbbce32d9",
+            "name": "GET servicios por pagina",
+            "url": "/usuarios/1/servicios-paginados?page=1",
+            "method": "GET",
+            "sortNum": 460000,
+            "created": "2023-12-17T16:17:22.069Z",
+            "modified": "2023-12-17T16:19:08.563Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAyODM3ODIzfQ.A26eb5OapBovveCTUEBH1SHvnX0BnDIQW8K96_iCl9A"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "1",
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "0353a8f7-76f4-4d1c-9da3-96a26170ad08",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "713a831b-6457-4085-b3f8-204cbe33748a",
+            "name": "GET Facturas paginadas",
+            "url": "/usuarios/1/facturas/detalles?page=1",
+            "method": "GET",
+            "sortNum": 470000,
+            "created": "2023-12-17T19:14:02.872Z",
+            "modified": "2023-12-18T00:05:21.981Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZXhwIjoxNzAyODY2OTEzfQ.MkpAptT_O0lTsghraTaeccyCk-TjGKS_0s711vSxSdc"
+                },
+                {
+                    "name": "user-id",
+                    "value": "1"
+                }
+            ],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "1",
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "adce37ee-faaf-4146-939a-377e4b86794b",
+            "colId": "d32e2a70-8a44-4b3a-aec1-a3b03152ecbb",
+            "containerId": "b80006a4-b69c-4d05-960d-d8498529b7f8",
+            "name": "GET productos stock positivo",
+            "url": "/usuarios/2/productos/stock-positivo",
+            "method": "GET",
+            "sortNum": 480000,
+            "created": "2023-12-20T03:32:00.364Z",
+            "modified": "2023-12-26T03:15:33.522Z",
+            "headers": [
+                {
+                    "name": "x-access-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZXhwIjoxNzAzNTY4MzUyfQ.xftHvvvaH3--CNmMKlqKYCulBS9kEXC01Mw8CbbiGJM"
+                },
+                {
+                    "name": "user-id",
+                    "value": "2"
+                }
+            ],
+            "params": [],
+            "tests": []
+        }
+    ],
+    "settings": {
+        "options": {
+            "baseUrl": "http://127.0.0.1:5500"
+        }
+    }
+}
