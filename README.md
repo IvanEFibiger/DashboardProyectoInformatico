@@ -1,4 +1,4 @@
-# 🧭 Dashboard Proyecto Informático
+# Dashboard Proyecto Informático
 
 Proyecto final desarrollado para la **Tecnicatura Universitaria en Tecnologías de la Programación**
 **Universidad Provincial del Sudoeste (UPSO)**
@@ -8,7 +8,7 @@ Grupo 7 — **Iván Fibiger**, **Daiana Saavedra**
 
 ---
 
-## 🚀 Descripción General
+## Descripción General
 
 **Dashboard Proyecto Informático** es una aplicación web fullstack diseñada para la gestión integral de clientes, productos, servicios, facturación y control de stock.
 El sistema implementa autenticación JWT, control de acceso por usuario, políticas de seguridad revisadas y comunicación API REST entre backend y frontend.
@@ -22,7 +22,7 @@ El sistema implementa autenticación JWT, control de acceso por usuario, políti
 
 ---
 
-## 🧩 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 DashboardProyectoInformatico/
@@ -53,7 +53,7 @@ DashboardProyectoInformatico/
 
 ---
 
-## ⚙️ Requisitos Previos
+## Requisitos Previos
 
 * **Python 3.11+**
 * **Node.js 20+**
@@ -62,7 +62,7 @@ DashboardProyectoInformatico/
 
 ---
 
-## 🐍 Configuración del Backend (Flask)
+## Configuración del Backend (Flask)
 
 ### 1️⃣ Crear entorno virtual
 
@@ -133,7 +133,7 @@ Servidor disponible en:
 
 ---
 
-## ⚛️ Configuración del Frontend (React + TypeScript)
+## Configuración del Frontend (React + TypeScript)
 
 ### 1️⃣ Instalar dependencias
 
@@ -162,7 +162,7 @@ Servidor disponible en:
 
 ---
 
-## 🔒 Autenticación y Seguridad
+## Autenticación y Seguridad
 
 * **Login** → `/login` devuelve access y refresh tokens.
 * **Refresh** → `/auth/refresh` renueva el token JWT de acceso.
@@ -171,7 +171,7 @@ Servidor disponible en:
 
 ---
 
-## 📊 Funcionalidades Principales
+## Funcionalidades Principales
 
 * Gestión de **Usuarios** (registro, login, logout).
 * CRUD completo de **Clientes**, **Productos** y **Servicios**.
@@ -183,7 +183,7 @@ Servidor disponible en:
 
 ---
 
-## 🧠 Tecnologías Utilizadas
+## Tecnologías Utilizadas
 
 **Backend**
 
@@ -204,7 +204,7 @@ Servidor disponible en:
 
 ---
 
-## 🧱 Arquitectura General
+## Arquitectura General
 
 ```
 Frontend (React/TS)
@@ -216,7 +216,7 @@ Base de Datos MySQL
 
 ---
 
-## 👥 Autores
+## Autores
 
 * **Iván Ever Fibiger** — Desarrollo Backend, Arquitectura, Seguridad, Integración API
 * **Daiana Saavedra** — Diseño UI/UX, Interfaz Frontend, Testing
