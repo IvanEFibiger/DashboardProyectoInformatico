@@ -1,134 +1,131 @@
-from api.Utilidades import *
+# api/routes/movimiento_stock.py
+from api import app
+from api.Utilidades import token_required, user_resource_param, producto_resource
 from flask import jsonify
+from api.db.db import mysql
+import MySQLdb.cursors as cursors
+from datetime import datetime
 
-"""Stock"""
-"""Obtener los movimientos de stock"""
+
 @app.route('/usuarios/<int:id_user>/stock_movimientos', methods=['GET'])
 @token_required
-@user_resources
+@user_resource_param("id_user")
 def get_stock_movimientos(id_user):
+    cur = mysql.connection.cursor(cursors.DictCursor)
     try:
-        cur = mysql.connection.cursor()
-
-        # Consulta para obtener el último movimiento de stock para cada producto del usuario
         cur.execute('''
-            SELECT P.nombre as producto, MS.stock_real
+            SELECT P.nombre AS producto, MS.stock_real
             FROM productos P
             JOIN movimiento_stock MS ON P.id = MS.producto_id
-            WHERE MS.id = (
-                SELECT MAX(id)
-                FROM movimiento_stock
-                WHERE producto_id = P.id
-            )
-            AND P.id_usuario = %s
+            WHERE P.id_usuario = %s
+              AND MS.id = (
+                  SELECT MAX(id)
+                  FROM movimiento_stock
+                  WHERE producto_id = P.id
+              )
+              AND P.activo = 1
         ''', (id_user,))
-
-        data = cur.fetchall()
-        stock_movimientos = []
-
-        for row in data:
-            movimiento_info = {
-                "producto": row[0],
-                "stock_real": int(row[1])
-            }
-
-            stock_movimientos.append(movimiento_info)
-
-        return jsonify(stock_movimientos)
-
+        rows = cur.fetchall() or []
+        stock_movimientos = [{
+            "producto": r["producto"],
+            "stock_real": int(r["stock_real"] or 0)
+        } for r in rows]
+        return jsonify(stock_movimientos), 200
     except Exception as e:
-        return jsonify({"message": str(e)}), 500
-
-
+        return jsonify({"message": f"stock:list {str(e)}"}), 500
+    finally:
+        cur.close()
 
 
 @app.route('/usuarios/<int:id_user>/productos/<int:id_producto>/ultimo_stock', methods=['GET'])
 @token_required
-@user_resources
+@user_resource_param("id_user")
 @producto_resource
 def get_ultimo_stock_producto(id_user, id_producto):
+    cur = mysql.connection.cursor(cursors.DictCursor)
     try:
-        cur = mysql.connection.cursor()
-
-        # Consulta para obtener el último movimiento de stock para un producto específico del usuario
         cur.execute('''
-            SELECT MS.stock_real
-            FROM movimiento_stock MS
-            WHERE MS.producto_id = %s
-            ORDER BY MS.id DESC
+            SELECT stock_real
+            FROM movimiento_stock
+            WHERE producto_id = %s
+            ORDER BY id DESC
             LIMIT 1
         ''', (id_producto,))
+        row = cur.fetchone()
 
-        ultimo_stock = cur.fetchone()
-
-        if ultimo_stock:
-            return jsonify({"producto_id": id_producto, "stock_real": int(ultimo_stock[0])})
+        if row and row.get("stock_real") is not None:
+            return jsonify({"producto_id": id_producto, "stock_real": int(row["stock_real"])}), 200
         else:
             return jsonify({"message": "No hay movimientos de stock para el producto"}), 404
-
     except Exception as e:
-        return jsonify({"message": str(e)}), 500
+        return jsonify({"message": f"stock:last {str(e)}"}), 500
+    finally:
+        cur.close()
 
 
-
-"""Obtener el movimiento de stock por producto"""
 @app.route('/usuarios/<int:id_user>/stock_movimientos/<int:id_producto>', methods=['GET'])
 @token_required
-@user_resources
+@user_resource_param("id_user")
 @producto_resource
-def get_stock_movimientos_by_producto(id_user, id_producto):  # Asegúrate de utilizar 'id_producto'
+def get_stock_movimientos_by_producto(id_user, id_producto):
+    cur = mysql.connection.cursor(cursors.DictCursor)
     try:
-        cur = mysql.connection.cursor()
-        cur.execute('SELECT tipo, cantidad, fecha, stock_real FROM movimiento_stock WHERE producto_id = %s ORDER BY fecha', (id_producto,))
+        cur.execute('''
+            SELECT tipo, cantidad, fecha, stock_real
+            FROM movimiento_stock
+            WHERE producto_id = %s
+            ORDER BY fecha, id
+        ''', (id_producto,))
+        rows = cur.fetchall() or []
 
-        data = cur.fetchall()
-        stock_movimientos = []
+        def _fmt_fecha(f):
+            if isinstance(f, datetime):
+                return f.strftime('%Y-%m-%d %H:%M:%S')
+            return f
 
-        for row in data:
-            movimiento_info = {
-                "tipo": row[0],
-                "cantidad": row[1],
-                "fecha": row[2],
-                "stock_real": int(row[3])
-            }
-            stock_movimientos.append(movimiento_info)
+        stock_movimientos = [{
+            "tipo": r["tipo"],
+            "cantidad": float(r["cantidad"]),
+            "fecha": _fmt_fecha(r["fecha"]),
+            "stock_real": int(r["stock_real"] or 0)
+        } for r in rows]
 
-        return jsonify(stock_movimientos)
-
+        return jsonify(stock_movimientos), 200
     except Exception as e:
-        return jsonify({"message": str(e)}), 500
+        return jsonify({"message": f"stock:history {str(e)}"}), 500
+    finally:
+        cur.close()
 
 
-"""Obtener el historial de ventas"""
 @app.route('/usuarios/<int:id_user>/historial_ventas', methods=['GET'])
 @token_required
-@user_resources
+@user_resource_param("id_user")
 def get_historial_ventas(id_user):
+    cur = mysql.connection.cursor(cursors.DictCursor)
     try:
-        cur = mysql.connection.cursor()
-
-        # Consulta para obtener el historial de ventas para cada producto del usuario
         cur.execute('''
-            SELECT P.nombre as producto, DF.cantidad, F.fecha_emision
+            SELECT P.nombre AS producto, DF.cantidad, F.fecha_emision
             FROM productos P
             JOIN detalle_factura DF ON P.id = DF.id_producto
             JOIN factura F ON DF.id_factura = F.id
             WHERE P.id_usuario = %s
+            ORDER BY F.fecha_emision, F.id, DF.id
         ''', (id_user,))
+        rows = cur.fetchall() or []
 
-        data = cur.fetchall()
-        historial_ventas = []
+        def _fmt_fecha(f):
+            if isinstance(f, datetime):
+                return f.strftime('%Y-%m-%d')
+            return f
 
-        for row in data:
-            venta_info = {
-                "producto": row[0],
-                "cantidad": int(row[1]),
-                "fecha_emision": row[2].strftime('%Y-%m-%d')  # Formatear la fecha a cadena
-            }
+        historial_ventas = [{
+            "producto": r["producto"],
+            "cantidad": float(r["cantidad"]),
+            "fecha_emision": _fmt_fecha(r["fecha_emision"])
+        } for r in rows]
 
-            historial_ventas.append(venta_info)
-
-        return jsonify(historial_ventas)
-
+        return jsonify(historial_ventas), 200
     except Exception as e:
-        return jsonify({"message": str(e)}), 500
+        return jsonify({"message": f"ventas:history {str(e)}"}), 500
+    finally:
+        cur.close()

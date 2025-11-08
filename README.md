@@ -1,298 +1,229 @@
-# **DASHBOARD PROYECTO INFORMATICO**
-
-**Universidad Provincial del Sudoeste**
-Tecnicatura Universitaria en Tecnologias de Programación
-Materia: Proyecto Informatico
-Profesor: Berger, Carlos
-Grupo 7
-Integrantes: Saavedra Daiana, Fibiger Ivan
-
-# **ESTRUCTURA Y LANZAMIENTO DE APLICACIÓN:**
-1. Crear Directorio de proyecto (PROYECTO INFORMATICO)
-2. Crear subdirectorios (FRONTEND y BACKEND)
-3. Cargar BACKEND en Pycharm
-4. Creamos el archivo de requisitos
-5. Instalar Dependencias
-6. Crear estructura de directorios:
-   BACKEND
-        api
-            models
-                   Clientes.py
-                   detalle_factura.py
-                   factura.py
-                   movimiento_stock.py
-                   Productos.py
-                   Servicios.py
-                   Users.py
-            routes
-                   Clientes.py
-                   factura.py
-                   movimiento_stock.py
-                   Productos.py
-                   Servicios.py
-                   Users.py
-            db
-            __init__.py
-            Utilidades.py
-        main.py
-        requirements.txt
-   FRONTEND
-        Clientes.html
-        dashboard.html
-        Facturas.html 
-        Productos.html
-        Servicios.html
-7. Ejecutar xampp y main.py
-8. Cargar directorio FRONTEND en Visual Studio Code y ejecutar index.html
-
-# **RUTAS:**
-## **Rutas de Usuarios:**
-
-@app.route("/login", methods=['POST'])
-Autenticación de usuarios.
-
-@app.route('/usuarios/<int:id_user>', methods=['GET'])
-Obtener usuarios por id
-
-@app.route("/logout", methods=['POST'])
-Deslogueo
-
-## **Rutas de clientes:**
-
-@app.route('/usuarios/<int:id_user>/clientes', methods=['GET'])
-Ruta para obtener todos los clientes de un usuario.
-
-@app.route('/usuarios/<int:id_user>/clientes', methods=['POST'])
-Ruta para agregar un cliente a un usuario.
-Para ingresar un nuevo cliente:
-{
-  "nombre": "Cooperativa",
-  "email": "coope@mail.com",
-  "direccion": "calle 7 100",
-  "cuit": 30504978552,
-  "id_usuario": 1
-}
-
-@app.route('/usuarios/<int:id_user>/clientes/<int:id_client>', methods=['PUT'])
-Ruta para actualizar un cliente:
-{
-  "nombre": "Cooperativa",
-  "email": "coope@mail.com",
-  "direccion": "calle 7 100",
-  "cuit": 30504978552
-}
-
-@app.route('/usuarios/<int:id_user>/clientes/<int:id_client>', methods=['DELETE'])
-Ruta para eliminar un cliente. (Borrado Logico).
-
-@app.route('/usuarios/<int:id_user>/clientes/<int:id_client>', methods=['GET'])
-Ruta para obtener el cliente por su id.
-
-@app.route('/usuarios/<int:id_user>/cantidad-clientes', methods=['GET'])
-Devuelve la cantidad de clientes registrados por usuario.
-
-@app.route('/usuarios/<int:id_user>/cliente-destacado', methods=['GET'])
-Devuelve el usuario que gasto mas dinero en sus compras.
-
-@app.route('/usuarios/<int:id_user>/ranking-clientes', methods=['GET'])
-Devuelve los clientes ordenados segun lo gastado.
-
-@app.route('/usuarios/<int:id_user>/clientes/total', methods=['GET'])
-Devuelve solo el numero de clientes registrados.
+# 🧭 Dashboard Proyecto Informático
+
+Proyecto final desarrollado para la **Tecnicatura Universitaria en Tecnologías de la Programación**
+**Universidad Provincial del Sudoeste (UPSO)**
+Materia: *Proyecto Informático*
+Profesor: **Carlos Berger**
+Grupo 7 — **Iván Fibiger**, **Daiana Saavedra**
+
+---
+
+## 🚀 Descripción General
+
+**Dashboard Proyecto Informático** es una aplicación web fullstack diseñada para la gestión integral de clientes, productos, servicios, facturación y control de stock.
+El sistema implementa autenticación JWT, control de acceso por usuario, políticas de seguridad revisadas y comunicación API REST entre backend y frontend.
+
+* **Backend:** Flask (Python) con MySQL
+* **Frontend:** React + TypeScript + Vite
+* **Autenticación:** JWT (Bearer) + Refresh Token (con cookies HttpOnly)
+* **Persistencia:** MySQL (Flask-MySQLdb)
+* **Límite de peticiones:** Flask-Limiter
+* **CORS y seguridad:** Flask-CORS + validaciones en endpoints
+
+---
+
+## 🧩 Estructura del Proyecto
+
+```
+DashboardProyectoInformatico/
+├── BACKEND/
+│   ├── api/
+│   │   ├── db/
+│   │   ├── models/
+│   │   ├── routes/
+│   │   ├── __init__.py
+│   │   ├── Utilidades.py
+│   │   └── ...
+│   ├── main.py
+│   ├── requirements.txt
+│   └── .env
+│
+└── frontend/
+    ├── src/
+    │   ├── api/
+    │   ├── components/
+    │   ├── pages/
+    │   ├── security/
+    │   ├── services/
+    │   └── main.tsx
+    ├── package.json
+    ├── tsconfig.json
+    └── vite.config.ts
+```
 
-@app.route('/usuarios/<int:id_user>/clientes-paginados', methods=['GET'])
-Devuelve los clientes registrados de a 5 por pagina.
+---
 
-## **Rutas de Productos:**
-@app.route('/usuarios/<int:id_user>/productos', methods=['GET'])
-Obtener todos los productos por usuarios
+## ⚙️ Requisitos Previos
 
-@app.route('/usuarios/<int:id_user>/productos/stock-positivo', methods=['GET'])
-Devuelve solo aquellos productos con stock positivo.
+* **Python 3.11+**
+* **Node.js 20+**
+* **MySQL 8.0+**
+* **Git** (opcional)
 
-@app.route('/usuarios/<int:id_user>/productos', methods=['POST'])
-Ruta para crear nuevo producto.
-Entrada:
-{
-  "nombre": "PC AIO ASUS v1",
-  "descripcion": "i7 13900, 32gb Ram DDR5, SSD M.2 512gb",
-  "precio": 250000,
-  "cantidad":20,
-  "id_usuario": 1
-}
+---
 
-@app.route('/usuarios/<int:id_user>/productos/<int:id_producto>', methods=['PUT'])
-Ruta para modificar producto por su id.
-entrada:
-{
-  "nombre": "PC AIO SAMSUNG",
-  "descripcion": "i7 12900, 16 RAM DDR4, SSD M.2 980GB",
-  "precio": 600000,
-  "cantidad": 10
-}
-
-
-@app.route('/usuarios/<int:id_user>/productos/<int:id_producto>/stock', methods=['PUT'])
-Ruta para unicamente modificar la cantidad para el control stock.
-entrada:
-{
-  "cantidad": 20
-}
-
-@app.route('/usuarios/<int:id_user>/productos/<int:id_producto>', methods=['DELETE'])
-Ruta para eliminar un producto.
-
-
-@app.route('/usuarios/<int:id_user>/productos/<int:id_producto>', methods=['GET'])
-Ruta para obtener un producto por su id.
-
-@app.route('/usuarios/<int:id_user>/ranking-productos', methods=['GET'])
-Devuelve los productos mas vendidos de mayor a menor.
-
-@app.route('/usuarios/<int:id_user>/productos/total', methods=['GET'])
-Devuelve el total de productos.
-
-@app.route('/usuarios/<int:id_user>/productos-paginados', methods=['GET'])
-Devuelve los productos de a 5 por pagina.
-
-## **Rutas de Servicios:**
-
-@app.route('/usuarios/<int:id_user>/servicios', methods=['GET'])
-Ruta para obtener todos los servicios.
-
-@app.route('/usuarios/<int:id_user>/servicios', methods=['POST'])
-Ruta para crear un nuevo servicio
-Entrada:
-{
-  "nombre": "Formateo v4",
-  "descripcion": "borrado y reinstalación de Sistema operativo y programas basicos",
-  "precio": 5500,
-  "id_usuario": 1
-}
-
-
-@app.route('/usuarios/<int:id_user>/servicios/<int:id_servicio>', methods=['PUT'])
-ruta para modificar un servicio:
-{
-  "nombre": "Formateo v34",
-  "descripcion": "borrado y reinstalación de Sistema operativo y programas basicos",
-  "precio": 9000
-}
-
-
-@app.route('/usuarios/<int:id_user>/servicios/<int:id_servicio>', methods=['DELETE'])
-Ruta para borrado lógico de servicio.
-
-
-@app.route('/usuarios/<int:id_user>/servicios/<int:id_servicio>', methods=['GET'])
-Obtener servicio por id.
-
-@app.route('/usuarios/<int:id_user>/ranking-servicios', methods=['GET'])
-Devuelve los servicios ordenados por ventas de mayor a menor.
-
-@app.route('/usuarios/<int:id_user>/servicios/total', methods=['GET'])
-Devuelve el total de servicios cargados
+## 🐍 Configuración del Backend (Flask)
 
-@app.route('/usuarios/<int:id_user>/servicios-paginados', methods=['GET'])
-devuelve los servicios de a 5 por pagina.
+### 1️⃣ Crear entorno virtual
 
-## **Rutas para Facturas:**
+```bash
+cd BACKEND
+python -m venv venv
+```
 
+### 2️⃣ Activar entorno virtual
 
-@app.route('/usuarios/<int:id_user>/factura', methods=['GET'])
-Ruta para obtener todas las facturas de un usuario.
+**Windows PowerShell**
 
-@app.route('/usuarios/<int:id_user>/factura', methods=['POST'])
-Ruta para crear una nueva factura.
-Entrada para un solo producto o servicio:
-{
-    "fecha_emision": "2023-11-21",
-    "id_clientes": 4,
-    "id_usuario": 1,
-    "productos_servicios": [
-        {
-            "cantidad": 5,
-            "id_producto": 21,
-            "id_servicio": null
-        }
-            ]
-}
+```bash
+venv\Scripts\activate
+```
 
-Para dos o mas:
+**Linux / macOS**
 
-{
-    "fecha_emision": "2023-11-21",
-    "id_clientes": 4,
-    "id_usuario": 1,
-    "productos_servicios": [
-        {
-            "cantidad": 5,
-            "id_producto": 21,
-            "id_servicio": null
-        },
-        {
-            "cantidad": 5,
-            "id_producto": 23,
-            "id_servicio": null
-        },
-        {
-            "cantidad": 1,
-            "id_producto": null,
-            "id_servicio": 8
-        }
-    ]
-}
+```bash
+source venv/bin/activate
+```
 
-"""Actualizar factura por id"""
-@app.route('/usuarios/<int:id_user>/factura/<int:id_factura>', methods=['PUT'])
-actualizar factura por id. Solo se permite la modificación de cliente y fecha.
-Entrada:
-{
-  "fecha_emision": "2023-08-21",
-  "id_clientes": 1
-}
+### 3️⃣ Instalar dependencias
 
+```bash
+pip install -r requirements.txt
+```
 
-@app.route('/usuarios/<int:id_user>/factura/<int:id_factura>', methods=['DELETE'])
-Borrado lógico de factura.
+### 4️⃣ Configurar variables de entorno
 
+Crear un archivo `.env` en `BACKEND/` con el siguiente contenido:
 
-@app.route('/usuarios/<int:id_user>/factura/<int:id_factura>', methods=['GET'])
-Consultar factura por id. En este caso se muestra la factura con todos sus detalles.
+```env
+# Flask / JWT
+FLASK_ENV=development
+SECRET_KEY=<TU_SECRET_KEY>
 
-@app.route('/usuarios/<int:id_user>/factura/total', methods=['GET'])
-Devuelve el valor total de facturas generadas por el usuario
+# MySQL
+MYSQL_HOST=localhost
+MYSQL_PORT=3306
+MYSQL_USER=<TU_USUARIO_DB>
+MYSQL_PASSWORD=<TU_PASSWORD_DB>
+MYSQL_DB=db_proyecto_informatico
+MYSQL_CURSORCLASS=DictCursor
+MYSQL_CHARSET=utf8mb4
 
-@app.route('/usuarios/<int:id_user>/factura/cantidad', methods=['GET'])
-Devuelve la cantidad de facturas generadas por el usuario.
+ENV=development
+BOOTSTRAP_ADMIN_TOKEN=<TOKEN_ADMIN_INICIAL>
 
-@app.route('/usuarios/<int:id_user>/factura/producto-mas-vendido', methods=['GET'])
-Devuelve el producto mas presente en todas las facturas.
+# JWT Config
+JWT_ISS=https://api.idsmart.local
+JWT_AUD=https://app.idsmart.local
+ACCESS_TTL_MIN=30
+REFRESH_TTL_DAYS=15
+FRONTEND_ORIGIN=http://localhost:5173
 
-@app.route('/usuarios/<int:id_user>/factura/servicio-mas-vendido', methods=['GET'])
-Devuelve el servicio mas presente en todas las facturas.
+```
 
-@app.route('/usuarios/<int:id_user>/facturas/detalles', methods=['GET'])
-Devuelve las facturas de a 5 por pagina.
+### 5️⃣ Ejecutar el servidor
 
-## **Rutas Movimientos de Stock:**
+```bash
+python main.py
+```
 
+Servidor disponible en:
 
-@app.route('/usuarios/<int:id_user>/stock_movimientos', methods=['GET'])
-Ruta para obtener todos los movimientos de stock de un usuario.
+> [http://127.0.0.1:5500/](http://127.0.0.1:5500/)
 
-@app.route('/usuarios/<int:id_user>/productos/<int:id_producto>/ultimo_stock', methods=['GET'])
-Obtiene el ultimo movimiento de stock registrado.
+---
 
-@app.route('/usuarios/<int:id_user>/stock_movimientos/<int:id_producto>', methods=['GET'])
-Obtiene el historial de movimientos para cada producto.
+## ⚛️ Configuración del Frontend (React + TypeScript)
 
-@app.route('/usuarios/<int:id_user>/historial_ventas', methods=['GET'])
-Obtiene el historial de ventas.
+### 1️⃣ Instalar dependencias
 
+```bash
+cd frontend
+npm install
+```
 
+### 2️⃣ Configurar variables de entorno
 
+Crear `.env.local` en la carpeta `frontend/`:
 
+```env
+VITE_API_BASE_URL=http://127.0.0.1:5500
+```
 
+### 3️⃣ Ejecutar entorno de desarrollo
 
+```bash
+npm run dev
+```
 
+Servidor disponible en:
+
+> [http://localhost:5173/](http://localhost:5173/)
+
+---
+
+## 🔒 Autenticación y Seguridad
+
+* **Login** → `/login` devuelve access y refresh tokens.
+* **Refresh** → `/auth/refresh` renueva el token JWT de acceso.
+* **Front** almacena sólo el access token; el refresh se maneja con cookie HttpOnly.
+* Axios intercepta respuestas `401` y solicita renovación automática.
+
+---
+
+## 📊 Funcionalidades Principales
+
+* Gestión de **Usuarios** (registro, login, logout).
+* CRUD completo de **Clientes**, **Productos** y **Servicios**.
+* Emisión y consulta de **Facturas**.
+* Seguimiento de **Movimientos de Stock**.
+* Reportes y estadísticas de ventas.
+* Paginación, validaciones y mensajes de error claros en UI.
+* Seguridad reforzada (rate limit, CORS estricto, tokens verificados en headers).
+
+---
+
+## 🧠 Tecnologías Utilizadas
+
+**Backend**
+
+* Flask 3.1
+* Flask-MySQLdb
+* Flask-Limiter
+* Flask-CORS
+* PyJWT
+* python-dotenv
+
+**Frontend**
+
+* React 18
+* TypeScript
+* Vite 7
+* Axios
+* TailwindCSS (UI limpia y responsive)
+
+---
+
+## 🧱 Arquitectura General
+
+```
+Frontend (React/TS)
+   ↓ Axios (Bearer Token)
+Backend (Flask REST API)
+   ↓
+Base de Datos MySQL
+```
+
+---
+
+## 👥 Autores
+
+* **Iván Ever Fibiger** — Desarrollo Backend, Arquitectura, Seguridad, Integración API
+* **Daiana Saavedra** — Diseño UI/UX, Interfaz Frontend, Testing
+
+---
+
+## 📄 Licencia
+
+Este proyecto fue desarrollado con fines académicos dentro de la **Universidad Provincial del Sudoeste (UPSO)**.
+Puede ser reutilizado con fines educativos o de demostración.

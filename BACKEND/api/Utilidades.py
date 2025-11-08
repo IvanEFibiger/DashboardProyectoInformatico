@@ -1,116 +1,94 @@
+# api/Utilidades.py
 from functools import wraps
-from api import app
+from flask import request, jsonify, g, current_app
 import jwt
-from flask import request, jsonify
 from api.db.db import mysql
+import MySQLdb.cursors as cursors  
+
+def _error(status, msg):
+    return jsonify({"message": msg}), status
+
+def _get_bearer_token():
+    auth = request.headers.get("Authorization", "")
+    if auth.startswith("Bearer "):
+        return auth.split(" ", 1)[1].strip()
+    return None
+
+def token_required(fn):
+    @wraps(fn)
+    def wrapper(*args, **kwargs):
+        token = _get_bearer_token()
+        if not token:
+            return _error(401, "Falta token Bearer en Authorization")
+        try:
+            data = jwt.decode(
+                token,
+                current_app.config["SECRET_KEY"],
+                algorithms=["HS256"],
+                options={"require": ["exp", "iat", "nbf"]},
+                leeway=5,  
+                audience=current_app.config.get("JWT_AUD"),
+                issuer=current_app.config.get("JWT_ISS"),
+            )
+        except jwt.ExpiredSignatureError:
+            return _error(401, "Token expirado")
+        except jwt.InvalidTokenError:
+            return _error(401, "Token inválido")
+
+        user_id = data.get("id")
+        if user_id is None:
+            return _error(401, "Token sin id de usuario")
+        g.current_user_id = int(user_id)
+        return fn(*args, **kwargs)
+    return wrapper
 
 
-def token_required(func):
-   @wraps(func)
-   def decorated(*args, **kwargs):
-       # Control: Verificar la existencia de un token en las cabeceras de la solicitud
-       token = None
-       if 'x-access-token' in request.headers:
-           token = request.headers['x-access-token']
-       if not token:
-           return jsonify({
-               "message": "Falta el Token"
-           }), 401
+def user_resource_param(param_name="id_user"):
+    def decorator(fn):
+        @wraps(fn)
+        def wrapper(*args, **kwargs):
+            if param_name not in kwargs:
+                return _error(400, f"Falta parámetro de ruta: {param_name}")
+            try:
+                route_user_id = int(kwargs[param_name])
+            except ValueError:
+                return _error(400, f"Parámetro {param_name} inválido")
+            if route_user_id != g.current_user_id:
+                return _error(403, "No tenés permisos para este recurso de usuario")
+            return fn(*args, **kwargs)
+        return wrapper
+    return decorator
 
-       user_id = None
-       if 'user-id' in request.headers:
-           user_id = request.headers['user-id']
-       if not user_id:
-           return jsonify({"message": "falta usuario"}), 401
+def _owner_check(table, id_col_name, param_name):
+    def decorator(fn):
+        @wraps(fn)
+        def wrapper(*args, **kwargs):
+            if param_name not in kwargs:
+                return _error(400, f"Falta parámetro de ruta: {param_name}")
+            try:
+                resource_id = int(kwargs[param_name])
+            except ValueError:
+                return _error(400, f"Parámetro {param_name} inválido")
 
-       try:
-           data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
-           token_id = data['id']
+            cur = mysql.connection.cursor(cursors.DictCursor)  
+            try:
+                cur.execute(
+                    f"SELECT id_usuario FROM {table} WHERE {id_col_name} = %s",
+                    (resource_id,)
+                )
+                row = cur.fetchone()
+            finally:
+                cur.close()
 
-           # Control: Verificar si el ID del usuario coincide con el ID del token
-           if int(user_id) != int(token_id):
-               return jsonify({"message": "error de ID"}), 401
-       except Exception as e:
-           print(e)
-           return jsonify({"message": str(e)}), 401
-       return func(*args, **kwargs)
-   return decorated
+            if row is None:
+                return _error(404, "Recurso no encontrado")
+            if int(row["id_usuario"]) != int(g.current_user_id):
+                return _error(403, "No tenés permisos para este recurso")
+            return fn(*args, **kwargs)
+        return wrapper
+    return decorator
 
-
-
-def user_resources(func):
-   @wraps(func)
-   def decorated(*args, **kwargs):
-       id_user_route = kwargs['id_user']
-       user_id = request.headers['user-id']
-
-       # Control: Verificar si el ID del usuario en la ruta coincide con el ID del usuario autenticado
-       if int(id_user_route) != int(user_id):
-           return jsonify({"message": "no tiene permisos para acceder a este recurso de usuario"}), 401
-       return func(*args, **kwargs)
-   return decorated
-
-def client_resource(func):
-   @wraps(func)
-   def decorated(*args, **kwargs):
-       id_cliente = kwargs['id_client']
-       print("Argumentos en client_resource:", kwargs)
-       cur = mysql.connection.cursor()
-       cur.execute('SELECT id_usuario FROM clientes WHERE id = {0}'.format(id_cliente))
-       data = cur.fetchone()
-       if data:
-           """print(data)"""
-           id_prop = data[0]
-           user_id = request.headers['user-id']
-           if int(id_prop) != int(user_id):
-               return jsonify({'message': 'No tiene permisos para acceder a este recurso'}), 401
-       return func(*args, **kwargs)
-   return decorated
-
-def  producto_resource(func):
-   @wraps(func)
-   def decorated(*args, **kwargs):
-       print("Argumentos en producto_resource: ", kwargs)
-       id_producto = kwargs['id_producto']
-       cur = mysql.connection.cursor()
-       cur.execute('SELECT id_usuario FROM productos WHERE id = {0}'.format(id_producto))
-       data = cur.fetchone()
-       if data:
-           id_prop = data[0]
-           user_id = request.headers['user_id']
-           if int(user_id) != int(id_prop):
-               return jsonify({'message': 'No tiene permisos para acceder a este recurso'}), 401
-       return func(*args, **kwargs)
-   return decorated
-
-def  servicio_resource(func):
-   @wraps(func)
-   def decorated(*args, **kwargs):
-       print("Argumentos en servicio_resource: ", kwargs)
-       id_servicio = kwargs['id_servicio']
-       cur = mysql.connection.cursor()
-       cur.execute('SELECT id_usuario FROM servicios WHERE id = {0}'.format(id_servicio))
-       data = cur.fetchone()
-       if data:
-           id_prop = data[0]
-           user_id = request.headers['user_id']
-           if int(user_id) != int(id_prop):
-               return jsonify({'message': 'No tiene permisos para acceder a este recurso'}), 401
-       return func(*args, **kwargs)
-   return decorated
-
-def factura_resource(func):
-   @wraps(func)
-   def decorated(*args, **kwargs):
-       print("Argumentos en factura_resource: ", kwargs)
-       id_factura = kwargs['id_factura']
-       cur = mysql.connection.cursor()
-       cur.execute('SELECT id_usuario FROM factura WHERE id = {0}'.format(id_factura))
-       data = cur.fetchone()
-       if data:
-           id_prop = data[0]
-           user_id = request.headers['user_id']
-           if int(user_id) != int(id_prop):
-               return jsonify({'message': 'No tiene permisos para acceder a este recurso'}), 401
-       return func(*args, **kwargs)
-   return decorated
+client_resource   = _owner_check("clientes",  "id", "id_client")
+producto_resource = _owner_check("productos", "id", "id_producto")
+servicio_resource = _owner_check("servicios", "id", "id_servicio")
+factura_resource  = _owner_check("factura",   "id", "id_factura")
